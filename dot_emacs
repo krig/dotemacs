@@ -1,0 +1,286 @@
+;; VARIABLES
+(setq ido-save-directory-list-file "~/.emacs.d/ido.history")
+(setq visible-bell t)
+(fset 'yes-or-no-p 'y-or-n-p)
+(show-paren-mode 1)
+(column-number-mode 1)
+(global-font-lock-mode 1)
+(icomplete-mode 1)
+(auto-compression-mode 1)
+(setq font-lock-maximum-decoration t)
+(add-hook 'text-mode-hook 'auto-fill-mode)
+(setq transient-mark-mode t)
+(menu-bar-mode nil)
+(tool-bar-mode nil)
+(scroll-bar-mode t)
+(menu-bar-right-scroll-bar)
+
+
+;; C SOURCE FOR EMACS
+(when (eq system-type 'windows-nt)
+    (setq find-function-C-source-directory "C:/Program/Emacs/src/src"))
+(when (not (eq system-type 'windows-nt))
+  (setq find-function-C-source-directory "~/.emacs.d/emacs-snapshot-20080228/src"))
+
+
+
+
+
+;; COLOR THEME
+(when (eq system-type 'windows-nt)
+  (set-default-font
+   "-*-Consolas-normal-r-normal-normal-13-*-*-*-c-*-iso8859-1"))
+(add-to-list 'load-path "~/.emacs.d/color-theme")
+(require 'color-theme)
+
+(color-theme-initialize)
+(load-library "color-theme-tango-light")
+(color-theme-tango-light)
+
+
+
+
+;; SERVER
+(when (not (eq system-type 'windows-nt))
+	   (server-start))
+
+;; IDO
+
+(ido-mode t)
+(ido-everywhere t)
+(setq ido-max-work-file-list 40)
+(setq ido-enable-flex-matching t)
+(add-hook 'ido-define-mode-map-hook 'ido-my-keys)
+(defun ido-my-keys ()
+  (define-key ido-mode-map "\t" 'ido-complete)
+					;tab is better for completion lists
+					;(define-key ido-mode-map (kbd "tab") 
+					; 'ido-complete)
+  (define-key ido-mode-map "\C-t" 'ido-toggle-regexp) ; same as in isearch
+  (define-key ido-mode-map "\C-d" 'ido-enter-dired)) ; cool
+
+
+;; TAB EXPANSION FOR C/C++
+
+;;(make-hippie-expand-function
+;; '(try-expand-dabbrev-visible
+;;   try-expand-dabbrev-from-kill
+;;   try-expand-dabbrev-all-buffers
+;;   try-complete-file-name-partially
+;;   try-complete-file-name))
+
+(setq hippie-expand-try-functions-list 
+      ;;(make-hippie-expand-function
+      '(try-expand-dabbrev-visible
+	try-expand-dabbrev 
+	try-expand-dabbrev-all-buffers 
+	try-expand-dabbrev-from-kill 
+	try-expand-all-abbrevs 
+	try-expand-list 
+	try-expand-line 
+	try-complete-lisp-symbol-partially 
+	try-complete-lisp-symbol
+	try-complete-file-name-partially
+	try-complete-file-name
+	))
+
+(defun indent-or-expand (arg)
+  "Either indent according to mode, or expand the word preceding
+point."
+  (interactive "*P")
+  (if (and
+       (or (bobp) (= ?w (char-syntax (char-before))))
+       (or (eobp) (not (= ?w (char-syntax (char-after))))))
+      (hippie-expand arg)
+    (indent-according-to-mode)))
+
+(defun my-tab-fix ()
+  (local-set-key [tab] 'indent-or-expand))
+
+;; newline-and-indent
+(defun my-set-newline-and-indent()
+  (local-set-key [return] 'newline-and-indent))
+
+(defun my-c-style-fix ()
+  (c-set-style "linux"))
+
+(dolist (hook '(
+		c-mode-hook
+		c++-mode-hook
+		sh-mode-hook
+		emacs-lisp-mode-hook
+		lisp-mode-hook
+		lisp-interaction-mode-hook
+		scheme-mode-hook
+		))
+  (add-hook hook 'my-tab-fix)
+  (add-hook hook 'my-set-newline-and-indent))
+
+(add-hook 'c-mode-hook 'my-c-style-fix)
+(add-hook 'c++-mode-hook 'my-c-style-fix)
+
+;; MISC THINGS FROM EMACS.D
+
+(add-to-list 'load-path "~/.emacs.d")
+;; (autoload 'paredit-mode "paredit"
+;; "Minor mode for pseudo-structurally editing Lisp code."
+;; t)
+;; (add-hook 'lisp-mode-hook (lambda () (paredit-mode +1)))
+;; (add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode +1)))
+;; (add-hook 'scheme-mode-hook (lambda () (paredit-mode +1)))
+
+;;(add-to-list 'load-path "~/.emacs.d/ocaml-mode")
+
+;;(setq auto-mode-alist
+;;      (cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
+;;(autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
+;;(autoload 'run-caml "inf-caml" "Run an inferior Caml process." t)
+
+;;(if window-system (require 'caml-font))
+
+;;(require 'sr-speedbar)
+;;(global-set-key [(super 's)] 'sr-speedbar-toggle)
+
+;; LINE NUMBERS
+(require 'linum)
+
+;; SLIME
+;;(when (eq system-type 'windows-nt)
+;; (add-to-list 'load-path "~/.emacs.d/slime/")
+;; (setq inferior-lisp-program "c:/Program/clisp-2.45/full/lisp.exe -B c:/Program/clisp-2.45/full -M c:/Program/clisp-2.45/full/lispinit.mem -ansi -q")
+;; (require 'slime)
+;; (slime-setup))
+ 
+;;(when (not (eq system-type 'windows-nt))
+;;    (setq inferior-lisp-program "sbcl")
+;;    (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
+;;    (require 'slime)
+;;    (slime-setup))
+
+;; lua support
+(setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+
+;;(defun cliki:start-slime ()
+;;  (unless (slime-connected-p)
+;;    (save-excursion (slime))))
+;;
+;;(add-hook 'slime-mode-hook 'cliki:start-slime)
+
+
+
+
+;; SMOOTH SCROLLING
+(require 'smooth-scrolling)
+
+
+
+
+;; TABBAR
+(require 'tabbar)
+
+;; Exclude scratch buffers from tabbar
+(when (require 'tabbar nil t)
+  (setq tabbar-buffer-groups-function
+	(lambda (b) (list "All Buffers")))
+  (setq tabbar-buffer-list-function
+	(lambda ()
+	  (remove-if
+	   (lambda(buffer)
+	     (find (aref (buffer-name buffer) 0) " *"))
+	   (buffer-list))))
+  (tabbar-mode))
+
+
+
+
+
+;; CUSTOMIZE SET
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(inhibit-startup-screen t)
+ '(initial-buffer-choice t)
+ '(speedbar-hide-button-brackets-flag t)
+ '(speedbar-use-images nil)
+ '(tabbar-home-button (quote ((" ") " ")))
+ '(tabbar-scroll-left-button (quote (("- ") "- ")))
+ '(tabbar-scroll-right-button (quote (("+ ") "+ "))))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ ;; '(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "#aaaaaa"))))
+ ;; '(font-lock-variable-name-face ((t nil)))
+ ;; '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#777777"))))
+ ;; '(tabbar-default-face ((t (:inherit variable-pitch :background "#404040" :foreground "#888888" :height 1.1))))
+ ;; '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#555555" :foreground "#eeeeeb"))))
+ ;; '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#333333")))))
+ '(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "#aaaaaa"))))
+ '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#777777"))))
+ '(tabbar-default-face ((t (:inherit variable-pitch :background "#eeeeeb" :foreground "#555555" :height 0.8))))
+ '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#cccccc" :foreground "#ce5c00"))))
+ '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#dddddd")))))
+
+;; FUNCTIONS
+(defun reindent-buffer ()
+  "Reindent the contents of the entire buffer."
+  (interactive)
+  (mark-whole-buffer)
+  (indent-region (region-beginning) (region-end)))
+
+;; Prevent emacs from setting mouse position for me.
+;; (thank you Emacs, but no thanks)
+(defun set-mouse-position (frame x y)
+  "This lisp function shadows the built-in
+set-mouse-position to prevent Emacs from
+moving my mouse cursor."
+  (return))
+
+
+
+
+
+;; PYTHON !
+
+;;(add-to-list 'load-path "~/.emacs.d/python")
+;;(require 'python)
+
+(defun mypy-indent-or-expand (arg)
+  "Either indent according to mode, or expand the word preceding
+point."
+  (interactive "*P")
+  (if (and
+       (or (bobp) (= ?w (char-syntax (char-before))))
+       (or (eobp) (not (= ?w (char-syntax (char-after))))))
+      (hippie-expand arg)
+    (python-indent-line)))
+
+(defun mypy-tab-fix ()
+  (local-set-key [tab] 'mypy-indent-or-expand))
+
+
+(add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
+(add-hook 'python-mode-hook 'mypy-tab-fix)
+
+
+;; FLYMAKE FOR PYTHON
+
+
+
+(when (load "flymake" t)
+  (defun flymake-pylint-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+		       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "epylint" (list local-file))))
+  
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pylint-init)))
+(add-hook 'python-mode-hook 'flymake-mode)
