@@ -242,7 +242,42 @@ moving my mouse cursor."
   (return))
 
 
+;; C++ #if 0 grayness
+;; less than perfect at the moment.. needs a ctrl+l to update :/
+;; ------------ C Mode
+(defun my-cpp-highlight ()
+  (setq cpp-known-face '(background-color . "#cccccb"))
+  (setq cpp-unknown-face 'default)
+  (setq cpp-face-type 'dark)
+  (setq cpp-known-writable 't)
+  (setq cpp-unknown-writable 't)
+  (setq cpp-edit-list
+	'((#("0" 0 1
+	     (c-in-sws t fontified t))
+	   (background-color . "#eeeeeb")
+	   nil both nil)
+	  (#("1" 0 1
+	     (c-in-sws t fontified t))
+	   nil
+	   (background-color . "#eeeeeb")
+	   both nil)))
+  (cpp-highlight-buffer t))
 
+(defun my-c-mode-common-hook ()
+  (my-cpp-highlight))
+
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+(defun my-c-mode-recenter ()
+  "Recenter buffer and refresh highlighting."
+  (interactive)
+  (recenter)
+  (cpp-highlight-buffer t))
+
+(defun my-c-initialization-hook ()
+  (define-key c-mode-base-map "\C-l" 'my-c-mode-recenter))
+
+(add-hook 'c-initialization-hook 'my-c-initialization-hook)
 
 
 ;; PYTHON !
