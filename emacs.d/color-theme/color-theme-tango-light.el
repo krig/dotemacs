@@ -32,7 +32,7 @@
      (font-lock-type-face ((t (:foreground "#4e9a06" :bold t))))
      (font-lock-variable-name-face ((t (:foreground "#555753" :underline t))))
      (font-lock-warning-face ((t (:bold t :foreground "#f57900"))))
-     (font-lock-negation-char-face ((t (:background "#ffc0c0"))))
+     (font-lock-negation-char-face ((t (:foreground "#cc0000"))))
      (font-lock-function-name-face ((t (:foreground "#f57900" :bold t :italic t))))
      (font-lock-preprocessor-face ((t (:italic t))))
      (comint-highlight-input ((t (:italic t :bold t))))

@@ -246,7 +246,7 @@ moving my mouse cursor."
 ;; less than perfect at the moment.. needs a ctrl+l to update :/
 ;; ------------ C Mode
 (defun my-cpp-highlight ()
-  (setq cpp-known-face '(background-color . "#cccccb"))
+  (setq cpp-known-face '(background-color . "#f8f8f5"))
   (setq cpp-unknown-face 'default)
   (setq cpp-face-type 'dark)
   (setq cpp-known-writable 't)
