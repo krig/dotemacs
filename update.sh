@@ -10,6 +10,14 @@ pull)
 	cp $HOME/.Xresources ./Xresources
 	cp $HOME/bin/epylint ./
 	;;
+dotemacs)
+	Message="Installed .emacs from repo into home directory."
+	cp ./dot_emacs $HOME/.emacs
+	;;
+colors)
+	Message="Installed Tango Light from repo into home directory."
+	cp ./emacs.d/color-theme/color-theme-tango-light.el ~/.emacs.d/color-theme/color-theme-tango-light.el
+	;;
 install)
 	Message="Installed from repo into home directory."
 	cp ./dot_emacs $HOME/.emacs

@@ -14,7 +14,7 @@
 (tool-bar-mode nil)
 (scroll-bar-mode t)
 (menu-bar-right-scroll-bar)
-
+(winner-mode t)
 
 ;; C SOURCE FOR EMACS
 (when (eq system-type 'windows-nt)
