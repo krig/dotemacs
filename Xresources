@@ -1,3 +1,10 @@
+Xft.antialias: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.autohint: true
+Xft.rgba: rgb
+Xft.dpi: 96
+Emacs.fontbackend: xft
 Emacs.font: Consolas-9
 emacs*geometry: 120x65
 
