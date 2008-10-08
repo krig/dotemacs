@@ -15,6 +15,7 @@
 (scroll-bar-mode t)
 (menu-bar-right-scroll-bar)
 (winner-mode t)
+;;(show-trailing-whitespace t)
 
 ;; C SOURCE FOR EMACS
 (when (eq system-type 'windows-nt)
@@ -25,6 +26,8 @@
 
 
 
+;;(autoload 'nuke-trailing-whitespace "nuke-trailing-whitespace" nil t)
+;;(add-hook 'write-file-hooks 'nuke-trailing-whitespace)
 
 ;; COLOR THEME
 (when (eq system-type 'windows-nt)
@@ -34,9 +37,11 @@
 (require 'color-theme)
 
 (color-theme-initialize)
+(load-library "color-theme-tango")
 (load-library "color-theme-tango-light")
-(color-theme-tango-light)
-
+;;(color-theme-tango-light)
+;;(color-theme-xemacs)
+(color-theme-tango)
 
 
 
@@ -54,7 +59,7 @@
 (defun ido-my-keys ()
   (define-key ido-mode-map "\t" 'ido-complete)
 					;tab is better for completion lists
-					;(define-key ido-mode-map (kbd "tab") 
+					;(define-key ido-mode-map (kbd "tab")
 					; 'ido-complete)
   (define-key ido-mode-map "\C-t" 'ido-toggle-regexp) ; same as in isearch
   (define-key ido-mode-map "\C-d" 'ido-enter-dired)) ; cool
@@ -69,16 +74,16 @@
 ;;   try-complete-file-name-partially
 ;;   try-complete-file-name))
 
-(setq hippie-expand-try-functions-list 
+(setq hippie-expand-try-functions-list
       ;;(make-hippie-expand-function
       '(try-expand-dabbrev-visible
-	try-expand-dabbrev 
-	try-expand-dabbrev-all-buffers 
-	try-expand-dabbrev-from-kill 
-	try-expand-all-abbrevs 
-	try-expand-list 
-	try-expand-line 
-	try-complete-lisp-symbol-partially 
+	try-expand-dabbrev
+	try-expand-dabbrev-all-buffers
+	try-expand-dabbrev-from-kill
+	try-expand-all-abbrevs
+	try-expand-list
+	try-expand-line
+	try-complete-lisp-symbol-partially
 	try-complete-lisp-symbol
 	try-complete-file-name-partially
 	try-complete-file-name
@@ -95,6 +100,7 @@ point."
     (indent-according-to-mode)))
 
 (defun my-tab-fix ()
+  (setq show-trailing-whitespace t)
   (local-set-key [tab] 'indent-or-expand))
 
 ;; newline-and-indent
@@ -150,7 +156,7 @@ point."
 ;; (setq inferior-lisp-program "c:/Program/clisp-2.45/full/lisp.exe -B c:/Program/clisp-2.45/full -M c:/Program/clisp-2.45/full/lispinit.mem -ansi -q")
 ;; (require 'slime)
 ;; (slime-setup))
- 
+
 ;;(when (not (eq system-type 'windows-nt))
 ;;    (setq inferior-lisp-program "sbcl")
 ;;    (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
@@ -296,8 +302,9 @@ point."
     (python-indent-line)))
 
 (defun mypy-tab-fix ()
-  (local-set-key [tab] 'mypy-indent-or-expand))
-
+  (local-set-key [tab] 'mypy-indent-or-expand)
+  (setq show-trailing-whitespace t)
+  (setq indent-tabs-mode nil))
 
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
 (add-hook 'python-mode-hook 'mypy-tab-fix)
@@ -315,7 +322,7 @@ point."
                         temp-file
                         (file-name-directory buffer-file-name))))
       (list "epylint" (list local-file))))
-  
+
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
 (add-hook 'python-mode-hook 'flymake-mode)

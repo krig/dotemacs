@@ -5,6 +5,40 @@ Xft.autohint: true
 Xft.rgba: rgb
 Xft.dpi: 96
 Emacs.fontbackend: xft
-Emacs.font: Consolas-9
+Emacs.font: Dina-8
 emacs*geometry: 120x65
 
+urxvt.foreground: #aaaaaa
+urxvt.background: #000000
+
+urxvt.color0: #000000
+urxvt.color1: #9e1828
+urxvt.color2: #9e1828
+urxvt.color3: #968a38
+urxvt.color4: #414171
+urxvt.color5: #963c59
+urxvt.color6: #418179
+urxvt.color7: gray
+urxvt.color8: gray40
+urxvt.color9: #cf6171
+urxvt.color10: #c5f779
+urxvt.color11: #fff796
+urxvt.color12: #4186be
+urxvt.color13: #cf9ebe
+urxvt.color14: #71bebe
+urxvt.color15: #ffffff
+
+urxvt.scrollBar: false
+urxvt.saveLines: 1500
+urxvt.urlLauncher: firefox
+
+urxvt.font: -*-fixed-medium-r-*-*-12-*-*-*-*-*-*-*
+urxvt.boldFont: -*-fixed-bold-*-*-*-13-*-*-*-*-*-*-*
+
+urxvt.modifier: alt
+
+
+URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
+URxvt.underlineURLs: true
+URxvt.perl-lib: /home/krig/.urxvt/
+URxvt.perl-ext: mark-yank-urls
