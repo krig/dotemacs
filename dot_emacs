@@ -41,7 +41,9 @@
 (load-library "color-theme-tango-light")
 ;;(color-theme-tango-light)
 ;;(color-theme-xemacs)
-(color-theme-tango)
+;;(color-theme-tango)
+(load-library "zenburn")
+(zenburn)
 
 
 
@@ -230,7 +232,10 @@ point."
  '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#777777"))))
  '(tabbar-default-face ((t (:inherit variable-pitch :background "#eeeeeb" :foreground "#555555" :height 0.8))))
  '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#cccccc" :foreground "#ce5c00"))))
- '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#dddddd")))))
+ '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#dddddd"))))
+ '(flymake-errline ((((class color)) (:underline "LightPink")))) 
+ '(flymake-warnline ((((class color)) (:underline "LightBlue2"))))
+ '(trailing-whitespace ((((class color)) (:background "#883030")))))
 
 ;; FUNCTIONS
 (defun reindent-buffer ()
