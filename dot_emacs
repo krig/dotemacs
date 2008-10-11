@@ -36,14 +36,11 @@
 (add-to-list 'load-path "~/.emacs.d/color-theme")
 (require 'color-theme)
 
-(color-theme-initialize)
-(load-library "color-theme-tango")
-(load-library "color-theme-tango-light")
+;;(load-library "color-theme-tango")
+;;(load-library "color-theme-tango-light")
 ;;(color-theme-tango-light)
 ;;(color-theme-xemacs)
 ;;(color-theme-tango)
-(load-library "zenburn")
-(zenburn)
 
 
 
@@ -228,13 +225,11 @@ point."
  ;; '(tabbar-default-face ((t (:inherit variable-pitch :background "#404040" :foreground "#888888" :height 1.1))))
  ;; '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#555555" :foreground "#eeeeeb"))))
  ;; '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#333333")))))
- '(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "#aaaaaa"))))
- '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#777777"))))
- '(tabbar-default-face ((t (:inherit variable-pitch :background "#eeeeeb" :foreground "#555555" :height 0.8))))
- '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#cccccc" :foreground "#ce5c00"))))
- '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#dddddd"))))
- '(flymake-errline ((((class color)) (:underline "LightPink")))) 
- '(flymake-warnline ((((class color)) (:underline "LightBlue2"))))
+ ;;'(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "#aaaaaa"))))
+ '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#dddddd"))))
+ '(tabbar-default-face ((t (:inherit variable-pitch :background "#4f4f4f" :foreground "#999999" :height 0.8))))
+ '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#d87c23" :foreground "#202020"))))
+ '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#5f5f5f"))))
  '(trailing-whitespace ((((class color)) (:background "#883030")))))
 
 ;; FUNCTIONS
@@ -331,3 +326,8 @@ point."
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
 (add-hook 'python-mode-hook 'flymake-mode)
+
+(color-theme-initialize)
+(load-library "zenburn")
+(zenburn)
+
