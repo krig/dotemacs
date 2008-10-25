@@ -117,6 +117,7 @@ point."
 		lisp-mode-hook
 		lisp-interaction-mode-hook
 		scheme-mode-hook
+		perl-mode-hook
 		))
   (add-hook hook 'my-tab-fix)
   (add-hook hook 'my-set-newline-and-indent))
