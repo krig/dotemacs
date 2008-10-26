@@ -1,0 +1,6 @@
+Building a package in debian:
+in package dir:
+export EMAIL=myemail@myhost.com
+dch -n
+dpkg-buildpackage -rfakeroot -b
+
