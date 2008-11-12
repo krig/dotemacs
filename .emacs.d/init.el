@@ -1,11 +1,11 @@
 ;; VARIABLES
 (setq visible-bell t)
 (fset 'yes-or-no-p 'y-or-n-p)
-(show-paren-mode 1)
-(column-number-mode 1)
-(global-font-lock-mode 1)
-(icomplete-mode 1)
-(auto-compression-mode 1)
+(show-paren-mode t)
+(column-number-mode t)
+(global-font-lock-mode t)
+(icomplete-mode t)
+(auto-compression-mode t)
 (setq font-lock-maximum-decoration t)
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (setq transient-mark-mode t)
@@ -16,17 +16,36 @@
 (winner-mode t)
 ;;(show-trailing-whitespace t)
 
+;; Put autosave files (ie #foo#) in one place, *not*
+;; scattered all over the file system!
+(defvar autosave-dir
+ (concat "/tmp/emacs_autosaves/" (user-login-name) "/"))
+
+(make-directory autosave-dir t)
+
+(defun auto-save-file-name-p (filename)
+  (string-match "^#.*#$" (file-name-nondirectory filename)))
+
+(defun make-auto-save-file-name ()
+  (concat autosave-dir
+   (if buffer-file-name
+      (concat "#" (file-name-nondirectory buffer-file-name) "#")
+    (expand-file-name
+     (concat "#%" (buffer-name) "#")))))
+
+;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
+;; list contains regexp=>directory mappings; filenames matching a regexp are
+;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
+(defvar backup-dir (concat "/tmp/emacs_backups/" (user-login-name) "/"))
+(setq backup-directory-alist (list (cons "." backup-dir)))
+
+
 ;; C SOURCE FOR EMACS
 (when (eq system-type 'windows-nt)
     (setq find-function-C-source-directory "C:/Program/Emacs/src/src"))
 (when (not (eq system-type 'windows-nt))
   (setq find-function-C-source-directory "~/.emacs.d/emacs-snapshot-20080228/src"))
 
-
-
-
-;;(autoload 'nuke-trailing-whitespace "nuke-trailing-whitespace" nil t)
-;;(add-hook 'write-file-hooks 'nuke-trailing-whitespace)
 
 ;; COLOR THEME
 (when (eq system-type 'windows-nt)
@@ -73,20 +92,19 @@
 ;;   try-complete-file-name-partially
 ;;   try-complete-file-name))
 
-(setq hippie-expand-try-functions-list
-      ;;(make-hippie-expand-function
-      '(try-expand-dabbrev-visible
-	try-expand-dabbrev
-	try-expand-dabbrev-all-buffers
-	try-expand-dabbrev-from-kill
-	try-expand-all-abbrevs
-	try-expand-list
-	try-expand-line
-	try-complete-lisp-symbol-partially
-	try-complete-lisp-symbol
-	try-complete-file-name-partially
-	try-complete-file-name
-	))
+;;(setq hippie-expand-try-functions-list
+(make-hippie-expand-function
+ '(try-expand-dabbrev-visible
+   try-expand-dabbrev-from-kill
+   try-expand-dabbrev
+   try-expand-dabbrev-all-buffers
+   ;;try-expand-all-abbrevs
+   try-expand-list
+   ;;try-expand-line
+   try-complete-lisp-symbol-partially
+   try-complete-lisp-symbol
+   try-complete-file-name-partially
+   try-complete-file-name))
 
 (defun indent-or-expand (arg)
   "Either indent according to mode, or expand the word preceding
@@ -328,6 +346,7 @@ point."
                '("\\.py\\'" flymake-pylint-init)))
 (add-hook 'python-mode-hook 'flymake-mode)
 
+
 ;; RUBY
 
 (add-to-list 'load-path "~/.emacs.d/ruby")
@@ -391,3 +410,15 @@ point."
     (flymake-log 3 "file %s, init=%s" file-name (car mode-and-masks))
     mode-and-masks))
 
+(defadvice yank-pop (around kill-ring-browse-maybe (arg))
+  "If last action was not a yank, run `browse-kill-ring' instead."
+  (if (not (eq last-command 'yank))
+      (browse-kill-ring)
+    ad-do-it))
+
+(ad-activate 'yank-pop)
+
+(bar-cursor-mode t)
+
+(global-set-key "\M-N" 'cyclebuffer-forward)
+(global-set-key "\M-P" 'cyclebuffer-backward)
