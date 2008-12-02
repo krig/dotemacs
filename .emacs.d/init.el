@@ -14,6 +14,9 @@
 (scroll-bar-mode t)
 (menu-bar-right-scroll-bar)
 (winner-mode t)
+(global-auto-revert-mode 1)
+(blink-cursor-mode -1)
+
 ;;(show-trailing-whitespace t)
 
 ;; Put autosave files (ie #foo#) in one place, *not*
@@ -99,7 +102,7 @@
    try-expand-dabbrev
    try-expand-dabbrev-all-buffers
    ;;try-expand-all-abbrevs
-   try-expand-list
+   ;;try-expand-list
    ;;try-expand-line
    try-complete-lisp-symbol-partially
    try-complete-lisp-symbol
@@ -167,6 +170,12 @@ point."
 
 ;; LINE NUMBERS
 (require 'linum)
+
+;; PABBREV
+(require 'pabbrev)
+(global-pabbrev-mode)
+;; disable pabbrevs tab completion(?)
+
 
 ;; SLIME
 ;;(when (eq system-type 'windows-nt)
@@ -422,3 +431,47 @@ point."
 
 (global-set-key "\M-N" 'cyclebuffer-forward)
 (global-set-key "\M-P" 'cyclebuffer-backward)
+
+
+
+
+(defun paste-se-encode-uri-component (str)
+  (mapconcat
+   (lambda (x)
+     (if (or (eq x 60) (eq x 62) (eq x 96)
+             (and (>= x 34) (<= x 38)) (and (>= x 123) (<= x 255))
+             (and (>= x 91) (<= x 94)) (and (>= x 0) (<= x 9))
+             (and (>= x 11) (<= x 32)))
+         (format "%%%x" x)
+       (char-to-string x)))
+   str ""))
+
+(defun paste-se-query-string (pairs)
+  (mapconcat
+   (lambda (x) (format "%s=%s"
+                       (paste-se-encode-uri-component (car x))
+                       (paste-se-encode-uri-component (cdr x))))
+   pairs "&"))
+
+(defun paste-se-paste-region (beg end)
+  (interactive "r")
+  (paste-se-paste-string (buffer-substring beg end))
+  (if transient-mark-mode
+      (setq deactivate-mark t))
+  nil)
+
+
+(defun paste-se-paste-string (paste-string)
+  (let ((url-request-method "POST")
+        (url-request-data (paste-se-query-string
+                           (list (cons "paste" paste-string)
+                                 (cons "lang" "text")
+                                 (cons "user" "")
+                                 (cons "desc" ""))))
+        (url-request-extra-headers
+         '(("Content-Type" . "application/x-www-form-urlencoded")))
+        (paste-cb (lambda (&rest args)
+                    (set buffer (car (cdr args)))
+                    (insert (plist-get (car args) :redirect)))))
+    (let ((oldbuf (current-buffer)))
+          (url-retrieve "http://paste.se/index.py" 'paste-cb (list oldbuf)))))
