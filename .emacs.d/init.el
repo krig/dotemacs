@@ -96,18 +96,18 @@
 ;;   try-complete-file-name))
 
 ;;(setq hippie-expand-try-functions-list
-(make-hippie-expand-function
- '(try-expand-dabbrev-visible
-   try-expand-dabbrev-from-kill
-   try-expand-dabbrev
-   try-expand-dabbrev-all-buffers
-   ;;try-expand-all-abbrevs
-   ;;try-expand-list
-   ;;try-expand-line
-   try-complete-lisp-symbol-partially
-   try-complete-lisp-symbol
-   try-complete-file-name-partially
-   try-complete-file-name))
+(fset 'my-hippie (make-hippie-expand-function
+		  '(try-expand-dabbrev-visible
+		    try-expand-dabbrev-from-kill
+		    try-expand-dabbrev
+		    try-expand-dabbrev-all-buffers
+		    ;;try-expand-all-abbrevs
+		    ;;try-expand-list
+		    ;;try-expand-line
+		    try-complete-lisp-symbol-partially
+		    try-complete-lisp-symbol
+		    try-complete-file-name-partially
+		    try-complete-file-name)))
 
 (defun indent-or-expand (arg)
   "Either indent according to mode, or expand the word preceding
@@ -116,7 +116,7 @@ point."
   (if (and
        (or (bobp) (= ?w (char-syntax (char-before))))
        (or (eobp) (not (= ?w (char-syntax (char-after))))))
-      (hippie-expand arg)
+      (my-hippie arg)
     (indent-according-to-mode)))
 
 (defun my-tab-fix ()
@@ -326,7 +326,7 @@ point."
   (if (and
        (or (bobp) (= ?w (char-syntax (char-before))))
        (or (eobp) (not (= ?w (char-syntax (char-after))))))
-      (hippie-expand arg)
+      (my-hippie arg)
     (python-indent-line)))
 
 (defun mypy-tab-fix ()
