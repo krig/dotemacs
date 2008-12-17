@@ -360,8 +360,8 @@ static char *gnus-pointer[] = {
      '(fringe ((t (:inherit zenburn-highlight-subtle))))
      '(header-line ((t (:inherit zenburn-highlight-damp
                         :box (:color "#2e3330" :line-width 2)))))
-     '(mode-line ((t (:foreground "#acbc90" :background "#1e2320"
-                      :box (:color "#1e2320" :line-width 2)))))
+     '(mode-line ((t (:background "#353b37" :foreground "#acbc90"
+                      :box (:color "#353b37" :line-width 2)))))
      '(mode-line-inactive ((t (:background "#2e3330" :foreground "#88b090"
                                :box (:color "#2e3330" :line-width 2)))))
      `(minibuffer-prompt ((t (:foreground ,zenburn-yellow))))
@@ -676,9 +676,9 @@ static char *gnus-pointer[] = {
      '(jde-java-font-lock-link
        ((t (:inherit zenburn-primary-5 :underline t))))
 
-		 '(semantic-tag-boundary-face
-			 ((t (:overline "#5f5f5f"))))
-		 
+     '(semantic-tag-boundary-face
+       ((t (:overline "#5f5f5f"))))
+
      '(keywiz-right ((t (:inherit zenburn-primary-1))))
      '(keywiz-wrong ((t (:inherit font-lock-warning))))
      '(keywiz-command ((t (:inherit zenburn-primary-2))))
@@ -785,9 +785,15 @@ static char *gnus-pointer[] = {
      '(tuareg-font-lock-operator
        ((t (:inherit font-lock-operator))))
 
-		 '(flymake-errline ((t (:underline "#cc9393"))))
-		 '(flymake-warnline ((t (:underline "#f0dfaf"))))
-		 
+     '(flymake-errline ((t (:underline "#cc9393"))))
+     '(flymake-warnline ((t (:underline "#f0dfaf"))))
+
+     '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#dddddd"))))
+     '(tabbar-default-face ((t (:inherit variable-pitch :background "#4f4f4f" :foreground "#999999" :height 0.8))))
+     '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#d87c23" :foreground "#202020"))))
+     '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#5f5f5f"))))
+     '(trailing-whitespace ((t (:background "#883030"))))
+
      '(w3m-form-button
        ((t (:inherit widget-button))))
      '(w3m-form-button-pressed

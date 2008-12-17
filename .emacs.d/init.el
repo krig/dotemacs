@@ -1,3 +1,42 @@
+;; MISC THINGS FROM EMACS.D
+(defun add-to-load-path (path-string)
+  (message (format "Passed %S..." path-string))
+  (if (stringp path-string)
+      (when (file-exists-p path-string)
+	(message (format "Adding %S to load-path..." path-string))
+	(add-to-list 'load-path (expand-file-name path-string)))
+    (add-to-load-path (car path-string))
+    (if (cdr path-string)
+	(add-to-load-path (cdr path-string)))))
+
+;;(add-to-list 'load-path "~/.emacs.d")
+(add-to-load-path (expand-file-name "~/.emacs.d"))
+
+;; COLOR THEME
+(when (eq system-type 'windows-nt)
+  (set-default-font
+   "-*-Consolas-normal-r-normal-normal-13-*-*-*-c-*-iso8859-1"))
+;;(add-to-list 'load-path "~/.emacs.d/color-theme")
+;;(require 'color-theme)
+
+;;(load-library "color-theme-tango")
+;;(load-library "color-theme-tango-light")
+;;(color-theme-tango-light)
+;;(color-theme-xemacs)
+;;(color-theme-tango)
+
+;;(add-to-list 'load-path "~/.emacs.d/color-theme")
+(add-to-load-path (expand-file-name "~/.emacs.d/color-theme"))
+(load-library "zenburn")
+(color-theme-zenburn)
+
+(unless (zenburn-format-spec-works-p)
+  (zenburn-define-format-spec))
+
+(set-face-foreground 'mode-line "#acbc90")
+(set-face-background 'mode-line "#353b37")
+
+
 ;; VARIABLES
 (setq visible-bell t)
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -9,16 +48,17 @@
 (setq font-lock-maximum-decoration t)
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (setq transient-mark-mode t)
-(menu-bar-mode nil)
-(tool-bar-mode nil)
-(scroll-bar-mode t)
-(menu-bar-right-scroll-bar)
-(winner-mode t)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode 1)
+(customize-set-variable 'scroll-bar-mode 'right)
+(winner-mode 1)
 (global-auto-revert-mode 1)
 (blink-cursor-mode -1)
+(global-set-key "\C-z" 'undo)
 
-;;(show-trailing-whitespace t)
 
+;; BACKUPS
 ;; Put autosave files (ie #foo#) in one place, *not*
 ;; scattered all over the file system!
 (defvar autosave-dir
@@ -43,27 +83,13 @@
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 
+
+
 ;; C SOURCE FOR EMACS
 (when (eq system-type 'windows-nt)
     (setq find-function-C-source-directory "C:/Program/Emacs/src/src"))
 (when (not (eq system-type 'windows-nt))
   (setq find-function-C-source-directory "~/.emacs.d/emacs-snapshot-20080228/src"))
-
-
-;; COLOR THEME
-(when (eq system-type 'windows-nt)
-  (set-default-font
-   "-*-Consolas-normal-r-normal-normal-13-*-*-*-c-*-iso8859-1"))
-(add-to-list 'load-path "~/.emacs.d/color-theme")
-(require 'color-theme)
-
-;;(load-library "color-theme-tango")
-;;(load-library "color-theme-tango-light")
-;;(color-theme-tango-light)
-;;(color-theme-xemacs)
-;;(color-theme-tango)
-
-
 
 ;; SERVER
 (when (not (eq system-type 'windows-nt))
@@ -98,8 +124,8 @@
 ;;(setq hippie-expand-try-functions-list
 (fset 'my-hippie (make-hippie-expand-function
 		  '(try-expand-dabbrev-visible
-		    try-expand-dabbrev-from-kill
 		    try-expand-dabbrev
+		    try-expand-dabbrev-from-kill
 		    try-expand-dabbrev-all-buffers
 		    ;;try-expand-all-abbrevs
 		    ;;try-expand-list
@@ -146,9 +172,8 @@ point."
 (add-hook 'c-mode-hook 'my-c-style-fix)
 (add-hook 'c++-mode-hook 'my-c-style-fix)
 
-;; MISC THINGS FROM EMACS.D
 
-(add-to-list 'load-path "~/.emacs.d")
+
 ;; (autoload 'paredit-mode "paredit"
 ;; "Minor mode for pseudo-structurally editing Lisp code."
 ;; t)
@@ -172,8 +197,8 @@ point."
 (require 'linum)
 
 ;; PABBREV
-(require 'pabbrev)
-(global-pabbrev-mode)
+;;(require 'pabbrev)
+;;(global-pabbrev-mode)
 ;; disable pabbrevs tab completion(?)
 
 
@@ -204,7 +229,7 @@ point."
 
 
 ;; SMOOTH SCROLLING
-(require 'smooth-scrolling)
+;;(require 'smooth-scrolling)
 
 
 
@@ -235,14 +260,15 @@ point."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
+ '(inhibit-startup-echo-area-message t)
  '(initial-buffer-choice t)
  '(speedbar-hide-button-brackets-flag t)
  '(speedbar-use-images nil)
- '(tabbar-home-button (quote ((" ") " ")))
- '(tabbar-scroll-left-button (quote (("- ") "- ")))
- '(tabbar-scroll-right-button (quote (("+ ") "+ "))))
+ '(tabbar-home-button (quote (("o") "o")))
+ '(tabbar-scroll-left-button (quote (("o") "o")))
+ '(tabbar-scroll-right-button (quote (("o") "o"))))
 
-(custom-set-faces
+;;(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
@@ -254,11 +280,11 @@ point."
  ;; '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#555555" :foreground "#eeeeeb"))))
  ;; '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#333333")))))
  ;;'(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "#aaaaaa"))))
- '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#dddddd"))))
- '(tabbar-default-face ((t (:inherit variable-pitch :background "#4f4f4f" :foreground "#999999" :height 0.8))))
- '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#d87c23" :foreground "#202020"))))
- '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#5f5f5f"))))
- '(trailing-whitespace ((((class color)) (:background "#883030")))))
+ ;;'(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#dddddd"))))
+ ;;'(tabbar-default-face ((t (:inherit variable-pitch :background "#4f4f4f" :foreground "#999999" :height 0.8))))
+ ;;'(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#d87c23" :foreground "#202020"))))
+ ;;'(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#5f5f5f"))))
+ ;;'(trailing-whitespace ((((class color)) (:background "#883030")))))
 
 ;; FUNCTIONS
 (defun reindent-buffer ()
@@ -280,7 +306,7 @@ moving my mouse cursor."
 ;; less than perfect at the moment.. needs a ctrl+l to update :/
 ;; ------------ C Mode
 (defun my-cpp-highlight ()
-  (setq cpp-known-face '(background-color . "#f8f8f5"))
+  (setq cpp-known-face '(background-color . "#3f4f3f"))
   (setq cpp-unknown-face 'default)
   (setq cpp-face-type 'dark)
   (setq cpp-known-writable 't)
@@ -288,12 +314,12 @@ moving my mouse cursor."
   (setq cpp-edit-list
 	'((#("0" 0 1
 	     (c-in-sws t fontified t))
-	   (background-color . "#eeeeeb")
+	   (background-color . "#4f4f4f")
 	   nil both nil)
 	  (#("1" 0 1
 	     (c-in-sws t fontified t))
 	   nil
-	   (background-color . "#eeeeeb")
+	   (background-color . "#4f4f4f")
 	   both nil)))
   (cpp-highlight-buffer t))
 
@@ -313,6 +339,9 @@ moving my mouse cursor."
 
 (add-hook 'c-initialization-hook 'my-c-initialization-hook)
 
+(defun dot-emacs ()
+  (interactive)
+  (find-file (expand-file-name "~/.emacs.d/init.el")))
 
 ;; PYTHON !
 
@@ -357,8 +386,8 @@ point."
 
 
 ;; RUBY
-
-(add-to-list 'load-path "~/.emacs.d/ruby")
+(add-to-load-path (expand-file-name "~/.emacs.d/ruby"))
+;;(add-to-list 'load-path "~/.emacs.d/ruby")
 
 (autoload 'ruby-mode "ruby-mode"
   "Mode for editing ruby source files")
@@ -375,11 +404,6 @@ point."
 (autoload 'rubydb "rubydb3x" "Ruby debugger" t)
 ;; uncomment the next line if you want syntax highlighting
 (add-hook 'ruby-mode-hook 'turn-on-font-lock)
-
-
-(color-theme-initialize)
-(load-library "zenburn")
-(zenburn)
 
 ;; Flymake hack to determine flymake mode
 ;; based on buffer major mode, not just by extension
@@ -475,3 +499,5 @@ point."
                     (insert (plist-get (car args) :redirect)))))
     (let ((oldbuf (current-buffer)))
           (url-retrieve "http://paste.se/index.py" 'paste-cb (list oldbuf)))))
+
+
