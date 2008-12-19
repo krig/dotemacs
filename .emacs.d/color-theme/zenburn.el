@@ -358,8 +358,7 @@ static char *gnus-pointer[] = {
 
      `(border ((t (:background ,zenburn-bg))))
      '(fringe ((t (:inherit zenburn-highlight-subtle))))
-     '(header-line ((t (:inherit zenburn-highlight-damp
-                        :box (:color "#2e3330" :line-width 2)))))
+     '(header-line ((t (:inherit zenburn-highlight-damp))))
      '(mode-line ((t (:background "#353b37" :foreground "#acbc90"
                       :box (:color "#353b37" :line-width 2)))))
      '(mode-line-inactive ((t (:background "#2e3330" :foreground "#88b090"
@@ -788,11 +787,15 @@ static char *gnus-pointer[] = {
      '(flymake-errline ((t (:underline "#cc9393"))))
      '(flymake-warnline ((t (:underline "#f0dfaf"))))
 
-     '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#dddddd"))))
-     '(tabbar-default-face ((t (:inherit variable-pitch :background "#4f4f4f" :foreground "#999999" :height 0.8))))
-     '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#d87c23" :foreground "#202020"))))
-     '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#5f5f5f"))))
-     '(trailing-whitespace ((t (:background "#883030"))))
+     '(tabbar-default-face ((t (:inherit default :family "fixed" :background "#353b37" :foreground "#acbc90" :height 80))))
+     ;;'(mode-line-inactive ((t (:background "#2e3330" :foreground "#88b090"
+     ;;                          :box (:color "#2e3330" :line-width 2)))))
+
+     ;;'(tabbar-default-face ((t (:inherit variable-pitch :background "#4f4f4f" :foreground "#999999" :height 0.7))))
+     '(tabbar-button-face ((t (:inherit tabbar-default-face))))
+     `(tabbar-selected-face ((t (:inherit tabbar-button-face :foreground ,zenburn-yellow))))
+     '(tabbar-unselected-face ((t (:inherit tabbar-button-face))))
+     '(trailing-whitespace ((((class color)) (:background "#883030"))))
 
      '(w3m-form-button
        ((t (:inherit widget-button))))

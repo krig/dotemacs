@@ -162,7 +162,7 @@
 ;;
 
 ;;; Code:
-
+
 ;;; Options
 ;;
 (defgroup tabbar nil
@@ -492,7 +492,7 @@ SPECS is a list of image specifications.  See also `find-image'."
 (defconst tabbar-separator-widget
   '(cons (string)
          (repeat :tag "Image"
-                 :extra-offset 2
+                 :extra-offset 1
                  (restricted-sexp :tag "Spec"
                                   :match-alternatives (listp))))
   "Widget for editing a tab bar separator.
@@ -528,13 +528,13 @@ See the variable `tabbar-separator-widget' for details."
     (cons :tag "Enabled"
           (string)
           (repeat :tag "Image"
-                  :extra-offset 2
+                  :extra-offset 1
                   (restricted-sexp :tag "Spec"
                                    :match-alternatives (listp))))
     (cons :tag "Disabled"
           (string)
           (repeat :tag "Image"
-                  :extra-offset 2
+                  :extra-offset 1
                   (restricted-sexp :tag "Spec"
                                    :match-alternatives (listp))))
     )

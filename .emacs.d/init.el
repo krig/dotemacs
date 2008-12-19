@@ -255,18 +255,18 @@ point."
 
 ;; CUSTOMIZE SET
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(inhibit-startup-screen t)
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(inhibit-startup-echo-area-message t)
+ '(inhibit-startup-screen t)
  '(initial-buffer-choice t)
  '(speedbar-hide-button-brackets-flag t)
  '(speedbar-use-images nil)
- '(tabbar-home-button (quote (("o") "o")))
- '(tabbar-scroll-left-button (quote (("o") "o")))
- '(tabbar-scroll-right-button (quote (("o") "o"))))
+ '(tabbar-home-button (quote (("\\") "\\")))
+ '(tabbar-scroll-left-button (quote (("m") "m")))
+ '(tabbar-scroll-right-button (quote (("/") "/"))))
 
 ;;(custom-set-faces
  ;; custom-set-faces was added by Custom.
