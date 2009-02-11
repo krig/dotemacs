@@ -57,6 +57,11 @@
 (blink-cursor-mode -1)
 (global-set-key "\C-z" 'undo)
 
+;; show tabs
+(show-ws-toggle-show-tabs)
+
+;; make tabs a tiny bit darker than the background color
+(set-face-background 'show-ws-tab "#3a3a3a")
 
 ;; BACKUPS
 ;; Put autosave files (ie #foo#) in one place, *not*
@@ -154,7 +159,7 @@ point."
   (local-set-key [return] 'newline-and-indent))
 
 (defun my-c-style-fix ()
-  (c-set-style "linux"))
+  (c-set-style "bsd"))
 
 (dolist (hook '(
 		c-mode-hook
@@ -209,11 +214,11 @@ point."
 ;; (require 'slime)
 ;; (slime-setup))
 
-;;(when (not (eq system-type 'windows-nt))
-;;    (setq inferior-lisp-program "sbcl")
-;;    (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
-;;    (require 'slime)
-;;    (slime-setup))
+(when (not (eq system-type 'windows-nt))
+  (setq inferior-lisp-program "sbcl")
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
+  (require 'slime)
+  (slime-setup))
 
 ;; lua support
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
@@ -229,7 +234,7 @@ point."
 
 
 ;; SMOOTH SCROLLING
-;;(require 'smooth-scrolling)
+(require 'smooth-scrolling)
 
 
 
