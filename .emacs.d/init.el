@@ -27,14 +27,14 @@
 
 ;;(add-to-list 'load-path "~/.emacs.d/color-theme")
 (add-to-load-path (expand-file-name "~/.emacs.d/color-theme"))
-(load-library "zenburn")
-(color-theme-zenburn)
+;;(load-library "zenburn")
+;;(color-theme-zenburn)
 
-(unless (zenburn-format-spec-works-p)
-  (zenburn-define-format-spec))
+;;(unless (zenburn-f;ormat-spec-works-p)
+;;  (zenburn-define-format-spec))
 
-(set-face-foreground 'mode-line "#acbc90")
-(set-face-background 'mode-line "#353b37")
+;;(set-face-foreground 'mode-line "#acbc90")
+;;(set-face-background 'mode-line "#353b37")
 
 
 ;; VARIABLES
@@ -57,11 +57,6 @@
 (blink-cursor-mode -1)
 (global-set-key "\C-z" 'undo)
 
-;; show tabs
-(show-ws-toggle-show-tabs)
-
-;; make tabs a tiny bit darker than the background color
-(set-face-background 'show-ws-tab "#3a3a3a")
 
 ;; BACKUPS
 ;; Put autosave files (ie #foo#) in one place, *not*
@@ -86,6 +81,18 @@
 ;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
 (defvar backup-dir (concat "/tmp/emacs_backups/" (user-login-name) "/"))
 (setq backup-directory-alist (list (cons "." backup-dir)))
+
+
+
+(require 'color-theme)
+(color-theme-initialize)
+(load-library "color-theme-blackboard.el")
+(color-theme-blackboard)
+;; show tabs
+;;(show-ws-toggle-show-tabs)
+
+;; make tabs a tiny bit darker than the background color
+;;(set-face-background 'show-ws-tab "#3a3a3a")
 
 
 

@@ -5,7 +5,7 @@ Xft.autohint: true
 Xft.rgba: rgb
 Xft.dpi: 96
 Emacs.fontbackend: xft
-Emacs.font: Dina-8
+Emacs.font: Monaco-11
 emacs*geometry: 120x65
 
 urxvt.foreground: #aaaaaa
