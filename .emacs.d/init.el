@@ -86,8 +86,12 @@
 
 (require 'color-theme)
 (color-theme-initialize)
-(load-library "color-theme-blackboard.el")
-(color-theme-blackboard)
+;;(load-library "color-theme-blackboard.el")
+;;(color-theme-blackboard)
+(load-library "color-theme-wombat.el")
+(color-theme-wombat)
+(set-face-foreground 'mode-line "#dddddd")
+
 ;; show tabs
 ;;(show-ws-toggle-show-tabs)
 
@@ -208,6 +212,8 @@ point."
 ;; LINE NUMBERS
 (require 'linum)
 
+(require 'washout)
+
 ;; PABBREV
 ;;(require 'pabbrev)
 ;;(global-pabbrev-mode)
@@ -276,9 +282,9 @@ point."
  '(initial-buffer-choice t)
  '(speedbar-hide-button-brackets-flag t)
  '(speedbar-use-images nil)
- '(tabbar-home-button (quote (("\\") "\\")))
- '(tabbar-scroll-left-button (quote (("m") "m")))
- '(tabbar-scroll-right-button (quote (("/") "/"))))
+ '(tabbar-home-button (quote (("|") "|")))
+ '(tabbar-scroll-left-button (quote (("|") "|")))
+ '(tabbar-scroll-right-button (quote (("|") "|"))))
 
 ;;(custom-set-faces
  ;; custom-set-faces was added by Custom.
