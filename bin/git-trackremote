@@ -1,0 +1,6 @@
+#!/bin/sh
+ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+branch=${ref#refs/heads/}
+
+git config branch.${branch}.remote origin
+git config branch.${branch}.merge ${ref}

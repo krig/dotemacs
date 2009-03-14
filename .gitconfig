@@ -1,0 +1,28 @@
+[user]
+	name = Kristoffer Grönlund
+	email = kristoffer.gronlund@purplescout.se
+[color]
+	branch = auto
+	status = auto
+	diff = auto
+	ui = auto
+[pack]
+	threads = 2
+[giggle]
+	compact-mode = false
+	main-window-maximized = false
+	main-window-geometry = 1111x1018+68+0
+	main-window-view = HistoryView
+	file-view-vpane-position = 701
+	file-view-hpane-position = 203
+	history-view-vpane-position = 369
+[merge]
+	tool = meld
+[alias]
+	ci = commit
+        age = !git-age $0
+	pulln = !git-pulln $0
+	wtf = status
+	d = diff
+	publish = !git-publish $0
+	track-remote = !git-trackremote $0

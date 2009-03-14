@@ -1,0 +1,264 @@
+#!/usr/bin/env python
+# copyright 2006 Kristoffer Gronlund
+# licensed under the GPL v2.
+
+import pygtk
+import gtk
+import gobject
+import os
+import os.path
+import pickle
+pygtk.require('2.0')
+
+from jules_config import *
+
+default_folder = ("", "")
+folder_list = []
+
+def save_paths():
+    f = open(SAVE_NAME, "w")
+    pickle.dump(folder_list, f)
+    pickle.dump(default_folder, f)
+    f.close()
+    print "written paths"
+
+def load_paths():
+    if os.path.exists(SAVE_NAME):
+        try:
+            global folder_list
+            global default_folder
+            f = open(SAVE_NAME, "r")
+            folder_list = pickle.load(f)
+            default_folder = pickle.load(f)
+            f.close()
+            print "loaded paths: ", folder_list
+        except:
+            pass
+
+class FolderSelector(gtk.Window):
+    def __init__(self, jules):
+        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
+        print "init folder selector", self, jules
+        self.set_title("Select Folder")
+        self.jules = jules
+        
+        self.set_size_request(140, 200)
+
+        self.list_model = gtk.ListStore(gobject.TYPE_STRING)
+        self.tree = gtk.TreeView(self.list_model)
+        self.folder_column = gtk.TreeViewColumn('Folder')
+        self.tree.append_column(self.folder_column)
+        
+        self.folder_cell = gtk.CellRendererText()
+        self.folder_column.pack_start(self.folder_cell, True)
+        self.folder_column.add_attribute(self.folder_cell, 'text', 0)
+        
+        self.tree.set_search_column(0)
+
+        self.icon_theme = gtk.icon_theme_get_default()
+
+        self.tree.connect("row-activated", self.on_list_activate)
+        self.tree.connect("button-press-event", self.on_button_press)
+
+        load_paths()
+        self.update_list()
+
+        self.add(self.tree)
+        self.show_all()
+        self.tree.columns_autosize()
+        print "done init"
+
+    def on_list_activate(self, tree, path, column):
+        iter = self.list_model.get_iter(path)
+        (name,) = self.list_model.get(iter, 0)
+        for f in folder_list:
+            (fname, path) = f
+            if fname == name:
+                print "opening path ", path
+                self.jules.open_project(fname, path)
+                self.hide()
+                return
+
+    def on_button_press(self, widget, event):
+        if event.button == 3:
+            m = gtk.Menu()
+            add = gtk.ImageMenuItem('Add Folder')
+            rem = gtk.ImageMenuItem('Remove Folder')
+            add.connect('activate', self.on_add_folder)
+            rem.connect('activate', self.on_remove_folder)
+            img = gtk.Image()
+            img.set_from_stock(gtk.STOCK_ADD, gtk.ICON_SIZE_MENU)
+            add.set_image(img)
+            img = gtk.Image()
+            img.set_from_stock(gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU)
+            rem.set_image(img)
+            m.append(add)
+            m.append(rem)
+            m.show_all()
+            m.popup(None, None, None, event.button, event.time)
+
+    def on_add_folder(self, item):
+        dia = gtk.FileChooserDialog('Select Folder', self,
+                gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                None,
+                None)
+        ok_button = dia.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dia.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        ok_button.grab_default()
+
+        response = dia.run()
+        dia.hide()
+            
+        if response == gtk.RESPONSE_OK:
+            uri = dia.get_filename()
+            (_,shortname) = os.path.split(uri)
+            self.add_folder(shortname, uri)
+
+    def on_remove_folder(self, item):
+        sel = self.tree.get_selection()
+        (model, iter) = sel.get_selected()
+        (name,) = model.get(iter, 0)
+        self.remove_folder(name)
+
+    def add_folder(self, name, path):
+        folder_list.append((name, path))
+        print folder_list
+        save_paths()
+        self.update_list()
+
+    def remove_folder(self, name):
+        for f in folder_list:
+            (fname, path) = f
+            if fname == name:
+                folder_list.remove(f)
+                break
+        save_paths()
+        self.update_list()
+
+    def update_list(self):
+        self.list_model.clear()
+        for folder in folder_list:
+            (name, path) = folder
+            self.list_model.append([name])
+
+class Jules(gtk.Window):
+    def __init__(self):
+        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
+        self.set_title("Jules")
+        self.set_size_request(150, 320)
+        self.connect("delete_event", self.on_delete_event)
+        self.connect("destroy", self.on_destroy)
+        self.scroll = gtk.ScrolledWindow()
+
+        self.tree_model = gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING)
+        self.tree = gtk.TreeView(self.tree_model)
+        self.file_column = gtk.TreeViewColumn('name', gtk.CellRendererText(), markup=0)
+        self.file_column.set_sort_indicator(True)
+        self.file_column.set_clickable(True)
+        self.file_column.set_sort_column_id(0)
+        self.tree.append_column(self.file_column)
+        self.tree.set_headers_clickable(True)
+        #self.path_column = gtk.TreeViewColumn('Path')
+        #self.tree.append_column(self.path_column)
+        #self.tree.fixed_height_mode = True
+
+#        self.file_cell = gtk.CellRendererText()
+ #       self.file_column.pack_start(self.file_cell, True)
+  #      self.file_column.add_attribute(self.file_cell, 'text', 0)
+        
+        self.tree.set_search_column(0)
+
+        self.scroll.add(self.tree)
+        self.add(self.scroll)
+        self.show_all()
+
+        self.project_selector = FolderSelector(self)
+#        self.project_selector.hide()
+
+        self.tree.connect("row-activated", self.on_row_activate)
+        self.tree.connect("button-press-event", self.on_button_press)
+        self.folder = ""
+        self.folder_name = ""
+        load_paths()
+        
+        (dn, df) = default_folder
+        if len(df) > 0:
+            print "open project"
+            self.open_project(dn, df)
+            self.project_selector.hide()
+        else:
+            print "show project selector"
+            self.project_selector.show()
+
+    def on_delete_event(self, widget, event):
+        return False
+
+    def on_destroy(self, widget):
+        gtk.main_quit()
+   
+    def open_project(self, short_name, folder_name):
+        self.tree_model.clear()
+        try:
+            self.folder = folder_name
+            self.folder_name = short_name
+            self.walk_folders(folder_name, None)
+        except:
+            print "error when opening project!", short_name, folder_name
+            pass
+
+    def walk_folders(self, folder_name, parent_iter):
+        for entry in os.listdir(folder_name):
+            path = folder_name + "/" + entry
+            if os.path.isdir(path):
+                iter = self.tree_model.append(parent_iter, ["<b>%s</b>"%entry, path])
+                self.walk_folders(path, iter)
+            elif os.path.isfile(path):
+                (base, extension) = os.path.splitext(path)
+                if extension in file_types:
+                    self.tree_model.append(parent_iter, [entry, path])
+  
+    def on_row_activate(self, tree, path, column):
+        iter = self.tree_model.get_iter(path)
+        (name, longname) = self.tree_model.get(iter, 0, 1)
+        (root, extension) = os.path.splitext(name)
+        if extension in file_types:
+            fn = file_types[extension]
+            fn(longname)
+
+    def on_button_press(self, widget, event):
+        if event.button == 3:
+            m = gtk.Menu()
+            mi = gtk.ImageMenuItem("Select Folder...")
+            mi.connect('activate', self.on_select_folder)
+            img = gtk.Image()
+            img.set_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_MENU)
+            mi.set_image(img)
+            m.append(mi)
+            mi = gtk.ImageMenuItem("Set as Default Folder")
+            img = gtk.Image()
+            img.set_from_stock(gtk.STOCK_HOME, gtk.ICON_SIZE_MENU)
+            mi.set_image(img)
+            mi.connect('activate', self.on_set_default)
+            m.append(mi)
+            m.show_all()
+            m.popup(None, None, None, event.button, event.time)
+            return True
+        return False
+    
+    def on_set_default(self, item):
+        global default_folder
+        default_folder = (self.folder_name, self.folder)
+        save_paths()
+ 
+    def on_select_folder(self, item):
+        self.project_selector.show()
+        load_paths()
+        self.project_selector.update_list()
+  
+    def run(self):
+        gtk.main()
+
+
+if __name__ == "__main__":
+    jules = Jules()
+    jules.run()

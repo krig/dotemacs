@@ -1,0 +1,15 @@
+#!/bin/sh
+PSC() { 
+	echo "\033[1m$*\033[m"
+}
+
+for P in "$@"; do
+	if [ -d $P ]; then
+                WD=`pwd`
+		cd $P
+                echo "$(PSC Pulling $P)"
+		git pull --rebase
+		cd $WD
+	fi
+done
+

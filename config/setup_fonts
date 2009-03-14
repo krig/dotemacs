@@ -1,0 +1,17 @@
+#!/bin/sh
+sudo rm /etc/fonts/conf.d/10-hinting-full.conf
+sudo rm /etc/fonts/conf.d/10-hinting-medium.conf
+sudo ln -s /etc/fonts/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/10-hinting-slight.conf
+sudo rm /etc/fonts/conf.d/10-no-sub-pixel.conf
+sudo rm /etc/fonts/conf.d/10-sub-pixel-bgr.conf
+sudo rm /etc/fonts/conf.d/10-sub-pixel-vbgr.conf
+sudo rm /etc/fonts/conf.d/10-sub-pixel-vrgb.conf
+sudo rm /etc/fonts/conf.d/10-unhinted.conf
+sudo ln -s /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/10-sub-pixel-rgb.conf
+sudo cp 60-latin.conf /etc/fonts/conf.avail/61-latin.conf
+sudo ln -s /etc/fonts/conf.avail/61-latin.conf /etc/fonts/conf.d/61-latin.conf
+sudo cp 91-liberation.conf /etc/fonts/conf.avail/91-liberation.conf
+sudo ln -s /etc/fonts/conf.avail/91-liberation.conf /etc/fonts/conf.d/91-liberation.conf
+sudo cp local.conf /etc/fonts/local.conf
+
+

@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+def lappy; exec "xrandr --output VGA --off --output LVDS --auto";  end
+def external; exec "xrandr --output LVDS --off --output VGA --auto"; end
+
+case ARGV.first
+when 'l' then lappy
+when 'e' then external
+else
+  external if `xrandr -q`.include?('VGA connected')
+  lappy
+end

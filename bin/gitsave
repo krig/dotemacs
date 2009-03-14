@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+
+git diff > $1
+git reset --hard HEAD
+echo "Changes saved in $1."
+

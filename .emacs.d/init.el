@@ -471,9 +471,8 @@ point."
 
 (bar-cursor-mode t)
 
-(global-set-key "\M-N" 'cyclebuffer-forward)
-(global-set-key "\M-P" 'cyclebuffer-backward)
-
+(global-set-key "\M-n" 'cyclebuffer-forward)
+(global-set-key "\M-p" 'cyclebuffer-backward)
 
 
 

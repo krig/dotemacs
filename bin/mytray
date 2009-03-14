@@ -1,0 +1,2 @@
+#!/bin/sh
+stalonetray -geometry 124x24-4+4 --skip-taskbar --sticky --fuzzy-edges 3 --tint-level 1 --tint-color white -t --skip-taskbar --window-type dock --grow-gravity W --icon-gravity NE --ignore-icon-resize TRUE --respect-icon-hints false --max-height 24 --icon-size 24 -i 24 &

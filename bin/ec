@@ -1,0 +1,6 @@
+#!/bin/sh
+if pgrep emacs ; then
+   emacsclient --no-wait "$1"
+else
+   emacs --file "$1" &
+fi
