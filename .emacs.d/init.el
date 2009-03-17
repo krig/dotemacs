@@ -237,6 +237,12 @@ point."
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 
+;; Markdown support
+(setq auto-mode-alist (cons '("\\.mdown$" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.markdown$" . markdown-mode) auto-mode-alist))
+(autoload 'markdown-mode "markdown-mode" "Markdown editing mode." t)
+
+
 ;;(defun cliki:start-slime ()
 ;;  (unless (slime-connected-p)
 ;;    (save-excursion (slime))))
