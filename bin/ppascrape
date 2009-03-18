@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+#todo: Use https://help.launchpad.net/API instead
+import os, sys, optparse, urllib2, simplejson
+
+apt_template = """
+deb http://ppa.launchpad.net/%(repo)s/ppa/ubuntu %(series)s main
+deb-src http://ppa.launchpad.net/%(repo)s/ppa/ubuntu %(series)s main
+"""
+url_template = """https://launchpad.net/~%(repo)s/+archive/ppa"""
+
+key_template = """sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com %s"""
+
+
+def setup():
+    opa = optparse.OptionParser(version="%prog 1.0")
+    opa.add_option("-r", "--repo", dest="repo",
+                   help="Repository to scrape")
+    opa.add_option("-s", "--series", dest="series",
+                   help="Ubuntu series to pull [default: %default]",
+                   default="intrepid")
+    opa.add_option("--insert", dest="insert", action="store_true",
+                   help="Insert into APT sources")
+    opt, args = opa.parse_args()
+    if not hasattr(opt, 'repo') or not opt.repo:
+        opa.error('no repository given')
+    return (opt, args)
+
+def error(s):
+    print s
+    sys.exit(1)
+
+def main():
+    options, _ = setup()
+    opt = options.__dict__
+
+    apt = apt_template % opt
+    aptf = open('%(repo)s.list'%opt, 'w')
+    aptf.write(apt)
+    aptf.close()
+
+    try:
+        url = urllib2.urlopen(url_template%opt)
+    except urllib2.HTTPError, e:
+        print e
+        error("Repo not found, scrape failed")
+
+    reading = False
+    data = ""
+    for line in url:
+        if line.find("<script>LP.client.cache['context'] =") >= 0:
+            reading = True
+        if reading:
+            data += line
+        if line.find("</script>") >= 0:
+            reading = False
+    start = data.find('{')
+    end = data.rfind('}')
+    if start<0 or end<0:
+        error("malformed url, scrape failed")
+    data = simplejson.loads(data[start:(end+1)])
+    if not 'signing_key_fingerprint' in data:
+        error("signing key not found, scrape failed")
+    key = data['signing_key_fingerprint']
+    os.system("gpg --keyserver keyserver.ubuntu.com --recv %s"%(key))
+    os.system("gpg --export --armor %s > %s.key"%(key, opt['repo']))
+    if not os.path.exists('%(repo)s.key'%opt):
+        error("Failed to retrieve the signing key %s" % key)
+
+    if opt['insert']:
+        os.system("""cat %(repo)s.key | sudo apt-key add -"""%opt)
+        os.system("""sudo cp %(repo)s.list /etc/apt/sources.list.d/"""%opt)
+
+if __name__=="__main__":
+    main()
+
+
+
