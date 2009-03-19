@@ -33,12 +33,14 @@ def main():
     options, _ = setup()
     opt = options.__dict__
 
+    print "Creating APT source: %(repo)s.list"%opt
     apt = apt_template % opt
     aptf = open('%(repo)s.list'%opt, 'w')
     aptf.write(apt)
     aptf.close()
 
     try:
+        print "Scraping launchpad:%(repo)s..."%opt
         url = urllib2.urlopen(url_template%opt)
     except urllib2.HTTPError, e:
         print e
@@ -60,13 +62,22 @@ def main():
     data = simplejson.loads(data[start:(end+1)])
     if not 'signing_key_fingerprint' in data:
         error("signing key not found, scrape failed")
+
+    print "Got: ", data['title']
+    print data['description'].strip()
     key = data['signing_key_fingerprint']
-    os.system("gpg --keyserver keyserver.ubuntu.com --recv %s"%(key))
-    os.system("gpg --export --armor %s > %s.key"%(key, opt['repo']))
-    if not os.path.exists('%(repo)s.key'%opt):
-        error("Failed to retrieve the signing key %s" % key)
+
+    # check if we already have this key
+    if os.system("gpg --list-key %s > /dev/null"%(key)) > 0:
+        os.system("gpg --keyserver keyserver.ubuntu.com --recv %s"%(key))
+        os.system("gpg --export --armor %s > %s.key"%(key, opt['repo']))
+        if not os.path.exists('%(repo)s.key'%opt):
+            error("Failed to retrieve the signing key %s" % key)
+    else:
+        print "Key already known."
 
     if opt['insert']:
+        print "Attempting to insert key and repo into APT..."
         os.system("""cat %(repo)s.key | sudo apt-key add -"""%opt)
         os.system("""sudo cp %(repo)s.list /etc/apt/sources.list.d/"""%opt)
 
