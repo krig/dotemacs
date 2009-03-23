@@ -226,7 +226,8 @@
 (c-lang-defconst c-modifier-kwds
   vala '("public" "partial" "private" "const" "abstract"
 	 "protected" "ref" "in" "out" "static" "virtual"
-	 "override" "params" "internal"))
+	 "override" "params" "internal" "weak" "owned"
+	 "unowned"))
 
 ;; We don't use the protection level stuff because it breaks the
 ;; method indenting. Not sure why, though.
@@ -246,11 +247,11 @@
 
 ;; Sets up the enum to handle the list properly
 (c-lang-defconst c-brace-list-decl-kwds
-  vala '("enum"))
+  vala '("enum" "errordomain"))
 
 ;; We need to remove Java's package keyword
 (c-lang-defconst c-ref-list-kwds
-  vala '("using" "namespace"))
+  vala '("using" "namespace" "construct"))
 
 ;; Follow-on blocks that don't require a brace
 (c-lang-defconst c-block-stmt-2-kwds
@@ -389,7 +390,6 @@ Key bindings:
   (run-hooks 'vala-mode-hook)
   (c-update-modeline))
 
-
 (provide 'vala-mode)
 
 ;;; vala-mode.el ends here

@@ -36,6 +36,27 @@
 ;;(set-face-foreground 'mode-line "#acbc90")
 ;;(set-face-background 'mode-line "#353b37")
 
+(setq initial-major-mode
+      (function (lambda ()
+        (text-mode)
+        (turn-on-auto-fill))))
+
+
+(defun create-scratch-buffer nil
+  "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
+  (interactive)
+  (let ((n 0)
+        bufname)
+    (while (progn
+	     (setq bufname (concat "*scratch"
+				   (if (= n 0) "" (int-to-string n))
+				   "*"))
+	     (setq n (1+ n))
+	     (get-buffer bufname)))
+    (switch-to-buffer (get-buffer-create bufname))
+    (text-mode)
+    (turn-on-auto-fill)))
+(global-set-key "\C-c\C-b" 'create-scratch-buffer)
 
 ;; VARIABLES
 (setq visible-bell t)
@@ -480,7 +501,11 @@ point."
 (global-set-key "\M-n" 'cyclebuffer-forward)
 (global-set-key "\M-p" 'cyclebuffer-backward)
 
-
+(autoload 'vala-mode "vala-mode" "Major mode for editing Vala code." t)
+(add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
+(add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
+(add-to-list 'file-coding-system-alist '("\\.vala$" . utf-8))
+(add-to-list 'file-coding-system-alist '("\\.vapi$" . utf-8))
 
 (defun paste-se-encode-uri-component (str)
   (mapconcat
