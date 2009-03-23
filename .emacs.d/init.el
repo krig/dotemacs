@@ -148,6 +148,12 @@
   (define-key ido-mode-map "\C-t" 'ido-toggle-regexp) ; same as in isearch
   (define-key ido-mode-map "\C-d" 'ido-enter-dired)) ; cool
 
+;; VALA MODE
+(autoload 'vala-mode "vala-mode" "Major mode for editing Vala code." t)
+(add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
+(add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
+(add-to-list 'file-coding-system-alist '("\\.vala$" . utf-8))
+(add-to-list 'file-coding-system-alist '("\\.vapi$" . utf-8))
 
 ;; TAB EXPANSION FOR C/C++
 
@@ -202,6 +208,7 @@ point."
 		lisp-interaction-mode-hook
 		scheme-mode-hook
 		perl-mode-hook
+		vala-mode-hook
 		))
   (add-hook hook 'my-tab-fix)
   (add-hook hook 'my-set-newline-and-indent))
@@ -500,12 +507,6 @@ point."
 
 (global-set-key "\M-n" 'cyclebuffer-forward)
 (global-set-key "\M-p" 'cyclebuffer-backward)
-
-(autoload 'vala-mode "vala-mode" "Major mode for editing Vala code." t)
-(add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
-(add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
-(add-to-list 'file-coding-system-alist '("\\.vala$" . utf-8))
-(add-to-list 'file-coding-system-alist '("\\.vapi$" . utf-8))
 
 (defun paste-se-encode-uri-component (str)
   (mapconcat
