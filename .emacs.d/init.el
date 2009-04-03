@@ -155,6 +155,11 @@
 (add-to-list 'file-coding-system-alist '("\\.vala$" . utf-8))
 (add-to-list 'file-coding-system-alist '("\\.vapi$" . utf-8))
 
+;; CSHARP MODE
+(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
+(add-to-list 'auto-mode-alist '("\\.cs$" . csharp-mode))
+
+
 ;; TAB EXPANSION FOR C/C++
 
 ;;(make-hippie-expand-function
@@ -210,6 +215,7 @@ point."
 		perl-mode-hook
 		vala-mode-hook
 		ruby-mode-hook
+		csharp-mode-hook
 		))
   (add-hook hook 'my-tab-fix)
   (add-hook hook 'my-set-newline-and-indent))
