@@ -209,6 +209,7 @@ point."
 		scheme-mode-hook
 		perl-mode-hook
 		vala-mode-hook
+		ruby-mode-hook
 		))
   (add-hook hook 'my-tab-fix)
   (add-hook hook 'my-set-newline-and-indent))
@@ -400,6 +401,8 @@ moving my mouse cursor."
 ;;(add-to-list 'load-path "~/.emacs.d/python")
 ;;(require 'python)
 
+(add-to-list 'interpreter-mode-alist '("python2.5" . python-mode))
+
 (defun mypy-indent-or-expand (arg)
   "Either indent according to mode, or expand the word preceding
 point."
@@ -549,4 +552,32 @@ point."
     (let ((oldbuf (current-buffer)))
           (url-retrieve "http://paste.se/index.py" 'paste-cb (list oldbuf)))))
 
+;;(define-generic-mode 'ragel-mode
+;;  '("//") ;; comment-list
+;;  '("Machine" "Alphabet" "GetKey" "Include" "Action" "Fsm" "Access" "Write" "Variable"
+;;    "any" "ascii" "extend" "alpha" "digit" "alnum" "lower" "upper" "xdigit" "cntrl" "graph"
+;;    "print" "punct" "space" "null"
+;;    "fc" "fpc" "fcurs" "ftargs" "fentry"
+;;    "fhold" "fexec" "fgoto" "fnext" "fcall" "fret" "fbreak" "ftargs" "fentry"
+;;    "while" "switch" "case" "for" "if" "else"
+;;    ) ;; keyword-list
+;;  '(;;("while\\|for\\|if\\|else" 0 font-lock-keyword-face t)
+;;    ("\"[^\"]*\"" 0 font-lock-builtin-face t) ;; font-lock-list
+;;    ("'[^']*'" 0 font-lock-string-face t) ;; font-lock-list
+;;    ("\[.*\]" 0 font-lock-builtin-face t)) ;; font-lock-list
+;;  '(".rl\\'") ;; auto-mode-list
+;;  nil) ;; function-list
 
+ (defvar ragel-mode-font-lock-keywords
+   '(("\\('.*'\\)" 1 'font-lock-string-face)
+     ("\\(\\\".*\\\"\\)" 1 'font-lock-string-face)))
+;;   '(
+;;     ("\\(//.*\\)" 1 'font-lock-comment-face)
+
+;;     ))
+
+ (define-derived-mode ragel-mode fundamental-mode "Ragel"
+   "Major mode to edit ragel files."
+   (set (make-local-variable 'font-lock-keywords)
+        '(ragel-mode-font-lock-keywords)))
+;;   (set (make-local-variable 'comment-start) "//"))
