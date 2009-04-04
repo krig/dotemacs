@@ -63,8 +63,10 @@ def main():
     if not 'signing_key_fingerprint' in data:
         error("signing key not found, scrape failed")
 
-    print "Got: ", data['title']
-    print data['description'].strip()
+    name = data.get('displayname', data.get('title', 'unknown'))
+
+    print "Got: ", name
+    print data.get('description', '').strip()
     key = data['signing_key_fingerprint']
 
     # check if we already have this key
