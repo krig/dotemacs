@@ -12,13 +12,18 @@ from optparse import OptionParser
 # git push origin master
 
 def parse_options():
-    parser = OptionParser()
+    parser = OptionParser(usage="usage: %prog [options] COMMAND")
+    parser.add_option("-v", "--verbose", dest="verbose", action="store_true",
+                      default=False, help="be noisy")
+    parser.add_option("-r", "--root", dest="root",
+                      help="default root directory [default: %default]",
+                      default=home+"/projects")
     parser.add_option("-s", "--source", dest="source",
                       help="source site dir [default: %default]",
-                      default=home+"/projects/site")
+                      default="%ROOT%/site")
     parser.add_option("-d", "--dest", dest="dest",
                       help="publishing repo [default: %default]",
-                      default=home+"/projects/krig.github.com")
+                      default="%ROOT%/krig.github.com")
     parser.add_option("-n", "--name", dest="name",
                       help="site name [default: %default]",
                       default="krig")
@@ -35,15 +40,18 @@ def parse_options():
         parser.error("No command given [build|push]")
 
     if args[0] not in ['build', 'push', 'all']:
-        parser.error("Unknown command %s", args[0])
+        parser.error("Unknown command %s" % (args[0]))
 
     return (opts, args)
 
 def main():
     opts, args = parse_options()
 
-    template_dir = opts.source + "/templates"
-    content_dir = opts.source + "/content"
+    real_source = opts.source.replace("%ROOT%", opts.root)
+    real_dest = opts.dest.replace("%ROOT%", opts.root)
+    
+    template_dir = real_source + "/templates"
+    content_dir = real_source + "/content"
 
     if args[0] in ['build', 'all']:
         cmd = ["ikiwiki",
@@ -55,15 +63,17 @@ def main():
                "--plugin", "goodstuff",
                "--rebuild",
                content_dir,
-               opts.dest,
+               real_dest,
                ]
+        if opts.verbose:
+            cmd.insert(1, "--verbose")
 
         ret = subprocess.call(cmd)
         if ret != 0:
             sys.exit(1)
 
     if args[0] in ['push', 'all']:
-        os.cahdir(opts.dest)
+        os.chdir(real_dest)
         ret = subprocess.call("git add .".split())
         if ret != 0:
             sys.exit(1)
