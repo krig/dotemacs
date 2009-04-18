@@ -36,6 +36,12 @@
 ;;(set-face-foreground 'mode-line "#acbc90")
 ;;(set-face-background 'mode-line "#353b37")
 
+;; UNTABIFY
+(defun untabify-buffer ()
+  "Untabify current buffer"
+  (interactive)
+  (untabify (point-min) (point-max)))
+
 (setq initial-major-mode
       (function (lambda ()
         (text-mode)
@@ -272,11 +278,21 @@ point."
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 
+
 ;; Markdown support
-(setq auto-mode-alist (cons '("\\.mdown$" . markdown-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.markdown$" . markdown-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.mdwn$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (autoload 'markdown-mode "markdown-mode" "Markdown editing mode." t)
 
+(defun real-untabify-hook ()
+  (prog1 nil
+    (untabify-buffer)))
+
+(defun untabify-hook ()
+  (add-hook 'before-save-hook 'real-untabify-hook))
+(add-hook 'markdown-mode-hook 'untabify-hook)
 
 ;;(defun cliki:start-slime ()
 ;;  (unless (slime-connected-p)

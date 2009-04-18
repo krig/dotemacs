@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+# script to generate website using ikiwiki
+
+import sys, os, subprocess
+from user import home
+from optparse import OptionParser
+
+# ikiwiki --wikiname "krig" ~/git/site ~/git/krig.github.com --refresh
+# cd ~/git/krig.github.com
+# git add .
+# git commit -a -m $message
+# git push origin master
+
+def parse_options():
+    parser = OptionParser()
+    parser.add_option("-s", "--source", dest="source",
+                      help="source site dir [default: %default]",
+                      default=home+"/projects/site")
+    parser.add_option("-d", "--dest", dest="dest",
+                      help="publishing repo [default: %default]",
+                      default=home+"/projects/krig.github.com")
+    parser.add_option("-n", "--name", dest="name",
+                      help="site name [default: %default]",
+                      default="krig")
+    parser.add_option("-m", "--message", dest="message",
+                      help="commit message [default: %default]",
+                      default="updated website")
+    parser.add_option("-E", "--email", dest="email",
+                      help="admin email [default: %default]",
+                      default="deceiver.g+ikiwiki@gmail.com")
+
+    opts, args = parser.parse_args()
+
+    if not args:
+        parser.error("No command given [build|push]")
+
+    if args[0] not in ['build', 'push', 'all']:
+        parser.error("Unknown command %s", args[0])
+
+    return (opts, args)
+
+def main():
+    opts, args = parse_options()
+
+    template_dir = opts.source + "/templates"
+    content_dir = opts.source + "/content"
+
+    if args[0] in ['build', 'all']:
+        cmd = ["ikiwiki",
+               "--wikiname", opts.name,
+               "--adminemail", opts.email,
+               "--no-discussion",
+               "--timeformat", "%Y-%m-%d %H:%M",
+               "--usedirs",
+               "--plugin", "goodstuff",
+               "--rebuild",
+               content_dir,
+               opts.dest,
+               ]
+
+        ret = subprocess.call(cmd)
+        if ret != 0:
+            sys.exit(1)
+
+    if args[0] in ['push', 'all']:
+        os.cahdir(opts.dest)
+        ret = subprocess.call("git add .".split())
+        if ret != 0:
+            sys.exit(1)
+        ret = subprocess.call("git commit -a -m".split() + [opts.message])
+        if ret != 0:
+            sys.exit(1)
+        ret = subprocess.call("git push origin master".split())
+        if ret != 0:
+            sys.exit(1)
+
+if __name__=="__main__":
+    main()
