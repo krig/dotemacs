@@ -66,7 +66,9 @@ def main():
     name = data.get('displayname', data.get('title', 'unknown'))
 
     print "Got: ", name
-    print data.get('description', '').strip()
+    desc = data.get('description', '')
+    if desc:
+        print desc.strip()
     key = data['signing_key_fingerprint']
 
     # check if we already have this key
@@ -80,7 +82,8 @@ def main():
 
     if opt['insert']:
         print "Attempting to insert key and repo into APT..."
-        os.system("""cat %(repo)s.key | sudo apt-key add -"""%opt)
+        if os.path.exists('%(repo)s.key'%opt):
+            os.system("""cat %(repo)s.key | sudo apt-key add -"""%opt)
         os.system("""sudo cp %(repo)s.list /etc/apt/sources.list.d/"""%opt)
 
 if __name__=="__main__":
