@@ -77,13 +77,15 @@
 (setq transient-mark-mode t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(scroll-bar-mode 1)
-(customize-set-variable 'scroll-bar-mode 'right)
+(scroll-bar-mode -1)
+;;(customize-set-variable 'scroll-bar-mode 'right)
 (winner-mode 1)
 (global-auto-revert-mode 1)
 (blink-cursor-mode -1)
 (global-set-key "\C-z" 'undo)
 
+(global-set-key "\C-x\C-k" 'kill-region)
+(global-set-key "\C-c\C-k" 'kill-region)
 
 ;; BACKUPS
 ;; Put autosave files (ie #foo#) in one place, *not*
@@ -603,3 +605,8 @@ point."
    (set (make-local-variable 'font-lock-keywords)
         '(ragel-mode-font-lock-keywords)))
 ;;   (set (make-local-variable 'comment-start) "//"))
+
+;; JAVASCRIPT MODE
+(autoload #'espresso-mode "espresso" "Start espresso-mode" t)
+(add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
