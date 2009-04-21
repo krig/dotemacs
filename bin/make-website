@@ -60,6 +60,7 @@ def main():
                "--no-discussion",
                "--timeformat", "%Y-%m-%d %H:%M",
                "--usedirs",
+               "--templatedir", template_dir,
                "--plugin", "goodstuff",
                "--rebuild",
                content_dir,
