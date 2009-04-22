@@ -607,6 +607,11 @@ point."
 ;;   (set (make-local-variable 'comment-start) "//"))
 
 ;; JAVASCRIPT MODE
-(autoload #'espresso-mode "espresso" "Start espresso-mode" t)
-(add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
+;;(autoload #'espresso-mode "espresso" "Start espresso-mode" t)
+;;(add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
+;;(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
+
+;; IMPROVED JAVASCRIPT MODE
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
