@@ -339,6 +339,9 @@ point."
  '(inhibit-startup-echo-area-message t)
  '(inhibit-startup-screen t)
  '(initial-buffer-choice t)
+ '(js2-basic-offset 4)
+ '(js2-bounce-indent-flag nil)
+ '(js2-indent-on-enter-key t)
  '(speedbar-hide-button-brackets-flag t)
  '(speedbar-use-images nil)
  '(tabbar-home-button (quote (("|") "|")))
@@ -615,3 +618,9 @@ point."
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
