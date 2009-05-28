@@ -1,0 +1,10 @@
+#!/bin/bash
+DIR=$1
+shift
+FMT=$1
+shift
+for arg in $@
+do
+	convert $arg $DIR/${arg%.*}.$FMT
+done
+
