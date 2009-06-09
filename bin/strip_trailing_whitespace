@@ -1,0 +1,3 @@
+#!/bin/bash
+for file in `find . -name "*.py"`; do sed 's/[ \t]*$//' $file > $file.new; mv $file.new $file; done
+

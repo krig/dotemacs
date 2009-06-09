@@ -1,0 +1,3 @@
+#!/bin/bash
+for file in `find . -name "*.py"`; do expand --tabs=4 $file > $file.new; mv $file.new $file; done
+

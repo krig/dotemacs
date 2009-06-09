@@ -15,3 +15,5 @@ set incsearch
 set showmatch
 colorscheme desert
 
+"set insertmode
+"set selectmode += cmd

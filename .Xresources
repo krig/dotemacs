@@ -5,34 +5,53 @@ Xft.autohint: true
 Xft.rgba: rgb
 Xft.dpi: 96
 Emacs.fontbackend: xft
-Emacs.font: Monaco-9
+Emacs.font: Droid Sans Mono-10
 emacs*geometry: 120x50
 
-urxvt.foreground: #aaaaaa
-urxvt.background: #000000
 
-urxvt.color0: #000000
-urxvt.color1: #9e1828
-urxvt.color2: #9e1828
-urxvt.color3: #968a38
-urxvt.color4: #414171
-urxvt.color5: #963c59
-urxvt.color6: #418179
-urxvt.color7: gray
-urxvt.color8: gray40
-urxvt.color9: #cf6171
-urxvt.color10: #c5f779
-urxvt.color11: #fff796
-urxvt.color12: #4186be
-urxvt.color13: #cf9ebe
-urxvt.color14: #71bebe
-urxvt.color15: #ffffff
+! background (not tango), foreground, tint color (for inheritPixmap)
+urxvt*background: #000000
+urxvt*foreground: #babdb6
+urxvt*tintColor: #d3d7cf
+
+! Black (not tango) + DarkGrey
+urxvt*color0: #000000
+urxvt*color8: #555753
+
+! DarkRed + Red
+urxvt*color1: #a40000
+urxvt*color9: #cc0000
+
+! DarkGreen + Green
+urxvt*color2: #4e9a06
+urxvt*color10: #73d216
+
+! DarkYellow + Yellow
+urxvt*color3: #c4a000
+urxvt*color11: #edd400
+
+! DarkBlue + Blue
+urxvt*color4: #204a87
+urxvt*color12: #3465a4
+
+! DarkMangenta + Mangenta
+urxvt*color5: #ce5c00
+urxvt*color13: #f57900
+
+!DarkCyan + Cyan (both not tango)
+urxvt*color6: #038e82
+urxvt*color14: #05d2c1
+
+! LightGrey + White
+urxvt*color7: #babdb6
+urxvt*color15: #d3d7cf
 
 urxvt.scrollBar: false
 urxvt.saveLines: 1500
-urxvt.urlLauncher: firefox
+urxvt.urlLauncher: x-www-browser
 
-urxvt.font: xft:Monaco:pixelsize=13
+urxvt.font: xft:Dina:size=8
+! urxvt.font: xft:Monospace:size=10
 
 urxvt.modifier: alt
 

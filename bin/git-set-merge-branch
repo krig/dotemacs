@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ $# -ne 1 ]
+then
+ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+branch=${ref#refs/heads/}
+else
+branch=$1
+ref=refs/heads/${branch}
+fi
+
+git config branch.${branch}.remote origin
+git config branch.${branch}.merge ${ref}
+
