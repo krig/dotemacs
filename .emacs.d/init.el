@@ -3,11 +3,11 @@
   (message (format "Passed %S..." path-string))
   (if (stringp path-string)
       (when (file-exists-p path-string)
-	(message (format "Adding %S to load-path..." path-string))
-	(add-to-list 'load-path (expand-file-name path-string)))
+        (message (format "Adding %S to load-path..." path-string))
+        (add-to-list 'load-path (expand-file-name path-string)))
     (add-to-load-path (car path-string))
     (if (cdr path-string)
-	(add-to-load-path (cdr path-string)))))
+        (add-to-load-path (cdr path-string)))))
 
 ;;(add-to-list 'load-path "~/.emacs.d")
 (add-to-load-path (expand-file-name "~/.emacs.d"))
@@ -54,11 +54,11 @@
   (let ((n 0)
         bufname)
     (while (progn
-	     (setq bufname (concat "*scratch"
-				   (if (= n 0) "" (int-to-string n))
-				   "*"))
-	     (setq n (1+ n))
-	     (get-buffer bufname)))
+             (setq bufname (concat "*scratch"
+                                   (if (= n 0) "" (int-to-string n))
+                                   "*"))
+             (setq n (1+ n))
+             (get-buffer bufname)))
     (switch-to-buffer (get-buffer-create bufname))
     (text-mode)
     (turn-on-auto-fill)))
@@ -139,7 +139,7 @@
 
 ;; SERVER
 (when (not (eq system-type 'windows-nt))
-	   (server-start))
+           (server-start))
 
 ;; IDO
 
@@ -151,9 +151,9 @@
 (add-hook 'ido-define-mode-map-hook 'ido-my-keys)
 (defun ido-my-keys ()
   (define-key ido-mode-map "\t" 'ido-complete)
-					;tab is better for completion lists
-					;(define-key ido-mode-map (kbd "tab")
-					; 'ido-complete)
+                                        ;tab is better for completion lists
+                                        ;(define-key ido-mode-map (kbd "tab")
+                                        ; 'ido-complete)
   (define-key ido-mode-map "\C-t" 'ido-toggle-regexp) ; same as in isearch
   (define-key ido-mode-map "\C-d" 'ido-enter-dired)) ; cool
 
@@ -180,17 +180,17 @@
 
 ;;(setq hippie-expand-try-functions-list
 (fset 'my-hippie (make-hippie-expand-function
-		  '(try-expand-dabbrev-visible
-		    try-expand-dabbrev
-		    try-expand-dabbrev-from-kill
-		    try-expand-dabbrev-all-buffers
-		    ;;try-expand-all-abbrevs
-		    ;;try-expand-list
-		    ;;try-expand-line
-		    try-complete-lisp-symbol-partially
-		    try-complete-lisp-symbol
-		    try-complete-file-name-partially
-		    try-complete-file-name)))
+                  '(try-expand-dabbrev-visible
+                    try-expand-dabbrev
+                    try-expand-dabbrev-from-kill
+                    try-expand-dabbrev-all-buffers
+                    ;;try-expand-all-abbrevs
+                    ;;try-expand-list
+                    ;;try-expand-line
+                    try-complete-lisp-symbol-partially
+                    try-complete-lisp-symbol
+                    try-complete-file-name-partially
+                    try-complete-file-name)))
 
 (defun indent-or-expand (arg)
   "Either indent according to mode, or expand the word preceding
@@ -211,21 +211,22 @@ point."
   (local-set-key [return] 'newline-and-indent))
 
 (defun my-c-style-fix ()
-  (c-set-style "bsd"))
+  (c-set-style "bsd")
+  (setq indent-tabs-mode nil))
 
 (dolist (hook '(
-		c-mode-hook
-		c++-mode-hook
-		sh-mode-hook
-		emacs-lisp-mode-hook
-		lisp-mode-hook
-		lisp-interaction-mode-hook
-		scheme-mode-hook
-		perl-mode-hook
-		vala-mode-hook
-		ruby-mode-hook
-		csharp-mode-hook
-		))
+                c-mode-hook
+                c++-mode-hook
+                sh-mode-hook
+                emacs-lisp-mode-hook
+                lisp-mode-hook
+                lisp-interaction-mode-hook
+                scheme-mode-hook
+                perl-mode-hook
+                vala-mode-hook
+                ruby-mode-hook
+                csharp-mode-hook
+                ))
   (add-hook hook 'my-tab-fix)
   (add-hook hook 'my-set-newline-and-indent))
 
@@ -318,13 +319,13 @@ point."
 ;; Exclude scratch buffers from tabbar
 (when (require 'tabbar nil t)
   (setq tabbar-buffer-groups-function
-	(lambda (b) (list "All Buffers")))
+        (lambda (b) (list "All Buffers")))
   (setq tabbar-buffer-list-function
-	(lambda ()
-	  (remove-if
-	   (lambda(buffer)
-	     (find (aref (buffer-name buffer) 0) " *"))
-	   (buffer-list))))
+        (lambda ()
+          (remove-if
+           (lambda(buffer)
+             (find (aref (buffer-name buffer) 0) " *"))
+           (buffer-list))))
   (tabbar-mode))
 
 
@@ -393,15 +394,15 @@ moving my mouse cursor."
   (setq cpp-known-writable 't)
   (setq cpp-unknown-writable 't)
   (setq cpp-edit-list
-	'((#("0" 0 1
-	     (c-in-sws t fontified t))
-	   (background-color . "#4f4f4f")
-	   nil both nil)
-	  (#("1" 0 1
-	     (c-in-sws t fontified t))
-	   nil
-	   (background-color . "#4f4f4f")
-	   both nil)))
+        '((#("0" 0 1
+             (c-in-sws t fontified t))
+           (background-color . "#4f4f4f")
+           nil both nil)
+          (#("1" 0 1
+             (c-in-sws t fontified t))
+           nil
+           (background-color . "#4f4f4f")
+           both nil)))
   (cpp-highlight-buffer t))
 
 (defun my-c-mode-common-hook ()
@@ -457,7 +458,7 @@ point."
 (when (load "flymake" t)
   (defun flymake-pylint-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-inplace))
+                       'flymake-create-temp-inplace))
            (local-file (file-relative-name
                         temp-file
                         (file-name-directory buffer-file-name))))
@@ -481,8 +482,8 @@ point."
 (autoload 'inf-ruby-keys "inf-ruby"
   "Set local key defs for inf-ruby in ruby-mode")
 (add-hook 'ruby-mode-hook
-	  '(lambda ()
-	     (inf-ruby-keys)))
+          '(lambda ()
+             (inf-ruby-keys)))
 ;; If you have Emacs 19.2x or older, use rubydb2x
 (autoload 'rubydb "rubydb3x" "Ruby debugger" t)
 ;; uncomment the next line if you want syntax highlighting
@@ -503,10 +504,10 @@ point."
 
 (defun flymake-get-major-mode-and-masks ()
   (let ((fnm flymake-allowed-major-modes)
-	(mode-and-masks nil))
+        (mode-and-masks nil))
     (while (and (not mode-and-masks) fnm)
       (if (eq (car (car fnm)) major-mode)
-	  (setq mode-and-masks (cdr (car fnm))))
+          (setq mode-and-masks (cdr (car fnm))))
       (setq fnm (cdr fnm)))
     mode-and-masks))
 
@@ -515,14 +516,14 @@ point."
   (unless (stringp file-name)
     (error "Invalid file-name"))
   (let ((fnm flymake-allowed-file-name-masks)
-	(mode-and-masks  nil))
+        (mode-and-masks  nil))
     (while (and (not mode-and-masks) fnm)
       (if (string-match (car (car fnm)) file-name)
-	  (setq mode-and-masks (cdr (car fnm))))
+          (setq mode-and-masks (cdr (car fnm))))
       (setq fnm (cdr fnm)))
     ;; this if added by ~krig
     (if (eq mode-and-masks nil)
-	(setq mode-and-masks (flymake-get-major-mode-and-masks)))
+        (setq mode-and-masks (flymake-get-major-mode-and-masks)))
     (flymake-log 3 "file %s, init=%s" file-name (car mode-and-masks))
     mode-and-masks))
 
@@ -637,5 +638,5 @@ point."
     (copy-region-as-kill
      (point)
      (progn (if arg (forward-visible-line arg)
-	      (end-of-visible-line))
-	    (point)))))
+              (end-of-visible-line))
+            (point)))))
