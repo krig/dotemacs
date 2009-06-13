@@ -150,6 +150,7 @@
 (setq ido-save-directory-list-file "~/.emacs.d/ido.history")
 (setq ido-max-work-file-list 40)
 (setq ido-enable-flex-matching t)
+(setq confirm-nonexistent-file-or-buffer nil)
 (add-hook 'ido-define-mode-map-hook 'ido-my-keys)
 (defun ido-my-keys ()
   (define-key ido-mode-map "\t" 'ido-complete)
