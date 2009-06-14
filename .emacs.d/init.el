@@ -84,7 +84,7 @@
 (blink-cursor-mode -1)
 (global-set-key "\C-z" 'undo)
 
-(setq indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
 
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
