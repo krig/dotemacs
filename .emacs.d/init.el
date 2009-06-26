@@ -27,8 +27,8 @@
 
 ;;(add-to-list 'load-path "~/.emacs.d/color-theme")
 (add-to-load-path (expand-file-name "~/.emacs.d/color-theme"))
-;;(load-library "zenburn")
-;;(color-theme-zenburn)
+(load-library "zenburn")
+(color-theme-zenburn)
 
 ;;(unless (zenburn-f;ormat-spec-works-p)
 ;;  (zenburn-define-format-spec))
@@ -42,10 +42,10 @@
   (interactive)
   (untabify (point-min) (point-max)))
 
-(setq initial-major-mode
-      (function (lambda ()
-        (text-mode)
-        (turn-on-auto-fill))))
+;;(setq initial-major-mode
+;;      (function (lambda ()
+;;        (text-mode)
+;;        (turn-on-auto-fill))))
 
 
 (defun create-scratch-buffer nil
@@ -115,14 +115,13 @@
 
 
 
-(require 'color-theme)
-(color-theme-initialize)
-;;(load-library "color-theme-blackboard.el")
-;;(color-theme-blackboard)
-(load-library "color-theme-wombat.el")
-(color-theme-wombat)
-(set-face-background 'mode-line "#978777")
-(set-face-foreground 'mode-line "#dddddd")
+;;(require 'color-theme)
+;;(color-theme-initialize)
+
+;;(color-theme-black-on-gray)
+
+;;(load-library "color-theme-wombat.el")
+;;(color-theme-wombat)
 
 ;; show tabs
 ;;(show-ws-toggle-show-tabs)
@@ -130,8 +129,19 @@
 ;; make tabs a tiny bit darker than the background color
 ;;(set-face-background 'show-ws-tab "#3a3a3a")
 
+;;(load-library "color-theme-blackboard.el")
+;;(color-theme-blackboard)
+;;(load-library "color-theme-ir-black.el")
+;;(color-theme-ir-black)
+;;(load-library "color-theme-railscasts.el")
+;;(color-theme-railscasts)
 
-
+;;(set-face-background 'mode-line "#DDDDDD")
+;;(set-face-foreground 'mode-line "#222222")
+;;(set-face-background 'mode-line-inactive "#222222")
+;;(set-face-foreground 'mode-line-inactive "#AAAAAA")
+;;(set-face-background 'modeline-buffer-id "#222222")
+;;(set-face-foreground 'modeline-buffer-id "#CCCCCC")
 
 ;; C SOURCE FOR EMACS
 (when (eq system-type 'windows-nt)
@@ -453,6 +463,21 @@ point."
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
 (add-hook 'python-mode-hook 'mypy-tab-fix)
 
+;;;; `Cython' mode.
+
+(add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
+
+(define-derived-mode cython-mode python-mode "Cython"
+  (font-lock-add-keywords
+   nil
+   `((,(concat "\\<\\(NULL"
+               "\\|c\\(def\\|har\\|typedef\\)"
+               "\\|e\\(num\\|xtern\\)"
+               "\\|float"
+               "\\|in\\(clude\\|t\\)"
+               "\\|object\\|public\\|struct\\|type\\|union\\|void"
+               "\\)\\>")
+      1 font-lock-keyword-face t))))
 
 ;; FLYMAKE FOR PYTHON
 
@@ -643,3 +668,13 @@ point."
      (progn (if arg (forward-visible-line arg)
               (end-of-visible-line))
             (point)))))
+
+
+;;;; SMEX
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-c M-x") 'smex-update-and-run)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)

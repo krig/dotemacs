@@ -52,7 +52,7 @@
 (require 'color-theme)
 
 (defvar zenburn-fg "#dcdccc")
-(defvar zenburn-bg "#3f3f3f")
+(defvar zenburn-bg "#2f2f2f")
 (defvar zenburn-bg+1 "#4f4f4f")
 (defvar zenburn-bg+2 "#5f5f5f")
 (defvar zenburn-yellow "#f0dfaf")

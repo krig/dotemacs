@@ -5,7 +5,8 @@ Xft.autohint: true
 Xft.rgba: rgb
 Xft.dpi: 96
 Emacs.fontbackend: xft
-Emacs.font: Droid Sans Mono-10
+!Emacs.font: Droid Sans Mono-10
+Emacs.font: Liberation Mono-9
 emacs*geometry: 120x50
 
 
