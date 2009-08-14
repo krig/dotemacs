@@ -1,0 +1,26 @@
+export EDITOR=emacs
+export CFLAGS="-O0 -Wall -ggdb3"
+#export DISPLAY=:0
+export CVS_RSH=ssh
+export PATH=$HOME/bin:$PATH
+#export PATH=$HOME/scripts:$PATH
+export MAKEFLAGS="-j 5"
+export CC="g++"
+
+# XTS stuff
+#export TET_ROOT=$HOME/xtest
+#export PATH=$TET_ROOT/bin:$TET_ROOT/xts5/bin:$PATH
+
+
+export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\E[0m'           # end mode
+export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+
+export XMMS_PATH=tcp://192.168.1.137
+export NAME="Kristoffer Grönlund"
+export EMAIL="kristoffer.gronlund@purplescout.se"
+
+

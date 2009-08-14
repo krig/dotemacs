@@ -787,7 +787,7 @@ static char *gnus-pointer[] = {
      '(flymake-errline ((t (:underline "#cc9393"))))
      '(flymake-warnline ((t (:underline "#f0dfaf"))))
 
-     '(tabbar-default-face ((t (:inherit default :family "fixed" :background "#353b37" :foreground "#acbc90" :height 80))))
+     '(tabbar-default-face ((t (:inherit default :background "#353b37" :foreground "#acbc90" :height 0.7))))
      ;;'(mode-line-inactive ((t (:background "#2e3330" :foreground "#88b090"
      ;;                          :box (:color "#2e3330" :line-width 2)))))
 

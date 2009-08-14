@@ -433,13 +433,14 @@ point."
       (my-hippie arg)
     (python-indent-line)))
 
-(defun mypy-tab-fix ()
+(defun mypy-extra-stuff ()
   (local-set-key [tab] 'mypy-indent-or-expand)
   (setq show-trailing-whitespace t)
   (setq indent-tabs-mode nil))
+  ;;(which-func-mode t))
 
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
-(add-hook 'python-mode-hook 'mypy-tab-fix)
+(add-hook 'python-mode-hook 'mypy-extra-stuff)
 
 ;;;; `Cython' mode.
 
@@ -681,5 +682,3 @@ point."
  '(tabbar-home-button (quote (("|") "|")))
  '(tabbar-scroll-left-button (quote (("|") "|")))
  '(tabbar-scroll-right-button (quote (("|") "|"))))
-
-

@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ "$1" == "" ]; then
+  echo "usage: uptime <pid>"
+  exit
+fi
+ps -o etime $1 | grep -v ELAPSED | sed 's/\s*//g' | sed "s/\(.*\)-\(.*\):\(.*\):\(.*\)/\1d \2h/; s/\(.*\):\(.*\):\(.*\)/\1h \2m/; s/\(.*\):\(.*\)/\1m \2s/"

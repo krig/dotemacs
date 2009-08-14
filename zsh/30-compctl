@@ -1,0 +1,17 @@
+# autocomplete man pages
+setopt SH_WORD_SPLIT
+function man_var () {
+    man_pages=( /usr/share/man*/**/*(N:t:r:r) )
+    compctl -k man_pages man
+    reply=( $man_pages )
+}
+compctl -K man_var man; man_pages=()
+
+# random file extensions
+compctl -g '*.pdf' + -g '*.ps.*' evince
+compctl -g '*(-/) .*(-/)' cd
+compctl -g '*.c' + -g '*.cpp' + -g '*.cc' gcc
+compctl -g '*.c' + -g '*.cpp' + -g '*.cc' g++
+compctl -g '*.src.rpm' koji
+
+
