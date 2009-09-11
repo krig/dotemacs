@@ -5,7 +5,7 @@
 ;; Emacs-style font-lock specs adapted from GNU Emacs 21.2 scheme.el.
 ;; Scheme Mode menu adapted from GNU Emacs 21.2 cmuscheme.el.
 
-(defconst quack-version      "0.36")
+(defconst quack-version      "0.37")
 (defconst quack-author-name  "Neil Van Dyke")
 (defconst quack-author-email "neil@neilvandyke.org")
 (defconst quack-web-page     "http://www.neilvandyke.org/quack/")
@@ -20,7 +20,7 @@ particular purpose.  See the GNU General Public License for more details.  See
 http://www.gnu.org/licenses/ for details.  For other licenses and consulting,
 please contact Neil Van Dyke.")
 
-(defconst quack-cvsid "$Id: quack.el,v 1.462 2009/05/27 05:04:06 neilpair Exp $")
+(defconst quack-cvsid "$Id: quack.el,v 1.463 2009/06/29 12:54:35 neilpair Exp $")
 
 ;;; Commentary:
 
@@ -111,6 +111,9 @@ please contact Neil Van Dyke.")
 ;;     neil@neilvandyke.org to add you to the moderated `scheme-announce' list.
 
 ;; HISTORY:
+;;
+;;     Version 0.37 (2009-06-29)
+;;         * Disabled highlighting of "Compilation started at" lines.
 ;;
 ;;     Version 0.36 (2009-05-27)
 ;;         * Made `#:' ``colon keywords'' fontify in PLT-ish mode.
@@ -4022,7 +4025,7 @@ Can be used in your `~/.emacs' file something like this:
     ;; PLT MzScheme 4.1.4 "=== context ===" traceback when there is only file,
     ;; line, and column info, but potentially no following ":" and additional
     ;; info like procedure name.
-    ("^\\([^:\n\"]+\\):\\([0-9]+\\):\\([0-9]+\\)" 1 2 3)
+    ("^\\([^:\n\" ]+\\):\\([0-9]+\\):\\([0-9]+\\)" 1 2 3)
 
     ;; PLT MzScheme 205 "setup-plt"
     ;;   load-handler: expected a `module' declaration for `bar-unit' in

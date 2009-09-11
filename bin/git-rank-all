@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+
+import re
+import sys, os
+from subprocess import *
+
+class Contributor:
+    def __init__(self, name, mail, amount=0, commits=0):
+        self.name = name
+        self.mail = mail
+        self.amount = amount
+        self.commits = commits
+
+    def __cmp__(self, other):
+        return cmp(other.amount, self.amount)
+
+
+def rank_contributors(path):
+    nowpath = os.getcwd()
+    os.chdir(path)
+    output = Popen("git-rank-contributors -v", shell=True, stdout=PIPE).stdout
+    os.chdir(nowpath)
+    return output.readlines()
+
+def shortlog(path):
+    nowpath = os.getcwd()
+    os.chdir(path)
+    output = Popen("git shortlog -ns", shell=True, stdout=PIPE).stdout
+    os.chdir(nowpath)
+    return output.readlines()
+
+def parse_name(nmail):
+    name, mail = nmail.split('<')
+    name = name.strip()
+    mail = mail.strip()
+    mail = mail[:-1]
+    return name, mail
+
+def parse_output(contributors, rankdata, slog):
+    for line in rankdata:
+        nmail, amt = line.strip().split(':')
+        author, mail = parse_name(nmail)
+        amt = int(amt.strip().split(' ')[0])
+        if author not in contributors:
+            contributors[author] = Contributor(author, mail, amt)
+        else:
+            contributors[author].amount += amt
+    for line in slog:
+        commit_count, slog_name = line.strip().split('\t')
+        commit_count = int(commit_count)
+        if slog_name not in contributors:
+            contributors[slog_name] = Contributor(slog_name, '', 0, commit_count)
+        else:
+            contributors[slog_name].commits += commit_count
+
+def sorter(a, b):
+    return -cmp(a[1], b[1])
+
+def sort_contributors(contributors):
+    return sorted(contributors.values())
+
+def main():
+    contributors = {}
+    for tgt in sys.argv[1:]:
+        if os.path.isdir(os.path.join(tgt, ".git")):
+            parse_output(contributors, rank_contributors(tgt), shortlog(tgt))
+    total_amount = sum(c.amount for c in contributors.values())
+    for c in sort_contributors(contributors):
+        print "%s: %d lines, %d commits (%.2f lines/commit) %.2f%%" % (c.name, c.amount, c.commits, float(c.amount)/float(c.commits), 100.0*float(c.amount)/float(total_amount))
+
+if __name__=="__main__":
+    main()

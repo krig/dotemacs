@@ -341,6 +341,28 @@ point."
            (buffer-list))))
   (tabbar-mode))
 
+
+
+
+
+;; CUSTOMIZE SET
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(inhibit-startup-echo-area-message t)
+ '(inhibit-startup-screen t)
+ '(initial-buffer-choice t)
+ '(js2-basic-offset 4)
+ '(js2-bounce-indent-flag nil)
+ '(js2-indent-on-enter-key t)
+ '(speedbar-hide-button-brackets-flag t)
+ '(speedbar-use-images nil)
+ '(tabbar-home-button (quote (("|") "|")))
+ '(tabbar-scroll-left-button (quote (("|") "|")))
+ '(tabbar-scroll-right-button (quote (("|") "|"))))
+
 ;;(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -462,19 +484,33 @@ point."
 
 
 
+;; (when (load "flymake" t)
+;;   (defun flymake-pylint-init ()
+;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;            (local-file (file-relative-name
+;;                         temp-file
+;;                         (file-name-directory buffer-file-name))))
+;;       (list "epylint" (list local-file))))
+
+;;   (add-to-list 'flymake-allowed-file-name-masks
+;;                '("\\.py\\'" flymake-pylint-init)))
+;;(add-hook 'python-mode-hook 'flymake-mode)
+
+;; code checking via flymake
+;; set code checker here from "epylint", "pyflakes"
+(setq pycodechecker "pyflakes")
 (when (load "flymake" t)
-  (defun flymake-pylint-init ()
+  (defun flymake-pycodecheck-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))
            (local-file (file-relative-name
                         temp-file
                         (file-name-directory buffer-file-name))))
-      (list "epylint" (list local-file))))
-
+      (list pycodechecker (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pylint-init)))
+               '("\\.py\\'" flymake-pycodecheck-init)))
 (add-hook 'python-mode-hook 'flymake-mode)
-
 
 ;; RUBY
 (add-to-load-path (expand-file-name "~/.emacs.d/ruby"))
@@ -501,7 +537,7 @@ point."
 
 (defcustom flymake-allowed-major-modes
   '((perl-mode flymake-perl-init)
-    (python-mode flymake-pylint-init)
+    (python-mode flymake-pycodecheck-init)
     (c-mode flymake-simple-make-init)
     (c++-mode flymake-simple-make-init)
     )
@@ -651,6 +687,8 @@ point."
 
 ;;;; SMEX
 (require 'smex)
+(setq smex-save-file "~/.emacs.d/smex.save")
+(setq smex-prompt-string ":: ")
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -658,27 +696,9 @@ point."
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
-;; QUACK (for scheme)
+;;;; QUACK
 (require 'quack)
+(setq quack-fontify-style 'emacs)
 
-
-;; CUSTOMIZE SET
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(inhibit-startup-echo-area-message t)
- '(inhibit-startup-screen t)
- '(initial-buffer-choice t)
- '(js2-basic-offset 4)
- '(js2-bounce-indent-flag nil)
- '(js2-indent-on-enter-key t)
- '(quack-fontify-style (quote emacs))
- '(quack-programs (quote ("ikarus" "bigloo" "csi" "csi -hygienic" "gosh" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "mred -z" "mzscheme" "mzscheme -il r6rs" "mzscheme -il typed-scheme" "mzscheme -M errortrace" "mzscheme3m" "mzschemecgc" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi")))
- '(quack-smart-open-paren-p t)
- '(speedbar-hide-button-brackets-flag t)
- '(speedbar-use-images nil)
- '(tabbar-home-button (quote (("|") "|")))
- '(tabbar-scroll-left-button (quote (("|") "|")))
- '(tabbar-scroll-right-button (quote (("|") "|"))))
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")

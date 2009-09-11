@@ -3,12 +3,27 @@ say() {
 	echo -e "\033[1m$*\033[m"
 }
 
+say2() {
+    echo -e "$*"
+}
+
 for P in "$@"; do
 	if [ -d $P ]; then
                 WD=`pwd`
 		cd $P
-		say "Pulling $P"
-		git pull --rebase
+                g="$(git rev-parse --git-dir 2>/dev/null)"
+                if [ -n "$g" ]; then
+                    uncommitted="$(git diff --exit-code > /dev/null 2>&1; echo $?)"
+                    queued="$(git status > /dev/null 2>&1; echo $?)"
+                    if [ $uncommitted -eq 1 ]; then
+                        say2 "$P: has uncommitted changes"
+                    elif [ $queued -eq 0 ]; then
+		        say2 "$P: has changes queued"
+                    else
+                        say "$P"
+                        git pull --rebase
+                    fi
+                fi
 		cd $WD
 	fi
 done
