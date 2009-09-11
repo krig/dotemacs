@@ -13,9 +13,9 @@
 alias rebase="git rebase"
 alias amend="git commit --amend"
 alias commit="git commit"
-alias pull="git pull origin"
+#alias pull="git pull origin"
 alias push="git push origin"
-
+alias pull="git pull --rebase origin"
 
 # SSH HOST ALIASES
 #alias leo="ssh $LEO"
@@ -42,6 +42,7 @@ alias la="ls -A"
 alias l="ls -CF"
 alias findpy="grin -I \"*.py\" -d \"build,.git,debian\""
 alias yo="ssh -X"
+alias irc="ssh -X stalin"
 
 alias tuttifrutti="python2.5 ../tuttifrutti/tuttifrutti.py"
 
