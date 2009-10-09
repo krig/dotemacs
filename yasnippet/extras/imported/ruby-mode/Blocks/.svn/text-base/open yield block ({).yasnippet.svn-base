@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# key: {
+# contributor: Translated from TextMate Snippet
+# name: Insert { |variable| … }
+# expand-env: ((yas/wrap-around-region t))
+# --
+{ ${1:$(if (string= yas/text "") "" "|")}${1:variable}${1:$(if (string= yas/text "") "" "|")} $0 } 
