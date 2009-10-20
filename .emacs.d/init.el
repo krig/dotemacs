@@ -11,6 +11,9 @@
 
 ;;(add-to-list 'load-path "~/.emacs.d")
 (add-to-load-path (expand-file-name "~/.emacs.d"))
+(add-to-load-path (expand-file-name "~/.emacs.d/scala-mode"))
+(add-to-load-path (expand-file-name "~/.emacs.d/emacs-eclim"))
+(add-to-load-path (expand-file-name "~/.emacs.d/smart-tab"))
 
 ;; COLOR THEME
 (when (eq system-type 'windows-nt)
@@ -80,11 +83,21 @@
 (scroll-bar-mode -1)
 ;;(customize-set-variable 'scroll-bar-mode 'right)
 (winner-mode 1)
-(global-auto-revert-mode 1)
+(global-auto-revert-mode t)
 (blink-cursor-mode -1)
 (global-set-key "\C-z" 'undo)
 
-(setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode t)
+
+(require 'tramp)
+(setq tramp-completion-reread-directory-timeout nil)
+(setq tramp-default-method "scpc")
+(add-to-list 'tramp-remote-path "~/bin")
+
+(setq vc-ignore-dir-regexp
+      (format "\\(%s\\)\\|\\(%s\\)"
+              vc-ignore-dir-regexp
+              tramp-file-name-regexp))
 
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
@@ -92,8 +105,7 @@
 ;; BACKUPS
 ;; Put autosave files (ie #foo#) in one place, *not*
 ;; scattered all over the file system!
-(defvar autosave-dir
- (concat "/tmp/emacs_autosaves/" (user-login-name) "/"))
+(defvar autosave-dir "~/.eamcs.d/autosaves/")
 
 (make-directory autosave-dir t)
 
@@ -110,8 +122,28 @@
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
 ;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
-(defvar backup-dir (concat "/tmp/emacs_backups/" (user-login-name) "/"))
+(defvar backup-dir "~/.emacs.d/backups/")
 (setq backup-directory-alist (list (cons "." backup-dir)))
+
+(add-to-list 'backup-directory-alist
+             (cons tramp-file-name-regexp nil))
+
+;;(add-to-list 'backup-directory-alist
+;;                  (cons "." "~/.emacs.d/backups/"))
+;;(setq tramp-backup-directory-alist backup-directory-alist)
+
+(setq tramp-auto-save-directory "~/.emacs.d/tramp-autosave")
+
+;;(add-to-list 'backup-directory-alist
+;;             (cons tramp-file-name-regexp nil))
+
+;; IBUFFER
+;; ibuffer:
+;;(require 'ibuffer)
+;;(setq ibuffer-default-sorting-mode 'major-mode)
+;;(setq ibuffer-always-show-last-buffer t)
+;;(setq ibuffer-view-ibuffer t)
+;;(global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
 
 
 
@@ -192,32 +224,56 @@
 ;;   try-complete-file-name))
 
 ;;(setq hippie-expand-try-functions-list
-(fset 'my-hippie (make-hippie-expand-function
-                  '(try-expand-dabbrev-visible
-                    try-expand-dabbrev
-                    try-expand-dabbrev-from-kill
-                    try-expand-dabbrev-all-buffers
-                    ;;try-expand-all-abbrevs
-                    ;;try-expand-list
-                    ;;try-expand-line
-                    try-complete-lisp-symbol-partially
-                    try-complete-lisp-symbol
-                    try-complete-file-name-partially
-                    try-complete-file-name)))
+;;(fset 'my-hippie (make-hippie-expand-function
+;;                  '(try-expand-dabbrev-visible
+;;                    try-expand-dabbrev
+;;                    try-expand-dabbrev-from-kill
+;;                    try-expand-dabbrev-all-buffers
+;;                    ;;try-expand-all-abbrevs
+;;                    ;;try-expand-list
+;;                    ;;try-expand-line
+;;                    try-complete-lisp-symbol-partially
+;;                    try-complete-lisp-symbol
+;;                    try-complete-file-name-partially
+;;                    try-complete-file-name)))
 
-(defun indent-or-expand (arg)
-  "Either indent according to mode, or expand the word preceding
-point."
-  (interactive "*P")
-  (if (and
-       (or (bobp) (= ?w (char-syntax (char-before))))
-       (or (eobp) (not (= ?w (char-syntax (char-after))))))
-      (my-hippie arg)
-    (indent-according-to-mode)))
+(add-to-list 'load-path
+	     "~/.emacs.d/yasnippet")
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/yasnippet/snippets")
+
+(require 'smart-tab)
+(setq smart-tab-using-hippie-expand t)
+
+(require 'hippie-exp)
+(setq hippie-expand-try-functions-list
+      '(yas/hippie-try-expand
+        try-expand-dabbrev
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+	try-complete-lisp-symbol-partially
+	try-complete-lisp-symbol
+	try-complete-file-name-partially
+        try-complete-file-name))
+
+;;(global-smart-tab-mode 1)
+
+;;(defun indent-or-expand (arg)
+;;  "Either indent according to mode, or expand the word preceding
+;;point."
+;;  (interactive "*P")
+;;  (if (and
+;;       (or (bobp) (= ?w (char-syntax (char-before))))
+;;       (or (eobp) (not (= ?w (char-syntax (char-after))))))
+;;      (my-hippie arg)
+;;    (indent-according-to-mode)))
 
 (defun my-tab-fix ()
   (setq show-trailing-whitespace t)
-  (local-set-key [tab] 'indent-or-expand))
+  (smart-tab-mode)
+  (smart-tab-mode-on))
+;;  (local-set-key [tab] 'indent-or-expand))
 
 ;; newline-and-indent
 (defun my-set-newline-and-indent()
@@ -226,6 +282,11 @@ point."
 (defun my-c-style-fix ()
   (c-set-style "bsd")
   (setq indent-tabs-mode nil))
+
+(defun my-java-style-fix ()
+  (setq c-basic-offset 4)
+  (setq tab-width 4)
+  (setq indent-tabs-mode t))
 
 (dolist (hook '(
                 c-mode-hook
@@ -239,13 +300,20 @@ point."
                 vala-mode-hook
                 ruby-mode-hook
                 csharp-mode-hook
+                java-mode-hook
                 ))
   (add-hook hook 'my-tab-fix)
   (add-hook hook 'my-set-newline-and-indent))
 
 (add-hook 'c-mode-hook 'my-c-style-fix)
 (add-hook 'c++-mode-hook 'my-c-style-fix)
+(add-hook 'java-mode-hook 'my-java-style-fix)
 
+(add-hook
+ 'java-mode-hook
+ '(lambda () "Treat Java 1.5 @-style annotations as comments."
+    (setq c-comment-start-regexp "(@|/(/|[*][*]?))")
+    (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
 
 
 ;; (autoload 'paredit-mode "paredit"
@@ -270,7 +338,7 @@ point."
 ;; LINE NUMBERS
 (require 'linum)
 
-(require 'washout)
+;;(require 'washout)
 
 ;; PABBREV
 ;;(require 'pabbrev)
@@ -285,11 +353,11 @@ point."
 ;; (require 'slime)
 ;; (slime-setup))
 
-(when (not (eq system-type 'windows-nt))
-  (setq inferior-lisp-program "sbcl")
-  (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
-  (require 'slime)
-  (slime-setup))
+;;(when (not (eq system-type 'windows-nt))
+;;  (setq inferior-lisp-program "sbcl")
+;;  (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
+;;  (require 'slime))
+;;  (slime-setup))
 
 ;; lua support
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
@@ -387,14 +455,6 @@ point."
   (interactive)
   (mark-whole-buffer)
   (indent-region (region-beginning) (region-end)))
-
-;; Prevent emacs from setting mouse position for me.
-;; (thank you Emacs, but no thanks)
-(defun set-mouse-position (frame x y)
-  "This lisp function shadows the built-in
-set-mouse-position to prevent Emacs from
-moving my mouse cursor."
-  (return))
 
 
 ;; C++ #if 0 grayness
@@ -510,7 +570,7 @@ point."
       (list pycodechecker (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pycodecheck-init)))
-(add-hook 'python-mode-hook 'flymake-mode)
+;;(add-hook 'python-mode-hook 'flymake-mode)
 
 ;; RUBY
 (add-to-load-path (expand-file-name "~/.emacs.d/ruby"))
@@ -578,7 +638,7 @@ point."
 
 (ad-activate 'yank-pop)
 
-(bar-cursor-mode t)
+;;(bar-cursor-mode t)
 
 (global-set-key "\M-n" 'cyclebuffer-forward)
 (global-set-key "\M-p" 'cyclebuffer-backward)
@@ -688,7 +748,7 @@ point."
 ;;;; SMEX
 (require 'smex)
 (setq smex-save-file "~/.emacs.d/smex.save")
-(setq smex-prompt-string ":: ")
+(setq smex-prompt-string ">>> ")
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -700,5 +760,43 @@ point."
 (require 'quack)
 (setq quack-fontify-style 'emacs)
 
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
+;;(require 'pymacs)
+;;(pymacs-load "ropemacs" "rope-")
+;;(define-key ropemacs-local-keymap [(control c) (control /)] 'rope-code-assist)
+
+(require 'scala-mode-auto)
+
+(dolist (hook '(
+                scala-mode-hook
+                ))
+  (add-hook hook 'my-tab-fix)
+  (add-hook hook 'my-set-newline-and-indent))
+
+;; Switch fromm *.<impl> to *.<head> and vice versa
+(defun switch-cc-to-h ()
+  (interactive)
+  (when (string-match "^\\(.*\\)\\.\\([^.]*\\)$" buffer-file-name)
+    (let ((name (match-string 1 buffer-file-name))
+ 	  (suffix (match-string 2 buffer-file-name)))
+      (cond ((string-match suffix "c\\|cc\\|C\\|cpp")
+ 	     (cond ((file-exists-p (concat name ".h"))
+ 		    (find-file (concat name ".h")))
+ 		   ((file-exists-p (concat name ".hh"))
+ 		    (find-file (concat name ".hh")))
+                   ((file-exists-p (concat name ".hpp"))
+                    (find-file (concat name ".hpp")))))
+ 	    ((string-match suffix "h\\|hh\\|hpp")
+ 	     (cond ((file-exists-p (concat name ".cc"))
+ 		    (find-file (concat name ".cc")))
+ 		   ((file-exists-p (concat name ".C"))
+ 		    (find-file (concat name ".C")))
+ 		   ((file-exists-p (concat name ".cpp"))
+ 		    (find-file (concat name ".cpp")))
+ 		   ((file-exists-p (concat name ".c"))
+ 		    (find-file (concat name ".c")))))))))
+
+
+;;(require 'eclim)
+
+
+
