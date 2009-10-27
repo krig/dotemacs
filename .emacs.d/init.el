@@ -15,6 +15,14 @@
 (add-to-load-path (expand-file-name "~/.emacs.d/emacs-eclim"))
 (add-to-load-path (expand-file-name "~/.emacs.d/smart-tab"))
 
+
+;; multi-occur marks all occurrances of regexp (WANT)
+;; (global-set-key "\C-z" 'multi-occur)
+;; pop-to-mark-command.. i don't quite understand, but sounds useful
+;; (global-set-key "\M-j" 'pop-to-mark-command)
+;; ..don't really see the need for this
+;; (global-set-key "\M-q" 'revert-buffer)
+
 ;; COLOR THEME
 (when (eq system-type 'windows-nt)
   (set-default-font
@@ -512,11 +520,13 @@ point."
   (if (and
        (or (bobp) (= ?w (char-syntax (char-before))))
        (or (eobp) (not (= ?w (char-syntax (char-after))))))
-      (my-hippie arg)
+      (hippie-expand arg)
     (python-indent-line)))
 
 (defun mypy-extra-stuff ()
-  (local-set-key [tab] 'mypy-indent-or-expand)
+  ;;(local-set-key [tab] 'mypy-indent-or-expand)
+  (smart-tab-mode)
+  (smart-tab-mode-on)
   (setq show-trailing-whitespace t)
   (setq indent-tabs-mode nil))
   ;;(which-func-mode t))
