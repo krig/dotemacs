@@ -12,5 +12,5 @@ export ECLIPSE_HOME=$HOME/.eclipse/org.eclipse.platform_3.2.0/configuration/ecli
 export XMMS_PATH=tcp://192.168.1.138:9999
 export NAME="Kristoffer Grönlund"
 export EMAIL="kristoffer.gronlund@purplescout.se"
-
+export TERM=rxvt
 
