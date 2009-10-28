@@ -49,6 +49,8 @@ autoload -Uz compinit
 compinit
 
 # End of lines added by compinstall
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle ':completion:*' glob 1
 #zstyle ':completion:*' menu select=long-list select=0
 #zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -76,6 +78,11 @@ zstyle ':completion:*:descriptions' format '%B%d%b'
 # ignore files already given for rm, kill, diff
 zstyle ':completion:*:(rm|kill|diff):*' ignore-line yes
 
+# Completing process IDs with menu selection:
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*'   force-list always
+
+
 _force_rehash() {
   (( CURRENT == 1 )) && rehash
   return 1  # Because we didn't really complete anything
@@ -89,5 +96,6 @@ function url-encode; {
 
 # Search google for the given keywords.
 function google; {
-        $VIEW "http://www.google.com/search?q=`url-encode "${(j: :)@}"`"
+        $VIEW "http://www.google.com/search?q=`url-encode \"${(j: :)@}\"`"
 }
+
