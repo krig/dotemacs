@@ -1,4 +1,4 @@
-export EDITOR=emacsclient -t
+export EDITOR="emacsclient -t"
 export CFLAGS="-O0 -Wall -ggdb3"
 export PATH=$HOME/bin:$PATH
 export MAKEFLAGS="-j 5"
