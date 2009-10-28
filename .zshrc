@@ -82,6 +82,8 @@ zstyle ':completion:*:(rm|kill|diff):*' ignore-line yes
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*'   force-list always
 
+# supposed to speed things up
+zstyle ':completion:*' accept-exact '*(N)'
 
 _force_rehash() {
   (( CURRENT == 1 )) && rehash
