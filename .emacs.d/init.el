@@ -3,11 +3,11 @@
   (message (format "Passed %S..." path-string))
   (if (stringp path-string)
       (when (file-exists-p path-string)
-        (message (format "Adding %S to load-path..." path-string))
-        (add-to-list 'load-path (expand-file-name path-string)))
+	(message (format "Adding %S to load-path..." path-string))
+	(add-to-list 'load-path (expand-file-name path-string)))
     (add-to-load-path (car path-string))
     (if (cdr path-string)
-        (add-to-load-path (cdr path-string)))))
+	(add-to-load-path (cdr path-string)))))
 
 ;;(add-to-list 'load-path "~/.emacs.d")
 (add-to-load-path (expand-file-name "~/.emacs.d"))
@@ -54,22 +54,22 @@
   (untabify (point-min) (point-max)))
 
 ;;(setq initial-major-mode
-;;      (function (lambda ()
-;;        (text-mode)
-;;        (turn-on-auto-fill))))
+;;	(function (lambda ()
+;;	  (text-mode)
+;;	  (turn-on-auto-fill))))
 
 
 (defun create-scratch-buffer nil
   "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
   (interactive)
   (let ((n 0)
-        bufname)
+	bufname)
     (while (progn
-             (setq bufname (concat "*scratch"
-                                   (if (= n 0) "" (int-to-string n))
-                                   "*"))
-             (setq n (1+ n))
-             (get-buffer bufname)))
+	     (setq bufname (concat "*scratch"
+				   (if (= n 0) "" (int-to-string n))
+				   "*"))
+	     (setq n (1+ n))
+	     (get-buffer bufname)))
     (switch-to-buffer (get-buffer-create bufname))
     (text-mode)
     (turn-on-auto-fill)))
@@ -104,8 +104,8 @@
 
 (setq vc-ignore-dir-regexp
       (format "\\(%s\\)\\|\\(%s\\)"
-              vc-ignore-dir-regexp
-              tramp-file-name-regexp))
+	      vc-ignore-dir-regexp
+	      tramp-file-name-regexp))
 
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
@@ -122,10 +122,10 @@
 
 (defun make-auto-save-file-name ()
   (concat autosave-dir
-   (if buffer-file-name
-      (concat "#" (file-name-nondirectory buffer-file-name) "#")
-    (expand-file-name
-     (concat "#%" (buffer-name) "#")))))
+	  (if buffer-file-name
+	      (concat "#" (file-name-nondirectory buffer-file-name) "#")
+	    (expand-file-name
+	     (concat "#%" (buffer-name) "#")))))
 
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
@@ -134,16 +134,16 @@
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 (add-to-list 'backup-directory-alist
-             (cons tramp-file-name-regexp nil))
+	     (cons tramp-file-name-regexp nil))
 
 ;;(add-to-list 'backup-directory-alist
-;;                  (cons "." "~/.emacs.d/backups/"))
+;;		    (cons "." "~/.emacs.d/backups/"))
 ;;(setq tramp-backup-directory-alist backup-directory-alist)
 
 (setq tramp-auto-save-directory "~/.emacs.d/tramp-autosave")
 
 ;;(add-to-list 'backup-directory-alist
-;;             (cons tramp-file-name-regexp nil))
+;;	       (cons tramp-file-name-regexp nil))
 
 ;; IBUFFER
 ;; ibuffer:
@@ -185,13 +185,13 @@
 
 ;; C SOURCE FOR EMACS
 (when (eq system-type 'windows-nt)
-    (setq find-function-C-source-directory "C:/Program/Emacs/src/src"))
+  (setq find-function-C-source-directory "C:/Program/Emacs/src/src"))
 (when (not (eq system-type 'windows-nt))
   (setq find-function-C-source-directory "~/.emacs.d/emacs-snapshot-20080228/src"))
 
 ;; SERVER
 (when (not (eq system-type 'windows-nt))
-           (server-start))
+  (server-start))
 
 ;; IDO
 
@@ -204,9 +204,9 @@
 (add-hook 'ido-define-mode-map-hook 'ido-my-keys)
 (defun ido-my-keys ()
   (define-key ido-mode-map "\t" 'ido-complete)
-                                        ;tab is better for completion lists
-                                        ;(define-key ido-mode-map (kbd "tab")
-                                        ; 'ido-complete)
+					;tab is better for completion lists
+					;(define-key ido-mode-map (kbd "tab")
+					; 'ido-complete)
   (define-key ido-mode-map "\C-t" 'ido-toggle-regexp) ; same as in isearch
   (define-key ido-mode-map "\C-d" 'ido-enter-dired)) ; cool
 
@@ -233,17 +233,17 @@
 
 ;;(setq hippie-expand-try-functions-list
 ;;(fset 'my-hippie (make-hippie-expand-function
-;;                  '(try-expand-dabbrev-visible
-;;                    try-expand-dabbrev
-;;                    try-expand-dabbrev-from-kill
-;;                    try-expand-dabbrev-all-buffers
-;;                    ;;try-expand-all-abbrevs
-;;                    ;;try-expand-list
-;;                    ;;try-expand-line
-;;                    try-complete-lisp-symbol-partially
-;;                    try-complete-lisp-symbol
-;;                    try-complete-file-name-partially
-;;                    try-complete-file-name)))
+;;		    '(try-expand-dabbrev-visible
+;;		      try-expand-dabbrev
+;;		      try-expand-dabbrev-from-kill
+;;		      try-expand-dabbrev-all-buffers
+;;		      ;;try-expand-all-abbrevs
+;;		      ;;try-expand-list
+;;		      ;;try-expand-line
+;;		      try-complete-lisp-symbol-partially
+;;		      try-complete-lisp-symbol
+;;		      try-complete-file-name-partially
+;;		      try-complete-file-name)))
 
 (add-to-list 'load-path
 	     "~/.emacs.d/yasnippet")
@@ -257,13 +257,13 @@
 (require 'hippie-exp)
 (setq hippie-expand-try-functions-list
       '(yas/hippie-try-expand
-        try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
+	try-expand-dabbrev
+	try-expand-dabbrev-all-buffers
+	try-expand-dabbrev-from-kill
 	try-complete-lisp-symbol-partially
 	try-complete-lisp-symbol
 	try-complete-file-name-partially
-        try-complete-file-name))
+	try-complete-file-name))
 
 ;;(global-smart-tab-mode 1)
 
@@ -272,9 +272,9 @@
 ;;point."
 ;;  (interactive "*P")
 ;;  (if (and
-;;       (or (bobp) (= ?w (char-syntax (char-before))))
-;;       (or (eobp) (not (= ?w (char-syntax (char-after))))))
-;;      (my-hippie arg)
+;;	 (or (bobp) (= ?w (char-syntax (char-before))))
+;;	 (or (eobp) (not (= ?w (char-syntax (char-after))))))
+;;	(my-hippie arg)
 ;;    (indent-according-to-mode)))
 
 (defun my-tab-fix ()
@@ -297,19 +297,19 @@
   (setq indent-tabs-mode t))
 
 (dolist (hook '(
-                c-mode-hook
-                c++-mode-hook
-                sh-mode-hook
-                emacs-lisp-mode-hook
-                lisp-mode-hook
-                lisp-interaction-mode-hook
-                scheme-mode-hook
-                perl-mode-hook
-                vala-mode-hook
-                ruby-mode-hook
-                csharp-mode-hook
-                java-mode-hook
-                ))
+		c-mode-hook
+		c++-mode-hook
+		sh-mode-hook
+		emacs-lisp-mode-hook
+		lisp-mode-hook
+		lisp-interaction-mode-hook
+		scheme-mode-hook
+		perl-mode-hook
+		vala-mode-hook
+		ruby-mode-hook
+		csharp-mode-hook
+		java-mode-hook
+		))
   (add-hook hook 'my-tab-fix)
   (add-hook hook 'my-set-newline-and-indent))
 
@@ -334,7 +334,7 @@
 ;;(add-to-list 'load-path "~/.emacs.d/ocaml-mode")
 
 ;;(setq auto-mode-alist
-;;      (cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
+;;	(cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
 ;;(autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
 ;;(autoload 'run-caml "inf-caml" "Run an inferior Caml process." t)
 
@@ -379,13 +379,14 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (autoload 'markdown-mode "markdown-mode" "Markdown editing mode." t)
 
-(defun real-untabify-hook ()
-  (prog1 nil
-    (untabify-buffer)))
+;; NOTE: this is broken and untabifies all over.
+;;(defun real-untabify-hook ()
+;;  (prog1 nil
+;;    (untabify-buffer)))
+;;(defun untabify-hook ()
+;;  (add-hook 'before-save-hook 'real-untabify-hook))
+;;(add-hook 'markdown-mode-hook 'untabify-hook)
 
-(defun untabify-hook ()
-  (add-hook 'before-save-hook 'real-untabify-hook))
-(add-hook 'markdown-mode-hook 'untabify-hook)
 
 ;;(defun cliki:start-slime ()
 ;;  (unless (slime-connected-p)
@@ -408,13 +409,13 @@
 ;; Exclude scratch buffers from tabbar
 (when (require 'tabbar nil t)
   (setq tabbar-buffer-groups-function
-        (lambda (b) (list "All Buffers")))
+	(lambda (b) (list "All Buffers")))
   (setq tabbar-buffer-list-function
-        (lambda ()
-          (remove-if
-           (lambda(buffer)
-             (find (aref (buffer-name buffer) 0) " *"))
-           (buffer-list))))
+	(lambda ()
+	  (remove-if
+	   (lambda(buffer)
+	     (find (aref (buffer-name buffer) 0) " *"))
+	   (buffer-list))))
   (tabbar-mode))
 
 
@@ -423,10 +424,10 @@
 
 ;; CUSTOMIZE SET
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(inhibit-startup-echo-area-message t)
  '(inhibit-startup-screen t)
  '(initial-buffer-choice t)
@@ -440,22 +441,22 @@
  '(tabbar-scroll-right-button (quote (("|") "|"))))
 
 ;;(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- ;; '(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "#aaaaaa"))))
- ;; '(font-lock-variable-name-face ((t nil)))
- ;; '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#777777"))))
- ;; '(tabbar-default-face ((t (:inherit variable-pitch :background "#404040" :foreground "#888888" :height 1.1))))
- ;; '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#555555" :foreground "#eeeeeb"))))
- ;; '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#333333")))))
- ;;'(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "#aaaaaa"))))
- ;;'(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#dddddd"))))
- ;;'(tabbar-default-face ((t (:inherit variable-pitch :background "#4f4f4f" :foreground "#999999" :height 0.8))))
- ;;'(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#d87c23" :foreground "#202020"))))
- ;;'(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#5f5f5f"))))
- ;;'(trailing-whitespace ((((class color)) (:background "#883030")))))
+;; custom-set-faces was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
+;; '(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "#aaaaaa"))))
+;; '(font-lock-variable-name-face ((t nil)))
+;; '(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#777777"))))
+;; '(tabbar-default-face ((t (:inherit variable-pitch :background "#404040" :foreground "#888888" :height 1.1))))
+;; '(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#555555" :foreground "#eeeeeb"))))
+;; '(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#333333")))))
+;;'(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face :foreground "#aaaaaa"))))
+;;'(tabbar-button-face ((t (:inherit tabbar-default-face :foreground "#dddddd"))))
+;;'(tabbar-default-face ((t (:inherit variable-pitch :background "#4f4f4f" :foreground "#999999" :height 0.8))))
+;;'(tabbar-selected-face ((t (:inherit tabbar-default-face :background "#d87c23" :foreground "#202020"))))
+;;'(tabbar-unselected-face ((t (:inherit tabbar-default-face :background "#5f5f5f"))))
+;;'(trailing-whitespace ((((class color)) (:background "#883030")))))
 
 ;; FUNCTIONS
 (defun reindent-buffer ()
@@ -475,15 +476,15 @@
   (setq cpp-known-writable 't)
   (setq cpp-unknown-writable 't)
   (setq cpp-edit-list
-        '((#("0" 0 1
-             (c-in-sws t fontified t))
-           (background-color . "#4f4f4f")
-           nil both nil)
-          (#("1" 0 1
-             (c-in-sws t fontified t))
-           nil
-           (background-color . "#4f4f4f")
-           both nil)))
+	'((#("0" 0 1
+	     (c-in-sws t fontified t))
+	   (background-color . "#4f4f4f")
+	   nil both nil)
+	  (#("1" 0 1
+	     (c-in-sws t fontified t))
+	   nil
+	   (background-color . "#4f4f4f")
+	   both nil)))
   (cpp-highlight-buffer t))
 
 (defun my-c-mode-common-hook ()
@@ -529,7 +530,7 @@ point."
   (smart-tab-mode-on)
   (setq show-trailing-whitespace t)
   (setq indent-tabs-mode nil))
-  ;;(which-func-mode t))
+;;(which-func-mode t))
 
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
 (add-hook 'python-mode-hook 'mypy-extra-stuff)
@@ -542,12 +543,12 @@ point."
   (font-lock-add-keywords
    nil
    `((,(concat "\\<\\(NULL"
-               "\\|c\\(def\\|har\\|typedef\\)"
-               "\\|e\\(num\\|xtern\\)"
-               "\\|float"
-               "\\|in\\(clude\\|t\\)"
-               "\\|object\\|public\\|struct\\|type\\|union\\|void"
-               "\\)\\>")
+	       "\\|c\\(def\\|har\\|typedef\\)"
+	       "\\|e\\(num\\|xtern\\)"
+	       "\\|float"
+	       "\\|in\\(clude\\|t\\)"
+	       "\\|object\\|public\\|struct\\|type\\|union\\|void"
+	       "\\)\\>")
       1 font-lock-keyword-face t))))
 
 ;; FLYMAKE FOR PYTHON
@@ -557,14 +558,14 @@ point."
 ;; (when (load "flymake" t)
 ;;   (defun flymake-pylint-init ()
 ;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                        'flymake-create-temp-inplace))
-;;            (local-file (file-relative-name
-;;                         temp-file
-;;                         (file-name-directory buffer-file-name))))
-;;       (list "epylint" (list local-file))))
+;;			  'flymake-create-temp-inplace))
+;;	      (local-file (file-relative-name
+;;			   temp-file
+;;			   (file-name-directory buffer-file-name))))
+;;	 (list "epylint" (list local-file))))
 
 ;;   (add-to-list 'flymake-allowed-file-name-masks
-;;                '("\\.py\\'" flymake-pylint-init)))
+;;		  '("\\.py\\'" flymake-pylint-init)))
 ;;(add-hook 'python-mode-hook 'flymake-mode)
 
 ;; code checking via flymake
@@ -573,13 +574,13 @@ point."
 (when (load "flymake" t)
   (defun flymake-pycodecheck-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
+		       'flymake-create-temp-inplace))
+	   (local-file (file-relative-name
+			temp-file
+			(file-name-directory buffer-file-name))))
       (list pycodechecker (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pycodecheck-init)))
+	       '("\\.py\\'" flymake-pycodecheck-init)))
 ;;(add-hook 'python-mode-hook 'flymake-mode)
 
 ;; RUBY
@@ -595,8 +596,8 @@ point."
 (autoload 'inf-ruby-keys "inf-ruby"
   "Set local key defs for inf-ruby in ruby-mode")
 (add-hook 'ruby-mode-hook
-          '(lambda ()
-             (inf-ruby-keys)))
+	  '(lambda ()
+	     (inf-ruby-keys)))
 ;; If you have Emacs 19.2x or older, use rubydb2x
 (autoload 'rubydb "rubydb3x" "Ruby debugger" t)
 ;; uncomment the next line if you want syntax highlighting
@@ -617,10 +618,10 @@ point."
 
 (defun flymake-get-major-mode-and-masks ()
   (let ((fnm flymake-allowed-major-modes)
-        (mode-and-masks nil))
+	(mode-and-masks nil))
     (while (and (not mode-and-masks) fnm)
       (if (eq (car (car fnm)) major-mode)
-          (setq mode-and-masks (cdr (car fnm))))
+	  (setq mode-and-masks (cdr (car fnm))))
       (setq fnm (cdr fnm)))
     mode-and-masks))
 
@@ -629,14 +630,14 @@ point."
   (unless (stringp file-name)
     (error "Invalid file-name"))
   (let ((fnm flymake-allowed-file-name-masks)
-        (mode-and-masks  nil))
+	(mode-and-masks	 nil))
     (while (and (not mode-and-masks) fnm)
       (if (string-match (car (car fnm)) file-name)
-          (setq mode-and-masks (cdr (car fnm))))
+	  (setq mode-and-masks (cdr (car fnm))))
       (setq fnm (cdr fnm)))
     ;; this if added by ~krig
     (if (eq mode-and-masks nil)
-        (setq mode-and-masks (flymake-get-major-mode-and-masks)))
+	(setq mode-and-masks (flymake-get-major-mode-and-masks)))
     (flymake-log 3 "file %s, init=%s" file-name (car mode-and-masks))
     mode-and-masks))
 
@@ -657,18 +658,18 @@ point."
   (mapconcat
    (lambda (x)
      (if (or (eq x 60) (eq x 62) (eq x 96)
-             (and (>= x 34) (<= x 38)) (and (>= x 123) (<= x 255))
-             (and (>= x 91) (<= x 94)) (and (>= x 0) (<= x 9))
-             (and (>= x 11) (<= x 32)))
-         (format "%%%x" x)
+	     (and (>= x 34) (<= x 38)) (and (>= x 123) (<= x 255))
+	     (and (>= x 91) (<= x 94)) (and (>= x 0) (<= x 9))
+	     (and (>= x 11) (<= x 32)))
+	 (format "%%%x" x)
        (char-to-string x)))
    str ""))
 
 (defun paste-se-query-string (pairs)
   (mapconcat
    (lambda (x) (format "%s=%s"
-                       (paste-se-encode-uri-component (car x))
-                       (paste-se-encode-uri-component (cdr x))))
+		       (paste-se-encode-uri-component (car x))
+		       (paste-se-encode-uri-component (cdr x))))
    pairs "&"))
 
 (defun paste-se-paste-region (beg end)
@@ -681,18 +682,18 @@ point."
 
 (defun paste-se-paste-string (paste-string)
   (let ((url-request-method "POST")
-        (url-request-data (paste-se-query-string
-                           (list (cons "paste" paste-string)
-                                 (cons "lang" "text")
-                                 (cons "user" "")
-                                 (cons "desc" ""))))
-        (url-request-extra-headers
-         '(("Content-Type" . "application/x-www-form-urlencoded")))
-        (paste-cb (lambda (&rest args)
-                    (set buffer (car (cdr args)))
-                    (insert (plist-get (car args) :redirect)))))
+	(url-request-data (paste-se-query-string
+			   (list (cons "paste" paste-string)
+				 (cons "lang" "text")
+				 (cons "user" "")
+				 (cons "desc" ""))))
+	(url-request-extra-headers
+	 '(("Content-Type" . "application/x-www-form-urlencoded")))
+	(paste-cb (lambda (&rest args)
+		    (set buffer (car (cdr args)))
+		    (insert (plist-get (car args) :redirect)))))
     (let ((oldbuf (current-buffer)))
-          (url-retrieve "http://paste.se/index.py" 'paste-cb (list oldbuf)))))
+      (url-retrieve "http://paste.se/index.py" 'paste-cb (list oldbuf)))))
 
 ;;(define-generic-mode 'ragel-mode
 ;;  '("//") ;; comment-list
@@ -710,18 +711,18 @@ point."
 ;;  '(".rl\\'") ;; auto-mode-list
 ;;  nil) ;; function-list
 
- (defvar ragel-mode-font-lock-keywords
-   '(("\\('.*'\\)" 1 'font-lock-string-face)
-     ("\\(\\\".*\\\"\\)" 1 'font-lock-string-face)))
+(defvar ragel-mode-font-lock-keywords
+  '(("\\('.*'\\)" 1 'font-lock-string-face)
+    ("\\(\\\".*\\\"\\)" 1 'font-lock-string-face)))
 ;;   '(
 ;;     ("\\(//.*\\)" 1 'font-lock-comment-face)
 
 ;;     ))
 
- (define-derived-mode ragel-mode fundamental-mode "Ragel"
-   "Major mode to edit ragel files."
-   (set (make-local-variable 'font-lock-keywords)
-        '(ragel-mode-font-lock-keywords)))
+(define-derived-mode ragel-mode fundamental-mode "Ragel"
+  "Major mode to edit ragel files."
+  (set (make-local-variable 'font-lock-keywords)
+       '(ragel-mode-font-lock-keywords)))
 ;;   (set (make-local-variable 'comment-start) "//"))
 
 ;; JAVASCRIPT MODE
@@ -734,10 +735,10 @@ point."
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 
@@ -751,8 +752,8 @@ point."
     (copy-region-as-kill
      (point)
      (progn (if arg (forward-visible-line arg)
-              (end-of-visible-line))
-            (point)))))
+	      (end-of-visible-line))
+	    (point)))))
 
 
 ;;;; SMEX
@@ -777,8 +778,8 @@ point."
 (require 'scala-mode-auto)
 
 (dolist (hook '(
-                scala-mode-hook
-                ))
+		scala-mode-hook
+		))
   (add-hook hook 'my-tab-fix)
   (add-hook hook 'my-set-newline-and-indent))
 
@@ -787,23 +788,23 @@ point."
   (interactive)
   (when (string-match "^\\(.*\\)\\.\\([^.]*\\)$" buffer-file-name)
     (let ((name (match-string 1 buffer-file-name))
- 	  (suffix (match-string 2 buffer-file-name)))
+	  (suffix (match-string 2 buffer-file-name)))
       (cond ((string-match suffix "c\\|cc\\|C\\|cpp")
- 	     (cond ((file-exists-p (concat name ".h"))
- 		    (find-file (concat name ".h")))
- 		   ((file-exists-p (concat name ".hh"))
- 		    (find-file (concat name ".hh")))
-                   ((file-exists-p (concat name ".hpp"))
-                    (find-file (concat name ".hpp")))))
- 	    ((string-match suffix "h\\|hh\\|hpp")
- 	     (cond ((file-exists-p (concat name ".cc"))
- 		    (find-file (concat name ".cc")))
- 		   ((file-exists-p (concat name ".C"))
- 		    (find-file (concat name ".C")))
- 		   ((file-exists-p (concat name ".cpp"))
- 		    (find-file (concat name ".cpp")))
- 		   ((file-exists-p (concat name ".c"))
- 		    (find-file (concat name ".c")))))))))
+	     (cond ((file-exists-p (concat name ".h"))
+		    (find-file (concat name ".h")))
+		   ((file-exists-p (concat name ".hh"))
+		    (find-file (concat name ".hh")))
+		   ((file-exists-p (concat name ".hpp"))
+		    (find-file (concat name ".hpp")))))
+	    ((string-match suffix "h\\|hh\\|hpp")
+	     (cond ((file-exists-p (concat name ".cc"))
+		    (find-file (concat name ".cc")))
+		   ((file-exists-p (concat name ".C"))
+		    (find-file (concat name ".C")))
+		   ((file-exists-p (concat name ".cpp"))
+		    (find-file (concat name ".cpp")))
+		   ((file-exists-p (concat name ".c"))
+		    (find-file (concat name ".c")))))))))
 
 
 ;;(require 'eclim)
