@@ -15,6 +15,6 @@ alias la="ls -A"
 alias l="ls -CF"
 alias findpy="grin -I \"*.py\" -d \"build,.git,debian\""
 alias yo="ssh -X"
-alias irc="ssh -X stalin"
+alias irc="TERM=xterm ssh -X stalin"
 alias tuttifrutti="python2.5 ../tuttifrutti/tuttifrutti.py"
 
