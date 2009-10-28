@@ -14,8 +14,13 @@ setopt correct # correct spelling mistakes in commands
 setopt autocd # change to directory without "cd"
 setopt auto_list # auto-list all completion choices when hitting TAB
 # automenu is needed for menu-based selection
-setopt auto_menu # don't auto-list first match
-unsetopt extendedglob
+setopt automenu # don't auto-list first match
+setopt extendedglob
+setopt listpacked
+setopt listtypes
+setopt completeinword          # not just at the end
+setopt alwaystoend             # when complete from middle, move cursor
+setopt histverify              # when using ! cmds, confirm first
 
 # misc
 unsetopt beep # don't beep
@@ -23,17 +28,6 @@ unsetopt notify # don't report background jobs immediately
 unsetopt hup # don't set HUP to jobs when exiting
 
 bindkey -e bold
-#bindkey -v # vim bindings
-# Ctrl+R history searching with vim bindings
-#bindkey -M viins '' history-incremental-search-backward
-#bindkey -M vicmd '' history-incremental-search-backward
-# Ctrl+ A/E even with vim bindings
-#bindkey -M viins '' beginning-of-line
-#bindkey -M vicmd '' beginning-of-line
-#bindkey -M viins '' end-of-line
-#bindkey -M vicmd '' end-of-line
-#bindkey -M viins '' forward-word
-#bindkey -M vicmd '' forward-word
 
 # expand no matter where in the line we are
 bindkey '	' expand-or-complete-prefix
@@ -41,14 +35,11 @@ bindkey '	' expand-or-complete-prefix
 if [ -e $HOME/.agent ]; then
     source $HOME/.agent
 fi
-for file in $HOME/.zsh/scripts/*; do
+for file in $HOME/.zsh/??-*; do
     source $file
 done
-# username@host:directory (git branch)>
-# red if root, git branch in green
-#export PS1=':: %(!.%{[31m%}.%{[36m%})%n@%m:%{[00m%}%~%{[32m%}$GITBRANCH%{[00m%}> '
 
-export PS1='%(?..?:%? )%(!.%{[31m%}.%{[36m%})%n:%{[00m%}%~%# '
+export PS1='%(?..?:%? )%(!.%{[31m%}.%{[34m%})%B%n%b%{[00m%}.%{[34m%}%m%{[00m%} %~ %# '
 export RPROMPT='%{[32m%}$GITBRANCH%{[00m%}%T'
 
 # The following lines were added by compinstall
@@ -60,7 +51,7 @@ compinit
 # End of lines added by compinstall
 zstyle ':completion:*' glob 1
 zstyle ':completion:*' menu select=long-list select=0
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+#zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # host autocompletion for hosts from known_hosts
 zstyle -e ':completion::*:hosts' hosts 'reply=(
@@ -74,10 +65,7 @@ zstyle -e ':completion::*:hosts' hosts 'reply=(
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
                              /usr/sbin /usr/bin /sbin /bin
 zstyle ':completion:*:functions' ignored-patterns '_*' # Ignore completion functions for commands you don't have
-
+zstyle ':completion:*:descriptions' format '%B%d%b'
 # ignore files already given for rm, kill, diff
 zstyle ':completion:*:(rm|kill|diff):*' ignore-line yes
 
-if [ "$HOST" = "emu" ]; then
-    mpx
-fi
