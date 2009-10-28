@@ -17,4 +17,9 @@ alias findpy="grin -I \"*.py\" -d \"build,.git,debian\""
 alias yo="ssh -X"
 alias irc="TERM=xterm ssh -X stalin"
 alias tuttifrutti="python2.5 ../tuttifrutti/tuttifrutti.py"
+alias less=most
+alias more=most
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
 
