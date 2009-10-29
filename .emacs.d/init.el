@@ -809,5 +809,9 @@ point."
 
 ;;(require 'eclim)
 
+;; shell-mode
+(defun shell ()
+  (interactive)
+  (ansi-term "/bin/zsh"))
 
 
