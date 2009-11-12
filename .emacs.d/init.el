@@ -814,4 +814,12 @@ point."
   (interactive)
   (ansi-term "/bin/zsh"))
 
+;; google go mode
 
+(require 'go-mode-load)
+
+(dolist (hook '(
+		go-mode-hook
+		))
+  (add-hook hook 'my-tab-fix)
+  (add-hook hook 'my-set-newline-and-indent))
