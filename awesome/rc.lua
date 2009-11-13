@@ -11,6 +11,8 @@ require("naughty")
 require("freedesktop.utils")
 require("freedesktop.menu")
 
+-- Teardrop
+require("teardrop")
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -296,7 +298,10 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end)
+              end),
+
+    -- Teardrop console
+    awful.key({ modkey }, "F10", function () teardrop("urxvt", "bottom", "center", 1, 0.15) end)
 )
 
 clientkeys = awful.util.table.join(

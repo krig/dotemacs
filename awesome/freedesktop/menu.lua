@@ -16,11 +16,11 @@ function new()
 	--programs['Video'] = {}
 	programs['Development'] = {}
 	--programs['Education'] = {}
-	--programs['Game'] = {}
+	programs['Game'] = {}
 	programs['Graphics'] = {}
 	programs['Network'] = {}
 	programs['Office'] = {}
-	--programs['Settings'] = {}
+	programs['Settings'] = {}
 	programs['System'] = {}
 	programs['Utility'] = {}
 	programs['Other'] = {}
