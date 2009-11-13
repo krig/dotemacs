@@ -242,3 +242,21 @@ point."
 (require 'quack)
 (setq quack-fontify-style 'emacs)
 
+;; SLIME
+;;(when (eq system-type 'windows-nt)
+;; (add-to-list 'load-path "~/.emacs.d/slime/")
+;; (setq inferior-lisp-program "c:/Program/clisp-2.45/full/lisp.exe -B c:/Program/clisp-2.45/full -M c:/Program/clisp-2.45/full/lispinit.mem -ansi -q")
+;; (require 'slime)
+;; (slime-setup))
+
+;;(when (not (eq system-type 'windows-nt))
+;;  (setq inferior-lisp-program "sbcl")
+;;  (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
+;;  (require 'slime))
+;;  (slime-setup))
+
+;;(defun cliki:start-slime ()
+;;  (unless (slime-connected-p)
+;;    (save-excursion (slime))))
+;;
+;;(add-hook 'slime-mode-hook 'cliki:start-slime)
