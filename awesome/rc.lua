@@ -7,6 +7,11 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
+-- Freedesktop menu
+require("freedesktop.utils")
+require("freedesktop.menu")
+
+
 -- Load Debian menu entries
 require("debian.menu")
 
@@ -18,6 +23,9 @@ beautiful.init(awful.util.getdir("config") .. "/zenburn/theme.lua")
 terminal = "urxvt"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
+
+freedesktop.utils.terminal = terminal  -- default: "xterm"
+freedesktop.utils.icon_theme = 'gnome' -- look inside /usr/share/icons/, default: nil (don't use icon theme)
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -55,24 +63,49 @@ end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
+menu_items = freedesktop.menu.new()
 myawesomemenu = {
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
-   { "restart", awesome.restart },
-   { "quit", awesome.quit }
+   { "manual", terminal .. " -e man awesome", freedesktop.utils.lookup_icon({ icon = 'help' }) },
+   { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua", 
+     freedesktop.utils.lookup_icon({icon = 'package_settings' }) },
+   { "restart", awesome.restart, freedesktop.utils.lookup_icon({ icon = 'gtk-refresh' }) },
+   { "quit", awesome.quit, freedesktop.utils.lookup_icon({ icon = 'gtk-quit' }) }
 }
+table.insert(menu_items, 1, { "awesome", myawesomemenu, beautiful.awesome_icon })
+--table.insert(menu_items, { "Debian", debian.menu.Debian_menu.Debian, 
+--			   freedesktop.utils.lookup_icon({ icon = 'debian-logo' }) })
+table.insert(menu_items, { "Terminal", terminal, freedesktop.utils.lookup_icon({icon = 'terminal'}) })
+table.insert(menu_items, { "Firefox", terminal, freedesktop.utils.lookup_icon({icon = 'web-browser'}) })
+table.insert(menu_items, { "Pidgin", terminal, freedesktop.utils.lookup_icon({icon = 'pidgin'}) })
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "open terminal", terminal }
-                                  }
-                        })
+mymainmenu = awful.menu.new({ items = menu_items })
 
-mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
+mylauncher = awful.widget.launcher({ image = freedesktop.utils.lookup_icon({ icon = 'distributor-logo' }),
                                      menu = mymainmenu })
+
 -- }}}
 
 -- {{{ Wibox
+
+-- Keyboard map indicator and changer
+kbdcfg = {}
+kbdcfg.cmd = "setxkbmap"
+kbdcfg.layout = { "us", "se" }
+kbdcfg.current = 1  -- us is our default layout
+kbdcfg.widget = widget({ type = "textbox", align = "right" })
+kbdcfg.widget.text = " <b>" .. kbdcfg.layout[kbdcfg.current] .. "</b> "
+kbdcfg.switch = function ()
+		   kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
+		   local t = " <b>" .. kbdcfg.layout[kbdcfg.current] .. "</b> "
+		   kbdcfg.widget.text = t
+		   os.execute( kbdcfg.cmd .. " " .. kbdcfg.layout[kbdcfg.current] )
+		end
+    
+-- Mouse bindings
+kbdcfg.widget:buttons(
+		      awful.util.table.join(awful.button({ }, 1, 
+							 function () kbdcfg.switch() end)))
+
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" }, "%H:%M")
 
@@ -149,6 +182,7 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+	kbdcfg.widget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
