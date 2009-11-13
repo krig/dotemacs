@@ -57,7 +57,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s)
+    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, awful.layout.suit.tile)
 end
 -- }}}
 
@@ -107,7 +107,43 @@ kbdcfg.widget:buttons(
 							 function () kbdcfg.switch() end)))
 
 -- Create a textclock widget
+local calendar = nil
+local offset = 0
+
+function remove_calendar()
+   if calendar ~= nil then
+      naughty.destroy(calendar)
+      calendar = nil
+      offset = 0
+   end
+end
+
+function add_calendar(inc_offset)
+   local save_offset = offset
+   remove_calendar()
+   offset = save_offset + inc_offset
+   local datespec = os.date("*t")
+   datespec = datespec.year * 12 + datespec.month - 1 + offset
+   datespec = (datespec % 12 + 1) .. " " .. math.floor(datespec / 12)
+   local cal = awful.util.pread("cal -m " .. datespec)
+   cal = string.gsub(cal, "^%s*(.-)%s*$", "%1")
+   local setup = {
+      text = string.format('<span font_desc="%s">%s</span>', "monospace", os.date("%a, %d %B %Y") .. "\n" .. cal),
+      timeout = 0, hover_timeout = 0.5,
+      width = 160,
+   }
+   calendar = naughty.notify(setup)
+end
+
+
 mytextclock = awful.widget.textclock({ align = "right" }, "%H:%M")
+mytextclock:add_signal("mouse::enter", function()
+			     add_calendar(0)
+			  end)
+mytextclock:add_signal("mouse::leave", remove_calendar)
+
+mytextclock:buttons(awful.util.table.join(awful.button({ }, 4, function() add_calendar(-1) end),
+					  awful.button({ }, 5, function() add_calendar(1) end)))
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -373,3 +409,4 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
