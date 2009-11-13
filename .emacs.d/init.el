@@ -167,17 +167,6 @@
  '(tabbar-scroll-right-button (quote (("|") "|"))))
 
 
-;;;; SMEX
-(require 'smex)
-(setq smex-save-file "~/.emacs.d/smex.save")
-(setq smex-prompt-string ">>> ")
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c M-x") 'smex-update-and-run)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
 (load (krig-base-path "util"))
 
 ;; SERVER
@@ -196,5 +185,16 @@
 (global-set-key "\M-n" 'cyclebuffer-forward)
 (global-set-key "\M-p" 'cyclebuffer-backward)
 
-
+;;;; SMEX
+;; Load smex last to have the command cache uptodate
+(require 'smex)
+(setq smex-save-file "~/.emacs.d/smex.save")
+(setq smex-prompt-string ">>> ")
+(smex-initialize)
+(smex-auto-update) ;; refresh caches after 60 seconds of idle time
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-c M-x") 'smex-update-and-run)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
