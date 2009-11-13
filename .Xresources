@@ -1,6 +1,7 @@
-Xft.antialias: true
-Xft.hinting: true
+Xft.antialias: 1
+Xft.hinting: 1
 Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
 Xft.autohint: true
 Xft.rgba: rgb
 Xft.dpi: 96
@@ -9,43 +10,26 @@ Emacs.fontbackend: xft
 Emacs.font: Liberation Mono-9
 emacs*geometry: 120x50
 
+!URxvt.color0: #2E3436
+urxvt*background: #2e3436
+urxvt*foreground: #eeeeec
+URxvt.color1: #CC0000
+URxvt.color2: #4E9A06
+URxvt.color3: #C4A000
+URxvt.color4: #3465A4
+URxvt.color5: #75507B
+URxvt.color6: #06989A
+URxvt.color7: #D3D7CF
+URxvt.color8: #555753
+URxvt.color9: #EF2929
+URxvt.color10: #8AE234
+URxvt.color11: #FCE94F
+URxvt.color12: #729FCF
+URxvt.color13: #AD7FA8
+URxvt.color14: #34E2E2
+URxvt.color15: #EEEEEC
 
-! background (not tango), foreground, tint color (for inheritPixmap)
-urxvt*background: #000000
-urxvt*foreground: #babdb6
 urxvt*tintColor: #d3d7cf
-
-! Black (not tango) + DarkGrey
-urxvt*color0: #000000
-urxvt*color8: #555753
-
-! DarkRed + Red
-urxvt*color1: #a40000
-urxvt*color9: #cc0000
-
-! DarkGreen + Green
-urxvt*color2: #4e9a06
-urxvt*color10: #73d216
-
-! DarkYellow + Yellow
-urxvt*color3: #c4a000
-urxvt*color11: #edd400
-
-! DarkBlue + Blue
-urxvt*color4: #204a87
-urxvt*color12: #3465a4
-
-! DarkMangenta + Mangenta
-urxvt*color5: #ce5c00
-urxvt*color13: #f57900
-
-!DarkCyan + Cyan (both not tango)
-urxvt*color6: #038e82
-urxvt*color14: #05d2c1
-
-! LightGrey + White
-urxvt*color7: #babdb6
-urxvt*color15: #d3d7cf
 
 urxvt.scrollBar: false
 urxvt.saveLines: 1500

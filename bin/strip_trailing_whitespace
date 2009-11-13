@@ -1,3 +1,15 @@
 #!/bin/bash
-for file in `find . -name "*.py"`; do sed 's/[ \t]*$//' $file > $file.new; mv $file.new $file; done
+if [ "$#" -lt 1 ]; then
+    echo "usage: $0 EXTENSION [PATH]"
+fi
+
+EXT=$1
+
+if [ "$#" -gt 1 ]; then
+    SPATH=$2
+else
+    SPATH=.
+fi
+
+for file in $(find ${SPATH} -name "*.${EXT}"); do sed 's/[ \t]*$//' $file > $file.new; mv $file.new $file; done
 
