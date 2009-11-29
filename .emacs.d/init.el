@@ -102,6 +102,11 @@
 ;; SMOOTH SCROLLING
 (require 'smooth-scrolling)
 
+;; UNIQUIFY - better buffer names
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward
+      uniquify-separator ":")
+
 ;; BAR CURSOR
 ;;(bar-cursor-mode t)
 
