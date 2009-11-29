@@ -1,0 +1,3 @@
+[submodule "arc"]
+	path = arc
+	url = git://github.com/nex3/arc.git

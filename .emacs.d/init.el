@@ -9,7 +9,7 @@
 	(normal-top-level-add-to-load-path
 	 subdirs))))
 
-(krig-setup-load-path '("scala-mode" "smart-tab" "color-theme" "yasnippet" "ruby"))
+(krig-setup-load-path '("scala-mode" "smart-tab" "color-theme" "yasnippet" "ruby" "arc"))
 
 
 ;; C SOURCE FOR EMACS
@@ -106,6 +106,11 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward
       uniquify-separator ":")
+
+;; PARENFACE -- dim parens in lispy languages
+(require 'parenface)
+
+(require 'htmlize)
 
 ;; BAR CURSOR
 ;;(bar-cursor-mode t)

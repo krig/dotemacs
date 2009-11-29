@@ -260,3 +260,18 @@ point."
 ;;    (save-excursion (slime))))
 ;;
 ;;(add-hook 'slime-mode-hook 'cliki:start-slime)
+
+
+
+;; ARC
+;; Arc support
+(autoload 'run-arc "inferior-arc"
+"Run an inferior Arc process, input and output via buffer *arc*.")
+(autoload 'arc-mode "arc"
+"Major mode for editing Arc." t)
+(add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
+(setq arc-program-name "~/build/arc/arc.sh")
+(add-hook 'inferior-arc-mode-hook
+	  (lambda ()
+	    (set (make-local-variable 'comint-use-prompt-regexp) t)
+	    (set (make-local-variable 'comint-prompt-read-only) t)))
