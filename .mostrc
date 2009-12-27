@@ -1,0 +1,13 @@
+unsetkey "B"
+unsetkey "b"
+setkey page_up "B"
+setkey page_up "b"
+unsetkey "J"
+unsetkey "j"
+setkey down "J"
+setkey down "j"
+unsetkey "K"
+unsetkey "k"
+setkey up "K"
+setkey up "k"
+

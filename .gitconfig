@@ -16,6 +16,8 @@
 	file-view-vpane-position = 701
 	file-view-hpane-position = 203
 	history-view-vpane-position = 369
+[push]
+    default = current
 [merge]
 	tool = meld
 [alias]
