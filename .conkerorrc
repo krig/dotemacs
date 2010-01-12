@@ -1,0 +1,30 @@
+// don't use a new window for the download buffer
+download_buffer_automatic_open_target = [OPEN_NEW_BUFFER_BACKGROUND, OPEN_NEW_WINDOW];
+
+// Don't let kill-buffer close the window
+can_kill_last_buffer = false;
+
+// use a single window, even when external programs open a url in conkeror
+url_remoting_fn = load_url_in_new_buffer;
+
+// keep the found item selected after search mode ends
+isearch_keep_selection = true;
+
+// open new tabs in the background
+clicks_in_new_buffer_target = OPEN_NEW_BUFFER_BACKGROUND;
+
+require("session.js");
+
+// automatically load saved session on startup
+session_auto_save_auto_load = true;
+
+define_webjump("trans", "http://translate.google.com/translate_t#auto|en|%s");
+define_webjump("github", "http://github.com/%s");
+define_webjump("e2", "http://everything2.com/index.pl?node=%s&searchy=search");
+define_webjump("man", "http://tozt.net/cgi-bin/man/man2html?query=%s");
+define_webjump("youtube", "http://www.youtube.com/results?search_query=%s&search=Search");
+define_webjump("codesearch", "http://www.google.com/codesearch?q=%s");
+define_webjump("twitter", "http://twitter.com/%s");
+
+// let xkcd-mode put the funny alt text into the page.
+xkcd_add_title = true;
