@@ -35,7 +35,7 @@
 ;; BACKUPS
 ;; Put autosave files (ie #foo#) in one place, *not*
 ;; scattered all over the file system!
-(defvar autosave-dir "~/.eamcs.d/autosaves/")
+(defvar autosave-dir "~/.emacs.d/autosaves/")
 
 (make-directory autosave-dir t)
 
