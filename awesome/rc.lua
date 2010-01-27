@@ -6,6 +6,7 @@ require("awful.rules")
 require("beautiful")
 -- Notification library
 require("naughty")
+--require("shifty")
 
 -- Freedesktop menu
 require("freedesktop.utils")
@@ -52,6 +53,10 @@ layouts =
 --  awful.layout.suit.magnifier,
     awful.layout.suit.floating
 }
+-- }}}
+
+-- {{{ Utility functions
+
 -- }}}
 
 -- {{{ Tags
@@ -267,13 +272,31 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
-    awful.key({ modkey,           }, "Tab",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end),
+    --awful.key({ modkey,           }, "Tab",
+    --    function ()
+    --        awful.client.focus.history.previous()
+    --        if client.focus then
+    --            client.focus:raise()
+    --        end
+    --    end),
+    awful.key({ modkey }, "Tab", 
+	      function ()
+		 local allclients = awful.client.visible(client.focus.screen)
+		 for i,v in ipairs(allclients) do
+		    if allclients[i+1] then
+		       allclients[i+1]:swap(v)
+		    end
+		 end
+		 awful.client.focus.byidx(-1)
+	      end),
+    awful.key({modkey, "Shift"}, "Tab",
+	      function ()
+		 local allclients = awful.client.visible(client.focus.screen)
+		 for i,v in ipairs(allclients) do
+		    allclients[1]:swap(allclients[i])
+		 end
+		 awful.client.focus.byidx(1)
+	      end),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
@@ -301,7 +324,7 @@ globalkeys = awful.util.table.join(
               end),
 
     -- Teardrop console
-    awful.key({ modkey }, "F10", function () teardrop("urxvt", "bottom", "center", 1, 0.15) end)
+    awful.key({ modkey }, "c", function () teardrop("urxvt", "bottom", "center", 1, 0.15) end)
 )
 
 clientkeys = awful.util.table.join(

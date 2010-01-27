@@ -12,7 +12,7 @@ theme.wallpaper_cmd = { "nitrogen --restore" }
 -- }}}
 
 -- {{{ Styles
-theme.font      = "liberation sans 8"
+theme.font      = "silkscreen 6"
 
 -- {{{ Colors
 theme.fg_normal = "#cccccc" --"#DCDCCC"
