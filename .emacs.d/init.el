@@ -208,3 +208,13 @@
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
+;;(load "folding" 'nomessage 'noerror)
+;;(folding-mode-add-find-file-hook)
+;;(folding-add-to-marks-list 'lua-mode                "-- {{{"  "-- }}}"  nil t)
+;; folding-show-current-entry
+
+
+;;'(tabbar-default-face ((t (:inherit default :background "#353b37" :foreground "#acbc90" :height 0.7))))
+
+(set-face-font 'tabbar-default-face "silkscreen-6")
+

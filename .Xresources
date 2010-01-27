@@ -1,13 +1,19 @@
-Xft.antialias: 1
-Xft.hinting: 1
-Xft.hintstyle: hintslight
-Xft.lcdfilter: lcddefault
-Xft.autohint: true
-Xft.rgba: rgb
-Xft.dpi: 96
+#Xft.antialias: 1
+#Xft.hinting: 1
+#Xft.hintstyle: hintslight
+#Xft.lcdfilter: lcddefault
+#Xft.autohint: true
+#Xft.rgba: rgb
+#Xft.dpi: 96
+Xft.antialias: 0
+Xft.dpi: 96.000000
+Xft.hinting: 0
+Xft.hintstyle: hintnone
+Xft.rgba: none
 Emacs.fontbackend: xft
 !Emacs.font: Droid Sans Mono-10
-Emacs.font: Liberation Mono-9
+!Emacs.font: Liberation Mono-10
+Emacs.font: Dina-8
 emacs*geometry: 120x50
 
 !URxvt.color0: #2E3436
@@ -36,7 +42,8 @@ urxvt.saveLines: 1500
 urxvt.urlLauncher: x-www-browser
 
 urxvt.font: xft:Dina:size=8
-! urxvt.font: xft:Monospace:size=10
+!urxvt.font: xft:Droid Sans Mono:size=8
+!urxvt.font: xft:Monospace:size=8
 
 urxvt.modifier: alt
 
