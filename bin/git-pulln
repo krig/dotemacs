@@ -11,18 +11,25 @@ for P in "$@"; do
 	if [ -d $P ]; then
                 WD=`pwd`
 		cd $P
-                g="$(git rev-parse --git-dir 2>/dev/null)"
-                if [ -n "$g" ]; then
-                    uncommitted="$(git diff --exit-code > /dev/null 2>&1; echo $?)"
-                    queued="$(git status > /dev/null 2>&1; echo $?)"
-                    if [ $uncommitted -eq 1 ]; then
-                        say2 "$P: has uncommitted changes"
-                    elif [ $queued -eq 0 ]; then
-		        say2 "$P: has changes queued"
-                    else
-                        say "$P"
-                        git pull --rebase
-                    fi
+                g="$(git rev-parse --git-dir > /dev/null 2>&1 ; echo $?)"
+                if [ $g -eq 0 ]; then
+		    # refresh index info
+		    git update-index --refresh > /dev/null 2>&1
+		    queued="$(git diff-index --name-status --cached --quiet HEAD; echo $?)"
+		    changed="$(git diff-files --name-status --quiet; echo $?)"
+		    uncommitted="$(git ls-files -m -o -d --exclude-standard)"
+		    if [ $queued -ne 0 ]; then
+			say2 "$P: has changes queued"
+		    elif [ $changed -ne 0 ]; then
+			say2 "$P: has unqueued changes"
+		    else
+			if [ -n "$uncommitted" ]; then
+			    say "$P *"
+			else
+			    say "$P"
+			fi
+			git pull --rebase
+		    fi
                 fi
 		cd $WD
 	fi

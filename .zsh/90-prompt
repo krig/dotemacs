@@ -47,15 +47,15 @@ function precmd {
                 fi
 
                 # print a * if git diff sees changes
-                local uncommitted
+                local changed
                 local queued
                 UC=""
-                uncommitted="$(git diff --exit-code > /dev/null 2>&1; echo $?)"
-                if [ $uncommitted -eq 1 ]; then
+                changed="$(git diff-files --name-status --quiet > /dev/null 2>&1; echo $?)"
+                if [ $changed -ne 0 ]; then
                    UC="*"
                 fi
-                queued="$(git status > /dev/null 2>&1; echo $?)"
-                if [ $queued -eq 0 ]; then
+                queued="$(git diff-index --name-status --cached --quiet HEAD > /dev/null 2>&1; echo $?)"
+                if [ $queued -ne 0 ]; then
                    UC="$UC+"
                 fi
                 printf "$UC"
