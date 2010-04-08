@@ -6,29 +6,18 @@ require("awful.rules")
 require("beautiful")
 -- Notification library
 require("naughty")
---require("shifty")
-
--- Freedesktop menu
-require("freedesktop.utils")
-require("freedesktop.menu")
-
--- Teardrop
-require("teardrop")
 
 -- Load Debian menu entries
 require("debian.menu")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init(awful.util.getdir("config") .. "/zenburn/theme.lua")
+beautiful.init("/home/krig/.config/awesome/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "urxvt"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
-
-freedesktop.utils.terminal = terminal  -- default: "xterm"
-freedesktop.utils.icon_theme = 'gnome' -- look inside /usr/share/icons/, default: nil (don't use icon theme)
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -40,23 +29,19 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
-    awful.layout.suit.max,
     awful.layout.suit.tile,
---  awful.layout.suit.tile.left,
+--    awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
---  awful.layout.suit.tile.top,
---  awful.layout.suit.fair,
---  awful.layout.suit.fair.horizontal,
---  awful.layout.suit.spiral,
---  awful.layout.suit.spiral.dwindle,
---  awful.layout.suit.max.fullscreen,
---  awful.layout.suit.magnifier,
+--    awful.layout.suit.tile.top,
+    awful.layout.suit.fair,
+--    awful.layout.suit.fair.horizontal,
+--    awful.layout.suit.spiral,
+--    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.max,
     awful.layout.suit.floating
+--    awful.layout.suit.max.fullscreen,
+--    awful.layout.suit.magnifier
 }
--- }}}
-
--- {{{ Utility functions
-
 -- }}}
 
 -- {{{ Tags
@@ -70,94 +55,47 @@ end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
-menu_items = freedesktop.menu.new()
 myawesomemenu = {
-   { "manual", terminal .. " -e man awesome", freedesktop.utils.lookup_icon({ icon = 'help' }) },
-   { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua", 
-     freedesktop.utils.lookup_icon({icon = 'package_settings' }) },
-   { "restart", awesome.restart, freedesktop.utils.lookup_icon({ icon = 'gtk-refresh' }) },
-   { "quit", awesome.quit, freedesktop.utils.lookup_icon({ icon = 'gtk-quit' }) }
+   { "manual", terminal .. " -e man awesome" },
+   { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
+   { "restart", awesome.restart },
+   --{ "quit", awesome.quit }
 }
-table.insert(menu_items, 1, { "awesome", myawesomemenu, beautiful.awesome_icon })
---table.insert(menu_items, { "Debian", debian.menu.Debian_menu.Debian, 
---			   freedesktop.utils.lookup_icon({ icon = 'debian-logo' }) })
-table.insert(menu_items, { "Terminal", terminal, freedesktop.utils.lookup_icon({icon = 'terminal'}) })
-table.insert(menu_items, { "Firefox", terminal, freedesktop.utils.lookup_icon({icon = 'web-browser'}) })
-table.insert(menu_items, { "Pidgin", terminal, freedesktop.utils.lookup_icon({icon = 'pidgin'}) })
 
-mymainmenu = awful.menu.new({ items = menu_items })
+myapplicationsmenu = {
+				    { "nautilus", "nautilus /home/krig", "/usr/share/icons/gnome/16x16/apps/file-manager.png" },
+				    { "chrome", "google-chrome", "/usr/share/icons/gnome/16x16/apps/web-browser.png" },
+				    { "emacs", "emacs", "/usr/share/icons/gnome/16x16/apps/text-editor.png" },
+				    { "eclipse", "eclipse", "/usr/share/icons/gnome/16x16/apps/logviewer.png" },
+				    { "rhythmbox", "rhythmbox", "/usr/share/icons/gnome/16x16/actions/stock_media-play.png"},
+                    { "evolution", "evolution", "/usr/share/icons/gnome/16x16/actions/stock_mail-compose.png" },
+				    { "spotify", "spotify" },
+				    { "gimp", "gimp" },
+}
 
-mylauncher = awful.widget.launcher({ image = freedesktop.utils.lookup_icon({ icon = 'distributor-logo' }),
+mysystemmenu = {
+    { "Awesome", myawesomemenu, beautiful.awesome_icon },
+    { "control center", "gnome-control-center", "/usr/share/icons/gnome/16x16/categories/gnome-settings.png" },
+    { "appearance", "gnome-appearance-properties", "/usr/share/icons/gnome/16x16/categories/package_graphics.png" },
+    { "Log out", "gnome-session-save --gui --logout-dialog", "/usr/share/icons/gnome/16x16/actions/reload_page.png" },
+    { "Shutdown", "gnome-session-save --gui --shutdown-dialog", "/usr/share/icons/gnome/16x16/actions/system-shutdown.png" },
+}
+
+mymainmenu = awful.menu({ items = { 
+                                    { "Terminal", terminal, "/usr/share/icons/gnome/16x16/apps/terminal.png" },
+                                    { "Applications", myapplicationsmenu, "/usr/share/icons/gnome/16x16/categories/applications-science.png" },
+                                    { "System", mysystemmenu, "/usr/share/icons/gnome/16x16/categories/applications-system.png" },
+                                    { "Debian", debian.menu.Debian_menu.Debian, "/usr/share/icons/gnome/16x16/categories/applications-utilities.png" },
+                                  }
+                        })
+
+mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
-
 -- }}}
 
 -- {{{ Wibox
-
--- Keyboard map indicator and changer
-kbdcfg = {}
-kbdcfg.cmd = "setxkbmap"
-kbdcfg.layout = { "us", "se" }
-kbdcfg.current = 1  -- us is our default layout
-kbdcfg.widget = widget({ type = "textbox", align = "right" })
-kbdcfg.widget.text = " <b>" .. kbdcfg.layout[kbdcfg.current] .. "</b> "
-kbdcfg.switch = function ()
-		   kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
-		   local t = " <b>" .. kbdcfg.layout[kbdcfg.current] .. "</b> "
-		   kbdcfg.widget.text = t
-		   os.execute( kbdcfg.cmd .. " " .. kbdcfg.layout[kbdcfg.current] )
-		end
-    
--- Mouse bindings
-kbdcfg.widget:buttons(
-		      awful.util.table.join(awful.button({ }, 1, 
-							 function () kbdcfg.switch() end)))
-
 -- Create a textclock widget
-local calendar = nil
-local offset = 0
-
-function remove_calendar()
-   if calendar ~= nil then
-      naughty.destroy(calendar)
-      calendar = nil
-      offset = 0
-   end
-end
-
-function trim(s)
-   return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
-end
-
-function add_calendar(inc_offset)
-   local save_offset = offset
-   remove_calendar()
-   offset = save_offset + inc_offset
-   local datespec = os.date("*t")
-   local day = datespec.day
-   datespec = datespec.year * 12 + datespec.month - 1 + offset
-   datespec = (datespec % 12 + 1) .. " " .. math.floor(datespec / 12)
-   local cal = awful.util.pread("ncal -w " .. datespec)
-   cal = trim(cal)
-   local sday = tostring(day)
-   cal = string.gsub(cal, "( "..sday..")", "<span foreground=\"red\"><b>%1</b></span>")
-   local setup = {
-      text = string.format('<span font_desc="%s">%s</span>', "monospace", "<b>" .. os.date("%A %d") .. "</b>\n" .. cal),
-      timeout = 0, hover_timeout = 0.5,
-      width = 160,
-   }
-   calendar = naughty.notify(setup)
-end
-
-
-mytextclock = awful.widget.textclock({ align = "right" }, "%H:%M")
-mytextclock:add_signal("mouse::enter", function()
-			     add_calendar(0)
-			  end)
-mytextclock:add_signal("mouse::leave", remove_calendar)
-
-mytextclock:buttons(awful.util.table.join(awful.button({ }, 4, function() add_calendar(-1) end),
-					  awful.button({ }, 5, function() add_calendar(1) end)))
+mytextclock = awful.widget.textclock({ align = "right" })
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -232,7 +170,6 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
-	kbdcfg.widget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -272,31 +209,13 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
-    --awful.key({ modkey,           }, "Tab",
-    --    function ()
-    --        awful.client.focus.history.previous()
-    --        if client.focus then
-    --            client.focus:raise()
-    --        end
-    --    end),
-    awful.key({ modkey }, "Tab", 
-	      function ()
-		 local allclients = awful.client.visible(client.focus.screen)
-		 for i,v in ipairs(allclients) do
-		    if allclients[i+1] then
-		       allclients[i+1]:swap(v)
-		    end
-		 end
-		 awful.client.focus.byidx(-1)
-	      end),
-    awful.key({modkey, "Shift"}, "Tab",
-	      function ()
-		 local allclients = awful.client.visible(client.focus.screen)
-		 for i,v in ipairs(allclients) do
-		    allclients[1]:swap(allclients[i])
-		 end
-		 awful.client.focus.byidx(1)
-	      end),
+    awful.key({ modkey,           }, "Tab",
+        function ()
+            awful.client.focus.history.previous()
+            if client.focus then
+                client.focus:raise()
+            end
+        end),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
@@ -321,10 +240,7 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end),
-
-    -- Teardrop console
-    awful.key({ modkey }, "c", function () teardrop("urxvt", "bottom", "center", 1, 0.15) end)
+              end)
 )
 
 clientkeys = awful.util.table.join(
@@ -397,6 +313,7 @@ awful.rules.rules = {
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
                      focus = true,
+		     size_hints_honor = false,
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
@@ -404,8 +321,6 @@ awful.rules.rules = {
     { rule = { class = "pinentry" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
-      properties = { floating = true } },
-    { rule = { class = "pidgin" },
       properties = { floating = true } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
@@ -418,7 +333,6 @@ awful.rules.rules = {
 client.add_signal("manage", function (c, startup)
     -- Add a titlebar
     -- awful.titlebar.add(c, { modkey = modkey })
-    c.size_hints_honor = false
 
     -- Enable sloppy focus
     c:add_signal("mouse::enter", function(c)
@@ -444,4 +358,3 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-

@@ -31,12 +31,14 @@
 		ruby-mode-hook
 		csharp-mode-hook
 		java-mode-hook
+		objc-mode-hook
 		))
   (add-hook hook 'my-tab-fix)
   (add-hook hook 'my-set-newline-and-indent))
 
 (add-hook 'c-mode-hook 'my-c-style-fix)
 (add-hook 'c++-mode-hook 'my-c-style-fix)
+(add-hook 'objc-mode-hook 'my-c-style-fix)
 (add-hook 'java-mode-hook 'my-java-style-fix)
 
 (add-hook
@@ -174,6 +176,7 @@ point."
     (python-mode flymake-pycodecheck-init)
     (c-mode flymake-simple-make-init)
     (c++-mode flymake-simple-make-init)
+    (objc-mode flymake-simple-make-init)
     )
   "*Major modes syntax checking is allowed for."
   :group 'flymake

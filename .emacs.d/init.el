@@ -195,6 +195,16 @@
 (global-set-key "\M-n" 'cyclebuffer-forward)
 (global-set-key "\M-p" 'cyclebuffer-backward)
 
+;;; This was installed by package-install.el.
+;;; This provides support for the package system and
+;;; interfacing with ELPA, the package archive.
+;;; Move this code earlier if you want to reference
+;;; packages in your .emacs.
+(when
+    (load
+     (expand-file-name "~/.emacs.d/elpa/package.el"))
+  (package-initialize))
+
 ;;;; SMEX
 ;; Load smex last to have the command cache uptodate
 (require 'smex)
@@ -216,5 +226,5 @@
 
 ;;'(tabbar-default-face ((t (:inherit default :background "#353b37" :foreground "#acbc90" :height 0.7))))
 
-(set-face-font 'tabbar-default-face "silkscreen-6")
+
 

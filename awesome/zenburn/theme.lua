@@ -8,31 +8,62 @@
 
 -- {{{ Main
 theme = {}
-theme.wallpaper_cmd = { "nitrogen --restore" }
+theme.wallpaper_cmd = { "true" }
 -- }}}
 
 -- {{{ Styles
 theme.font      = "silkscreen 6"
 
+-- gtk_color_scheme = "
+-- fg_color:#3a3935
+-- bg_color:#f0ebe2
+-- base_color:#ffffff
+-- text_color:#3a3935
+-- selected_bg_color:#c6b9a6
+-- selected_fg_color:#323232
+-- tooltip_bg_color:#000
+-- tooltip_fg_color:#fff"
+
+-- D5CAB6
+-- DFD8C8
+-- 3C3B37
+
+-- ubuntu colors:
+-- light purple: 7C154A
+-- v.dark purple: 27091e
+-- light orange: f1592a
+
 -- {{{ Colors
-theme.fg_normal = "#cccccc" --"#DCDCCC"
-theme.fg_focus  = "#F0DFAF" --"#F0DFAF"
-theme.fg_urgent = "#cc9393" --"#CC9393"
-theme.bg_normal = "#1e2320" --"#3F3F3F"
-theme.bg_focus  = "#3f3f3f" --"#1E2320"
-theme.bg_urgent = "#3f3f3f" --"#3F3F3F"
+theme.fg_normal = "#c6b9a6"
+theme.bg_normal = "#3C3B37"
+theme.fg_focus = "#FFFFFF"
+theme.bg_focus = "#3C3B37"
+theme.fg_urgent = "#FFFFFF"
+theme.bg_urgent = "#7C154A"
+--theme.fg_normal = "#DCDCCC"
+--theme.fg_focus  = "#F0DFAF"
+--theme.fg_urgent = "#CC9393"
+--theme.bg_normal = "#3F3F3F"
+--theme.bg_focus  = "#1E2320"
+--theme.bg_urgent = "#3F3F3F"
 -- }}}
 
 -- {{{ Borders
 theme.border_width  = "1"
-theme.border_normal = "#3F3F3F"
-theme.border_focus  = "#6F6F6F"
-theme.border_marked = "#CC9393"
+theme.border_normal = "#27091e"
+theme.border_focus  = "#3C3B37"
+theme.border_marked = "#7C154A"
+--theme.border_width  = "1"
+--theme.border_normal = "#3F3F3F"
+--theme.border_focus  = "#6F6F6F"
+--theme.border_marked = "#CC9393"
 -- }}}
 
 -- {{{ Titlebars
-theme.titlebar_bg_focus  = "#3F3F3F"
-theme.titlebar_bg_normal = "#3F3F3F"
+theme.titlebar_bg_focus  = "#3a3935"
+theme.titlebar_bg_normal = "#3a3935"
+--theme.titlebar_bg_focus  = "#3F3F3F"
+--theme.titlebar_bg_normal = "#3F3F3F"
 -- }}}
 
 -- There are other variable sets
@@ -65,61 +96,61 @@ theme.mouse_finder_color = "#CC9393"
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_height = "18"
-theme.menu_width  = "140"
+theme.menu_height = "16"
+theme.menu_width  = "160"
 -- }}}
 
 -- {{{ Icons
 -- {{{ Taglist
-theme.taglist_squares_sel   = "/home/krig/.config/awesome/zenburn/taglist/squarefz.png"
-theme.taglist_squares_unsel = "/home/krig/.config/awesome/zenburn/taglist/squarez.png"
+theme.taglist_squares_sel   = "/usr/share/awesome/themes/zenburn/taglist/squarefz.png"
+theme.taglist_squares_unsel = "/usr/share/awesome/themes/zenburn/taglist/squarez.png"
 --theme.taglist_squares_resize = "false"
 -- }}}
 
 -- {{{ Misc
-theme.awesome_icon           = "/home/krig/.config/awesome/zenburn/awesome-icon.png"
+theme.awesome_icon           = "/home/krig/.config/awesome/zenburn/cof.png"
 theme.menu_submenu_icon      = "/usr/share/awesome/themes/default/submenu.png"
 theme.tasklist_floating_icon = "/usr/share/awesome/themes/default/tasklist/floatingw.png"
 -- }}}
 
 -- {{{ Layout
-theme.layout_tile       = "/home/krig/.config/awesome/zenburn/layouts/tile.png"
-theme.layout_tileleft   = "/home/krig/.config/awesome/zenburn/layouts/tileleft.png"
-theme.layout_tilebottom = "/home/krig/.config/awesome/zenburn/layouts/tilebottom.png"
-theme.layout_tiletop    = "/home/krig/.config/awesome/zenburn/layouts/tiletop.png"
-theme.layout_fairv      = "/home/krig/.config/awesome/zenburn/layouts/fairv.png"
-theme.layout_fairh      = "/home/krig/.config/awesome/zenburn/layouts/fairh.png"
-theme.layout_spiral     = "/home/krig/.config/awesome/zenburn/layouts/spiral.png"
-theme.layout_dwindle    = "/home/krig/.config/awesome/zenburn/layouts/dwindle.png"
-theme.layout_max        = "/home/krig/.config/awesome/zenburn/layouts/max.png"
-theme.layout_fullscreen = "/home/krig/.config/awesome/zenburn/layouts/fullscreen.png"
-theme.layout_magnifier  = "/home/krig/.config/awesome/zenburn/layouts/magnifier.png"
-theme.layout_floating   = "/home/krig/.config/awesome/zenburn/layouts/floating.png"
+theme.layout_tile       = "/usr/share/awesome/themes/zenburn/layouts/tile.png"
+theme.layout_tileleft   = "/usr/share/awesome/themes/zenburn/layouts/tileleft.png"
+theme.layout_tilebottom = "/usr/share/awesome/themes/zenburn/layouts/tilebottom.png"
+theme.layout_tiletop    = "/usr/share/awesome/themes/zenburn/layouts/tiletop.png"
+theme.layout_fairv      = "/usr/share/awesome/themes/zenburn/layouts/fairv.png"
+theme.layout_fairh      = "/usr/share/awesome/themes/zenburn/layouts/fairh.png"
+theme.layout_spiral     = "/usr/share/awesome/themes/zenburn/layouts/spiral.png"
+theme.layout_dwindle    = "/usr/share/awesome/themes/zenburn/layouts/dwindle.png"
+theme.layout_max        = "/usr/share/awesome/themes/zenburn/layouts/max.png"
+theme.layout_fullscreen = "/usr/share/awesome/themes/zenburn/layouts/fullscreen.png"
+theme.layout_magnifier  = "/usr/share/awesome/themes/zenburn/layouts/magnifier.png"
+theme.layout_floating   = "/usr/share/awesome/themes/zenburn/layouts/floating.png"
 -- }}}
 
 -- {{{ Titlebar
-theme.titlebar_close_button_focus  = "/home/krig/.config/awesome/zenburn/titlebar/close_focus.png"
-theme.titlebar_close_button_normal = "/home/krig/.config/awesome/zenburn/titlebar/close_normal.png"
+theme.titlebar_close_button_focus  = "/usr/share/awesome/themes/zenburn/titlebar/close_focus.png"
+theme.titlebar_close_button_normal = "/usr/share/awesome/themes/zenburn/titlebar/close_normal.png"
 
-theme.titlebar_ontop_button_focus_active  = "/home/krig/.config/awesome/zenburn/titlebar/ontop_focus_active.png"
-theme.titlebar_ontop_button_normal_active = "/home/krig/.config/awesome/zenburn/titlebar/ontop_normal_active.png"
-theme.titlebar_ontop_button_focus_inactive  = "/home/krig/.config/awesome/zenburn/titlebar/ontop_focus_inactive.png"
-theme.titlebar_ontop_button_normal_inactive = "/home/krig/.config/awesome/zenburn/titlebar/ontop_normal_inactive.png"
+theme.titlebar_ontop_button_focus_active  = "/usr/share/awesome/themes/zenburn/titlebar/ontop_focus_active.png"
+theme.titlebar_ontop_button_normal_active = "/usr/share/awesome/themes/zenburn/titlebar/ontop_normal_active.png"
+theme.titlebar_ontop_button_focus_inactive  = "/usr/share/awesome/themes/zenburn/titlebar/ontop_focus_inactive.png"
+theme.titlebar_ontop_button_normal_inactive = "/usr/share/awesome/themes/zenburn/titlebar/ontop_normal_inactive.png"
 
-theme.titlebar_sticky_button_focus_active  = "/home/krig/.config/awesome/zenburn/titlebar/sticky_focus_active.png"
-theme.titlebar_sticky_button_normal_active = "/home/krig/.config/awesome/zenburn/titlebar/sticky_normal_active.png"
-theme.titlebar_sticky_button_focus_inactive  = "/home/krig/.config/awesome/zenburn/titlebar/sticky_focus_inactive.png"
-theme.titlebar_sticky_button_normal_inactive = "/home/krig/.config/awesome/zenburn/titlebar/sticky_normal_inactive.png"
+theme.titlebar_sticky_button_focus_active  = "/usr/share/awesome/themes/zenburn/titlebar/sticky_focus_active.png"
+theme.titlebar_sticky_button_normal_active = "/usr/share/awesome/themes/zenburn/titlebar/sticky_normal_active.png"
+theme.titlebar_sticky_button_focus_inactive  = "/usr/share/awesome/themes/zenburn/titlebar/sticky_focus_inactive.png"
+theme.titlebar_sticky_button_normal_inactive = "/usr/share/awesome/themes/zenburn/titlebar/sticky_normal_inactive.png"
 
-theme.titlebar_floating_button_focus_active  = "/home/krig/.config/awesome/zenburn/titlebar/floating_focus_active.png"
-theme.titlebar_floating_button_normal_active = "/home/krig/.config/awesome/zenburn/titlebar/floating_normal_active.png"
-theme.titlebar_floating_button_focus_inactive  = "/home/krig/.config/awesome/zenburn/titlebar/floating_focus_inactive.png"
-theme.titlebar_floating_button_normal_inactive = "/home/krig/.config/awesome/zenburn/titlebar/floating_normal_inactive.png"
+theme.titlebar_floating_button_focus_active  = "/usr/share/awesome/themes/zenburn/titlebar/floating_focus_active.png"
+theme.titlebar_floating_button_normal_active = "/usr/share/awesome/themes/zenburn/titlebar/floating_normal_active.png"
+theme.titlebar_floating_button_focus_inactive  = "/usr/share/awesome/themes/zenburn/titlebar/floating_focus_inactive.png"
+theme.titlebar_floating_button_normal_inactive = "/usr/share/awesome/themes/zenburn/titlebar/floating_normal_inactive.png"
 
-theme.titlebar_maximized_button_focus_active  = "/home/krig/.config/awesome/zenburn/titlebar/maximized_focus_active.png"
-theme.titlebar_maximized_button_normal_active = "/home/krig/.config/awesome/zenburn/titlebar/maximized_normal_active.png"
-theme.titlebar_maximized_button_focus_inactive  = "/home/krig/.config/awesome/zenburn/titlebar/maximized_focus_inactive.png"
-theme.titlebar_maximized_button_normal_inactive = "/home/krig/.config/awesome/zenburn/titlebar/maximized_normal_inactive.png"
+theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/zenburn/titlebar/maximized_focus_active.png"
+theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/zenburn/titlebar/maximized_normal_active.png"
+theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/zenburn/titlebar/maximized_focus_inactive.png"
+theme.titlebar_maximized_button_normal_inactive = "/usr/share/awesome/themes/zenburn/titlebar/maximized_normal_inactive.png"
 -- }}}
 -- }}}
 
