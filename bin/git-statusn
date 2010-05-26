@@ -1,0 +1,55 @@
+#!/bin/bash
+say() {
+	echo -e "\033[1m$*\033[m"
+}
+
+say2() {
+    echo -e "$*"
+}
+
+s=`printf "%32s %8s %8s %8s\n" "repository" "queued" "changed" "uncommitted"`
+say "$s"
+for P in "$@"; do
+	if [ -d $P ]; then
+                WD=`pwd`
+		cd $P
+                g="$(git rev-parse --git-dir > /dev/null 2>&1 ; echo $?)"
+                if [ $g -eq 0 ]; then
+		    # refresh index info
+		    git update-index --refresh > /dev/null 2>&1
+		    queued="$(git diff-index --name-status --cached --quiet HEAD; echo $?)"
+		    changed="$(git diff-files --name-status --quiet; echo $?)"
+		    uncommitted="$(git ls-files -m -o -d --exclude-standard)"
+		    hilite=0
+
+		    if [ $queued -ne 0 ]; then
+			queued="yes"
+			hilite=1
+		    else
+			queued="no"
+		    fi
+
+		    if [ $changed -ne 0 ]; then
+			changed="yes"
+			hilite=1
+		    else
+			changed="no"
+		    fi
+
+		    if [ -n "$uncommitted" ]; then
+			uncommitted="yes"
+		    else
+			uncommitted="no"
+		    fi
+
+		    s=`printf "%32s %8s %8s %8s\n" "$P" "$queued" "$changed" "$uncommitted"`
+		    if [ $hilite -eq 1 ]; then
+			say "$s"
+		    else
+			say2 "$s"
+		    fi
+                fi
+		cd $WD
+	fi
+done
+

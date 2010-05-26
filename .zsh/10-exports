@@ -1,7 +1,7 @@
 export EDITOR="emacsclient -t"
 export PAGER=most
 export CFLAGS="-O0 -Wall -ggdb3"
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:/opt/android:$PATH
 export MAKEFLAGS="-j 5"
 export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
 export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
@@ -13,5 +13,10 @@ export ECLIPSE_HOME=$HOME/.eclipse/org.eclipse.platform_3.2.0/configuration/ecli
 export XMMS_PATH=tcp://192.168.1.138:9999
 export NAME="Kristoffer Grönlund"
 export EMAIL="kristoffer.gronlund@purplescout.se"
-export TERM=rxvt
+#export TERM=xterm-color
+export OOO_FORCE_DESKTOP=gnome
+
+export GOROOT=$HOME/build/go
+export GOARCH=amd64
+export GOOS=linux
 
