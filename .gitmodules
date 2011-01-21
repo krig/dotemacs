@@ -1,0 +1,6 @@
+[submodule "el-get/el-get"]
+	path = el-get/el-get
+	url = git://github.com/dimitri/el-get.git
+[submodule "smart-tab"]
+	path = smart-tab
+	url = https://github.com/genehack/smart-tab.git
