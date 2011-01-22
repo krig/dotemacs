@@ -24,6 +24,8 @@
 (winner-mode 1)
 (global-auto-revert-mode t)
 
+(setq compilation-skip-threshold 2)
+
 ;; TRAMP
 (require 'tramp)
 (setq tramp-completion-reread-directory-timeout nil)
