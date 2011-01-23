@@ -254,7 +254,7 @@
   (when (string-match "^\\(.*\\)\\.\\([^.]*\\)$" buffer-file-name)
     (let ((name (match-string 1 buffer-file-name))
 	  (suffix (match-string 2 buffer-file-name)))
-      (cond ((string-match suffix "c\\|cc\\|C\\|cpp")
+      (cond ((string-match suffix "c\\|cc\\|C\\|cpp\\|m")
 	     (cond ((file-exists-p (concat name ".h"))
 		    (find-file (concat name ".h")))
 		   ((file-exists-p (concat name ".hh"))
@@ -269,7 +269,8 @@
 		   ((file-exists-p (concat name ".cpp"))
 		    (find-file (concat name ".cpp")))
 		   ((file-exists-p (concat name ".c"))
-		    (find-file (concat name ".c")))))))))
+		    (find-file (concat name ".c")))
+       ((file-exists-p (concat name ".m")))))))))
 (global-set-key [M-s-up] 'switch-cc-to-h)
 
 ;; REINDENT BUFFER
