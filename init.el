@@ -55,7 +55,8 @@
         (:name inf-ruby  :type elpa)
         (:name ruby-compilation :type elpa)
         (:name css-mode 
-               :type elpa 
+               :type elpa
+               :load "css-mode.el"
                :after (lambda () (css-mode-hook)))
         (:name textmate
                :type git
@@ -269,6 +270,7 @@
 		    (find-file (concat name ".cpp")))
 		   ((file-exists-p (concat name ".c"))
 		    (find-file (concat name ".c")))))))))
+(global-set-key [M-s-up] 'switch-cc-to-h)
 
 ;; REINDENT BUFFER
 (defun reindent-buffer ()
