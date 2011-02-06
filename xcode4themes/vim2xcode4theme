@@ -1,0 +1,202 @@
+#!/usr/bin/env python
+
+import os, sys
+
+
+def parse_rgb_txt():
+    rgb_txt = os.path.expanduser('~/bin/rgb.txt')
+    ret = {}
+    with open(rgb_txt) as f:
+        for line in f:
+            if line.startswith('!'):
+                continue
+            c = line.strip().replace('\t', ' ').split()
+            c = (c[0], c[1], c[2], " ".join(c[3:]))
+            ret[c[3].lower()] = (int(c[0]), int(c[1]), int(c[2]))
+    return ret
+
+colornames = parse_rgb_txt()
+
+def make_color(name, r, g, b):
+    return "        <key>%(name)s</key>\n        <string>%(r)s %(g)s %(b)s 1</string>"%locals()
+
+def make_font(key, font, size):
+    return "        <key>%s</key>\n        <string>%s - %.1f</string>"%(key, font, float(size))
+
+def make_default_font(key):
+    return make_font(key, 'Menlo-Regular', 11.0)
+
+xcode_template = """
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+%(basic_colors)s
+	<key>DVTSourceTextSyntaxColors</key>
+	<dict>
+%(syntax_colors)s
+	</dict>
+	<key>DVTSourceTextSyntaxFonts</key>
+	<dict>
+                %(syntax_fonts)s
+	</dict>
+</dict>
+</plist>
+"""
+
+def hex2trip(h):
+    """convert #ff7f00 to (255, 127, 0)"""
+    return tuple(int(x, 16) for x in (h[1:3], h[3:5], h[5:7]))
+
+def trip2norm(t):
+    """convert (255, 127, 0) to (1.0, 0.5, 0.0)"""
+    return (t[0]/255.0, t[1]/255.0, t[2]/255.0)
+
+def vimclr2xcode(c):
+    if c[0] == '#':
+        return trip2norm(hex2trip(c))
+    elif c.lower() in colornames:
+        return trip2norm(colornames[c.lower()])
+    else:
+        print >>sys.stderr, "Color not found: "+c
+        return (1.0, 1.0, 1.0)
+
+xcode_colors_basic_mapping = [
+    ('DVTConsoleDebuggerInputTextColor', ['Normal']),
+    ('font', 'DVTConsoleDebuggerInputTextFont', 'Menlo-Bold', 11.0),
+    ('DVTConsoleDebuggerOutputTextColor', ['Normal']),
+    ('font', 'DVTConsoleDebuggerOutputTextFont', 'Menlo-Regular', 11.0),
+    ('DVTConsoleDebuggerPromptTextColor', ['Normal']),
+    ('font', 'DVTConsoleDebuggerPromptTextFont', 'Menlo-Bold', 11.0),
+    ('DVTConsoleExectuableInputTextColor', ['Normal']),
+    ('font', 'DVTConsoleExectuableInputTextFont', 'Menlo-Regular', 11.0),
+    ('DVTConsoleExectuableOutputTextColor', ['Normal']),
+    ('font', 'DVTConsoleExectuableOutputTextFont', 'Menlo-Bold', 11.0),
+    ('DVTConsoleTextBackgroundColor', [], ['Normal']),
+    ('DVTConsoleTextInsertionPointColor', ['Cursor']),
+    ('DVTConsoleTextSelectionColor', [], ['Visual']),
+    ('DVTDebuggerInstructionPointerColor', ['Keyword', 'Statement']),
+    ('DVTSourceTextBackground', [], ['Normal']),
+    ('DVTSourceTextBlockDimBackgroundColor', [], ['Visual']),
+    ('DVTSourceTextInsertionPointColor', ['Cursor']),
+    ('DVTSourceTextInvisiblesColor', [], ['Normal']),
+    ('DVTSourceTextSelectionColor', [], ['Visual'])]
+
+# xcode_name, preferred_guifg_mappings[, preferred_guibg_mappings]
+xcode_syntax_colors_mapping = [
+    ("xcode.syntax.attribute", ['Identifier']),
+    ("xcode.syntax.character", ['Character', 'Number', 'Constant']),
+    ("xcode.syntax.comment", ['Comment']),
+    ("xcode.syntax.comment.doc", ['Comment']),
+    ("xcode.syntax.comment.doc.keyword", ['Comment']),
+    ("xcode.syntax.identifier.class", ['Structure', 'Type']),
+    ("xcode.syntax.identifier.class.system", ['Structure', 'Type']),
+    ("xcode.syntax.identifier.constant", ['Constant']),
+    ("xcode.syntax.identifier.constant.system", ['Constant']),
+    ("xcode.syntax.identifier.function", ['Function', 'Identifier']),
+    ("xcode.syntax.identifier.function.system", ['Function']),
+    ("xcode.syntax.identifier.macro", ['Macro', 'Define']),
+    ("xcode.syntax.identifier.macro.system", ['Macro', 'Define']),
+    ("xcode.syntax.identifier.type", ['Type', 'Typedef']),
+    ("xcode.syntax.identifier.type.system", ['Type', 'Typedef']),
+    ("xcode.syntax.identifier.variable", ['Identifier']),
+    ("xcode.syntax.identifier.variable.system", ['Identifier']),
+    ("xcode.syntax.keyword", ['Keyword', 'Statement']),
+    ("xcode.syntax.number", ['Number', 'Constant']),
+    ("xcode.syntax.plain", ['Normal']),
+    ("xcode.syntax.preprocessor", ['Include', 'Define', 'PreCondit', 'PreProc']),
+    ("xcode.syntax.string", ['String', 'Constant']),
+    ("xcode.syntax.url", ['Underlined', 'String', 'Constant'])]
+
+def parse_vimfile(vim):
+    def strip(l):
+        x = l.find('"')
+        if x >= 0:
+            return l[:x]
+        return l
+    def parse_line(l):
+        sp = l.split()
+        return (sp[1], sp[2:])
+    def clry(x):
+        try:
+            x = x.split('=')
+            return (x[0], vimclr2xcode(x[1]))
+        except IndexError, e:
+            print e
+            print x
+            return (x[0], (1.0, 1.0, 1.0))
+    def clrmap(lst):
+        return dict([clry(x) for x in lst if x.startswith('gui')])
+    colors = [parse_line(strip(line)) for line in vim if line.strip().startswith('hi')]
+    ret = {}
+    for c in colors:
+        if c[0] in ret:
+            ret[c[0]].update(clrmap(c[1]))
+        else:
+            ret[c[0]] = clrmap(c[1])
+    return ret
+
+def map_fg(vim, name, guifg):
+    for hi in guifg:
+        if (hi in vim) and ('guifg' in vim[hi]):
+            mc = make_color(name, *vim[hi]['guifg'])
+            #print >>sys.stderr, mc
+            return mc
+    return make_color(name, *vim['Normal']['guifg'])
+
+def map_bg(vim, name, guibg):
+    for hi in guibg:
+        if (hi in vim) and ('guibg' in vim[hi]):
+            mc = make_color(name, *vim[hi]['guibg'])
+            #print >>sys.stderr, mc
+            return mc
+    return make_color(name, *vim['Normal']['guibg'])
+
+def map_vim_theme(vim):
+    if 'Normal' not in vim:
+        print >>sys.stderr, "Can't process theme without Normal definition with guifg/guibg set"
+        return None, None
+    print >>sys.stderr, 'Normal=',vim['Normal']
+    if 'guifg' not in vim['Normal'] or 'guibg' not in vim['Normal']:
+        print >>sys.stderr, "Can't process theme without Normal definition with guifg/guibg set"
+        return None, None
+
+    def map_font(mapping):
+        return make_font(mapping[1], mapping[2], mapping[3])
+    def map_color(mapping):
+        name = mapping[0]
+        if len(mapping) > 2:
+            return map_bg(vim, name, mapping[2])
+        else:
+            return map_fg(vim, name, mapping[1])
+    basic = []
+    syntax = []
+    for mapping in xcode_colors_basic_mapping:
+        if mapping[0] == 'font':
+            basic.append(map_font(mapping))
+        else:
+            basic.append(map_color(mapping))
+    for mapping in xcode_syntax_colors_mapping:
+        syntax.append(map_color(mapping))
+    return basic, syntax
+
+def convert_vim_theme(vim):
+    vim = parse_vimfile(vim)
+
+    basic, syntax = map_vim_theme(vim)
+    if not basic:
+        return None
+    basic = "\n".join(basic)
+    syntax = "\n".join(syntax)
+    fonts = make_font('xcode.syntax.plain', 'Inconsolata', 15.0)
+    return xcode_template % {'basic_colors':basic, 'syntax_colors':syntax, 'syntax_fonts':fonts}
+
+if __name__=="__main__":
+    for n in sys.argv[1:]:
+        print >>sys.stderr, "Processing ", n
+        with open(n) as vimtheme:
+            result = convert_vim_theme(vimtheme)
+            if result:
+                with open(os.path.splitext(n)[0] + '.dvtcolortheme', 'w') as xcodetheme:
+                    xcodetheme.write(result)
+
