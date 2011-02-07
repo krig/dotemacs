@@ -62,6 +62,10 @@
                :type elpa
                :load "css-mode.el"
                :after (lambda () (css-mode-hook)))
+        (:name sass-mode
+               :type elpa
+               :load "sass-mode.el"
+               :after (lambda () (sass-mode-hook)))
         (:name textmate
                :type git
                :url "git://github.com/defunkt/textmate.el"
@@ -114,6 +118,9 @@
   (add-hook 'css-mode-hook '(lambda ()
                               (setq css-indent-level 2)
                               (setq css-indent-offset 2))))
+
+(defun sass-mode-hook ()
+  (autoload 'sass-mode "css-mode" nil t))
 
 (defun is-rails-project ()
   (when (textmate-project-root)
@@ -435,6 +442,10 @@
  rng-nxml-auto-validate-flag nil
  nxml-degraded t)
 (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
+
+;; HAML-MODE
+(add-to-list 'load-path "~/.emacs.d/haml-mode")
+(require 'haml-mode)
 
 ;; IDO RECENTF
 (defun recentf-ido-find-file ()

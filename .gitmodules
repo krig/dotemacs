@@ -4,3 +4,6 @@
 [submodule "smart-tab"]
 	path = smart-tab
 	url = https://github.com/genehack/smart-tab.git
+[submodule "haml-mode"]
+	path = haml-mode
+	url = https://github.com/nex3/haml-mode.git
