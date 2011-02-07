@@ -24,6 +24,10 @@
 (winner-mode 1)
 (global-auto-revert-mode t)
 
+;; put something different in the scratch buffer
+(setq initial-scratch-message
+      ";; scratch buffer\n")
+
 (setq compilation-skip-threshold 2)
 
 ;; TRAMP
@@ -37,7 +41,7 @@
 	      tramp-file-name-regexp))
 
 ;; THEME
-(set-frame-font "Consolas-15")
+(set-frame-font "Inconsolata-14")
 (load-theme 'tango)
 
 ;; ELPA
@@ -244,8 +248,7 @@
 	     (setq n (1+ n))
 	     (get-buffer bufname)))
     (switch-to-buffer (get-buffer-create bufname))
-    (text-mode)
-    (turn-on-auto-fill)))
+    (lisp-interaction-mode)))
 
 ;; HEADER SWITCH
 (defun switch-cc-to-h ()
@@ -466,3 +469,17 @@
   (global-set-key (kbd "C-c M-x") 'smex-update-and-run)
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
