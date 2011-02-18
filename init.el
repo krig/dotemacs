@@ -40,10 +40,6 @@
 	      vc-ignore-dir-regexp
 	      tramp-file-name-regexp))
 
-;; THEME
-(set-frame-font "Inconsolata-14")
-(load-theme 'tango)
-
 ;; ELPA
 (require 'package)
 (setq package-archives (cons '("tromey" . "http://tromey.com/elpa/") package-archives))
@@ -281,7 +277,7 @@
 		   ((file-exists-p (concat name ".c"))
 		    (find-file (concat name ".c")))
        ((file-exists-p (concat name ".m")))))))))
-(global-set-key [M-s-up] 'switch-cc-to-h)
+(global-set-key [C-s-up] 'switch-cc-to-h)
 
 ;; REINDENT BUFFER
 (defun reindent-buffer ()
@@ -319,6 +315,8 @@
 
 (defun my-c-style-fix ()
   (c-set-style "bsd")
+  (setq c-basic-offset 4)
+  (setq tab-width 4)
   (setq indent-tabs-mode nil))
 
 (defun my-java-style-fix ()
@@ -480,6 +478,13 @@
   (global-set-key (kbd "C-c M-x") 'smex-update-and-run)
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+
+;; THEME
+(set-frame-font "Inconsolata-14")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;;(load-theme 'wombat) ;; not finished
+(load-theme 'tango)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -493,4 +498,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(trailing-whitespace ((t (:foreground "red4" :underline t :background "MistyRose1")))))
