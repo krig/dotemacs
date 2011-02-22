@@ -77,11 +77,13 @@
                :url "https://github.com/eschulte/rhtml.git"
                :features rhtml-mode
                :after (lambda () (rhtml-mode-hook)))
-        (:name yaml-mode 
+        (:name yaml-mode
                :type git
                :url "http://github.com/yoshiki/yaml-mode.git"
                :features yaml-mode
-               :after (lambda () (yaml-mode-hook)))))
+               :after (lambda () (yaml-mode-hook)))
+        (:name magit
+               :after (lambda () (global-set-key (kbd "C-x C-z") 'magit-status)))))
 
 (defun ruby-mode-hook ()
   (autoload 'ruby-mode "ruby-mode" nil t)
@@ -133,7 +135,8 @@
     (ruby-compilation-this-buffer)))
 
 ;; SYNC EL-GET
-(el-get 'sync)
+;;(el-get 'sync)
+(el-get)
 
 ;; TEXTMATE
 (textmate-mode)
@@ -431,6 +434,11 @@
   (setq show-trailing-whitespace t))
 (add-hook 'js2-mode-hook 'krig-js2-style-fix)
 
+;; MUSTACHE MODE
+;;(add-to-list 'load-path "~/.emacs.d/mustache-mode.el")
+(require 'mustache-mode)
+
+
 ;; RUBY HTML.ERB MODE
 (setq
  nxhtml-global-minor-mode t
@@ -465,6 +473,9 @@
       (find-file (cdr (assoc filename
 			     file-assoc-list))))))
 (global-set-key "\C-x\C-r" 'recentf-ido-find-file)
+
+;;(require 'undo-tree)
+;;(global-undo-tree-mode)
 
 ;; SMEX
 (progn
