@@ -490,23 +490,21 @@
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
-;; THEME
-(set-frame-font "Inconsolata-14")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;;(load-theme 'wombat) ;; not finished
-(load-theme 'tango)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(show-paren-mode t)
- '(tool-bar-mode nil))
+ '(custom-safe-themes (quote ("f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(trailing-whitespace ((t (:foreground "red4" :underline t :background "MistyRose1")))))
+ )
+
+;; THEME
+(set-frame-font "Inconsolata-13")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'wombat) ;; not finished
+;;(load-theme 'tango)
