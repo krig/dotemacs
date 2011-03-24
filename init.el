@@ -1,4 +1,5 @@
 ;; emacs configuration
+(autoload 'magit-status "magit" nil t)
 
 (push "/usr/local/bin" exec-path)
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
@@ -10,6 +11,7 @@
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 (setq inhibit-startup-message t)
+(setq visible-bell t)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -452,6 +454,8 @@
 ;; HAML-MODE
 (add-to-list 'load-path "~/.emacs.d/haml-mode")
 (require 'haml-mode)
+
+(require 'magit)
 
 ;; IDO RECENTF
 (defun recentf-ido-find-file ()
