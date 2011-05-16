@@ -478,6 +478,13 @@
 			     file-assoc-list))))))
 (global-set-key "\C-x\C-r" 'recentf-ido-find-file)
 
+(defun zap-space-forward () ; adapted from `delete-horizontal-space'
+  "*Delete all spaces, tabs and newlines after point."
+  (interactive "*")
+  (delete-region (point) (progn (skip-chars-forward " \t\n") (point))))
+
+(global-set-key [C-tab] (lambda () (interactive) (insert-char 9 1)))
+
 ;;(require 'undo-tree)
 ;;(global-undo-tree-mode)
 
@@ -499,7 +506,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default))))
+ '(column-number-mode t)
+ '(custom-safe-themes (quote ("f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default)))
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -508,7 +518,7 @@
  )
 
 ;; THEME
-(set-frame-font "Inconsolata-13")
+(set-frame-font "Inconsolata-14")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'wombat) ;; not finished
 ;;(load-theme 'tango)
