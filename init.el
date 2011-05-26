@@ -518,7 +518,7 @@
  )
 
 ;; THEME
-(set-frame-font "Inconsolata-14")
+(set-frame-font "Monofur-11")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'wombat) ;; not finished
 ;;(load-theme 'tango)
