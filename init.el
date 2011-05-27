@@ -455,6 +455,15 @@
 (add-to-list 'load-path "~/.emacs.d/haml-mode")
 (require 'haml-mode)
 
+
+;; SLIME
+
+(add-to-list 'load-path "~/.emacs.d/slime/")  ; your SLIME directory
+(setq inferior-lisp-program "sbcl") ; your Lisp system
+(require 'slime)
+(slime-setup)
+
+;; MAGIT
 (require 'magit)
 
 ;; IDO RECENTF
@@ -518,7 +527,7 @@
  )
 
 ;; THEME
-(set-frame-font "Monofur-11")
+(set-frame-font "Monofur-13")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'wombat) ;; not finished
 ;;(load-theme 'tango)

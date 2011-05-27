@@ -10,3 +10,6 @@
 [submodule "themes/zenburn"]
 	path = themes/zenburn
 	url = https://github.com/bbatsov/zenburn-emacs.git
+[submodule "slime"]
+	path = slime
+	url = https://github.com/nablaone/slime.git
