@@ -459,9 +459,24 @@
 ;; SLIME
 
 (add-to-list 'load-path "~/.emacs.d/slime/")  ; your SLIME directory
-(setq inferior-lisp-program "sbcl") ; your Lisp system
+(setq inferior-lisp-program "sbcl --noinform") ; your Lisp system
 (require 'slime)
-(slime-setup)
+(slime-setup '(slime-fancy))
+
+;; QUACK
+
+(require 'quack)
+
+;; PARROT
+
+(load "parrot")
+(load "pasm")
+(add-to-list 'auto-mode-alist '("\\.pasm\\'" . pasm-mode))
+(add-hook 'pasm-mode-hook
+          (function (lambda ()
+                      (setq indent-tabs-mode nil))))
+(autoload 'pir-mode "pir-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.pir\\'" . pir-mode))
 
 ;; MAGIT
 (require 'magit)
@@ -517,6 +532,9 @@
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(custom-safe-themes (quote ("f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default)))
+ '(quack-default-program "racket")
+ '(quack-remap-find-file-bindings-p nil)
+ '(quack-run-scheme-always-prompts-p nil)
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -527,7 +545,8 @@
  )
 
 ;; THEME
-(set-frame-font "Monofur-13")
+;;(set-frame-font "Monofur-13")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'wombat) ;; not finished
-;;(load-theme 'tango)
+;;(load-theme 'wombat) ;; not finished
+(load-theme 'tango)
+(set-frame-font "Consolas-14")
