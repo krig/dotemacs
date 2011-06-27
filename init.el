@@ -243,7 +243,18 @@
   (interactive)
   (untabify (point-min) (point-max)))
 
+(require 'generic-x)
+
 ;; CREATE SCRATCH BUFFER
+
+(define-generic-mode 'scratch-mode
+  '("#" ";") ; comment-list
+  '() ; keyword-list
+  '(("[0-9]+" . 'font-lock-variable-name-face)) ; font-lock-list
+  nil ; auto-mode-list
+  '(auto-fill-mode) ; function-list
+  "Major mode for scratch buffers.")
+
 (defun create-scratch-buffer nil
   "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
   (interactive)
@@ -256,7 +267,20 @@
 	     (setq n (1+ n))
 	     (get-buffer bufname)))
     (switch-to-buffer (get-buffer-create bufname))
-    (lisp-interaction-mode)))
+    (scratch-mode)))
+
+;; LORD PROGRAMMATON
+(define-generic-mode 'programmaton-mode
+  '("#")
+  '("def" "if" "case" "elif" "else" "for" "in" "unless" "while" "do" "end" "fn" "throw" "int" "int64" "string" "real" "type")
+  '(("[0-9]+" . 'font-lock-variable-name-face)
+    ("[\(\)]" . 'paren-face)
+    ("\\\"[^\\\"]*\\\"" . 'font-lock-string-face)
+    ("['][^']*[']" . 'font-lock-string-face))
+  '("\\.lp$")
+  '(smart-tab-mode)
+  "A mode for lord programmaton files")
+
 
 ;; HEADER SWITCH
 (defun switch-cc-to-h ()
@@ -466,6 +490,12 @@
 ;; QUACK
 
 (require 'quack)
+
+(autoload 'bison-mode "bison-mode.el")
+(add-to-list 'auto-mode-alist '("\\.ypp\\'" . bison-mode))
+
+(autoload 'flex-mode "flex-mode.el")
+(add-to-list 'auto-mode-alist '("\\.l\\'" . flex-mode))
 
 ;; PARROT
 
