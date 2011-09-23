@@ -13,3 +13,6 @@
 [submodule "slime"]
 	path = slime
 	url = https://github.com/nablaone/slime.git
+[submodule "rt-liberation"]
+	path = rt-liberation
+	url = http://yrk.nfshost.com/repos/rt-liberation.git/

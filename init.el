@@ -8,7 +8,7 @@
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
-(setq-default tab-width 2)
+(setq-default tab-width 8)
 (setq-default indent-tabs-mode nil)
 (setq inhibit-startup-message t)
 (setq visible-bell t)
@@ -45,6 +45,8 @@
 ;; ELPA
 (require 'package)
 (setq package-archives (cons '("tromey" . "http://tromey.com/elpa/") package-archives))
+(add-to-list 'package-archives
+	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
 (require 'el-get)
@@ -281,6 +283,29 @@
   '(smart-tab-mode)
   "A mode for lord programmaton files")
 
+;; BDSM
+
+(defvar bdsm-tab-width 4)
+
+(defun bdsm-mode-setup () ; use c-indent-command
+  (setq tab-width bdsm-tab-width)
+  (setq indent-tabs-mode t)
+  (setq indent-line-function 'insert-tab)
+  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
+  (smart-tab-mode))
+
+(define-generic-mode 'bdsm-mode
+  '("#")
+  '("any" "all" "in" "not")
+  '(("[a-z][a-zA-Z0-9_]*" . 'font-lock-reference-face)
+    ("[0-9]+" . 'font-lock-variable-name-face)
+    ("^[ ]+" . 'trailing-whitespace)
+    ("/" . 'font-lock-type-face)
+    ("?" . 'font-lock-builtin-face)
+    ("!" . 'font-lock-function-name-face))
+  '()
+  '(bdsm-mode-setup)
+  "A mode for BDSM grammars")
 
 ;; HEADER SWITCH
 (defun switch-cc-to-h ()
@@ -340,6 +365,7 @@
 
 (defun krig-mode-hook ()
   (setq show-trailing-whitespace t)
+  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
   (local-set-key [return] 'newline-and-indent))
 
 (defun my-c-style-fix ()
@@ -542,6 +568,16 @@
 ;;(require 'undo-tree)
 ;;(global-undo-tree-mode)
 
+
+;; RT :(
+
+(add-to-list 'load-path "~/.emacs.d/rt-liberation/")
+(require 'rt-liberation)
+(setq rt-liber-rt-binary "~/bin/rt"
+      rt-liber-rt-version "3.8.2")
+(setq rt-liber-username "krig")
+(setq rt-liber-base-url "https://tracker.int.prnw.net/")
+
 ;; SMEX
 (progn
   (require 'smex)
@@ -561,7 +597,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-safe-themes (quote ("f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default)))
+ '(custom-safe-themes (quote ("0174d99a8f1fdc506fa54403317072982656f127" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "36c5ca198b60e4ac862195b3f0533ad31cc1a4ff" "f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default)))
  '(quack-default-program "racket")
  '(quack-remap-find-file-bindings-p nil)
  '(quack-run-scheme-always-prompts-p nil)
@@ -576,7 +612,129 @@
 
 ;; THEME
 ;;(set-frame-font "Monofur-13")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 ;;(load-theme 'wombat) ;; not finished
-(load-theme 'tango)
+;;(load-theme 'tango)
+
+;; 1. Add the `emacs-color-theme-solarized` directory to your Emacs `load-path`.
+;; 2. `M-x enable-theme`, then either `solarized-light` or `solarized-dark`.
+(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
+(load-theme 'solarized-dark)
+
 (set-frame-font "Consolas-14")
+
+(defun procera-psm-tickets ()
+  "List relevant PSM tickets in RT"
+  (interactive)
+  (rt-liber-browse-query "( Status = 'new' OR Status = 'open' OR Status = 'stalled' ) AND (  'CF.{Component}' LIKE 'PSM' OR Queue = 'PSMBugs' OR Queue = 'PSMFeatures' )"))
+
+;; (defun procera-psm-open-ticket ()
+;;   "Open specific ticket in RT"
+;;   (interactive)
+;;   (let ((ticket (read-string "Ticket ID:")))
+;;     (rt-liber-browse-query
+;;      (rt-liber-compile-query
+;;       (id ticket)))))
+
+;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+;; Originally from stevey, adapted to support moving to a new directory.
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive
+   (progn
+     (if (not (buffer-file-name))
+         (error "Buffer '%s' is not visiting a file!" (buffer-name)))
+     (list (read-file-name (format "Rename %s to: " (file-name-nondirectory
+                                                     (buffer-file-name)))))))
+  (if (equal new-name "")
+      (error "Aborted rename"))
+  (setq new-name (if (file-directory-p new-name)
+                     (expand-file-name (file-name-nondirectory
+                                        (buffer-file-name))
+                                       new-name)
+                   (expand-file-name new-name)))
+  ;; If the file isn't saved yet, skip the file rename, but still update the
+  ;; buffer name and visited file.
+  (if (file-exists-p (buffer-file-name))
+      (rename-file (buffer-file-name) new-name 1))
+  (let ((was-modified (buffer-modified-p)))
+    ;; This also renames the buffer, and works with uniquify
+    (set-visited-file-name new-name)
+    (if was-modified
+        (save-buffer)
+      ;; Clear buffer-modified flag caused by set-visited-file-name
+      (set-buffer-modified-p nil))
+  (message "Renamed to %s." new-name)))
+
+;; someday might want to rotate windows if more than 2 of them
+(defun swap-windows ()
+ "If you have 2 windows, it swaps them."
+ (interactive)
+ (cond
+  ((not (= (count-windows) 2)) (message "You need exactly 2 windows to do this."))
+  (t
+   (let* ((w1 (first (window-list)))
+          (w2 (second (window-list)))
+          (b1 (window-buffer w1))
+          (b2 (window-buffer w2))
+          (s1 (window-start w1))
+          (s2 (window-start w2)))
+     (set-window-buffer w1 b2)
+     (set-window-buffer w2 b1)
+     (set-window-start w1 s2)
+     (set-window-start w2 s1)))))
+
+;; Never understood why Emacs doesn't have this function, either.
+;;
+(defun move-buffer-file (dir)
+  "Moves both current buffer and file it's visiting to DIR."
+  (interactive "DNew directory: ")
+  (let* ((name (buffer-name))
+         (filename (buffer-file-name))
+         (dir
+          (if (string-match dir "\\(?:/\\|\\\\)$")
+              (substring dir 0 -1) dir))
+         (newname (concat dir "/" name)))
+
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (progn
+        (copy-file filename newname 1)
+        (delete-file filename)
+        (set-visited-file-name newname)
+        (set-buffer-modified-p nil)
+        t))))
+
+(defun set-tab-stop-width (width)
+      "Set all tab stops to WIDTH in current buffer.
+    This updates `tab-stop-list', but not `tab-width'.
+    By default, `indent-for-tab-command' uses tabs to indent, see
+    `indent-tabs-mode'."
+      (interactive "nTab width: ")
+      (let* ((max-col (car (last tab-stop-list)))
+             ;; If width is not a factor of max-col,
+             ;; then max-col could be reduced with each call.
+             (n-tab-stops (/ max-col width)))
+        (set (make-local-variable 'tab-stop-list)
+             (mapcar (lambda (x) (* width x))
+                     (number-sequence 1 n-tab-stops)))
+        ;; So preserve max-col, by adding to end.
+        (unless (zerop (% max-col width))
+          (setcdr (last tab-stop-list)
+                  (list max-col)))))
+
+(defun backward-delete-whitespace-to-column ()
+  "delete back to the previous column of whitespace, or as much whitespace as possible,
+or just one char if that's not possible"
+  (interactive)
+  (if indent-tabs-mode
+      (call-interactively 'backward-delete-char-untabify)
+    (let ((movement (% (current-column) tab-width))
+          (p (point)))
+      (when (= movement 0) (setq movement tab-width))
+      (save-match-data
+        (if (string-match "\\w*\\(\\s-+\\)$" (buffer-substring-no-properties (- p movement) p))
+            (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
+        (call-interactively 'backward-delete-char-untabify))))))
+
