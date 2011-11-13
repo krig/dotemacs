@@ -32,6 +32,8 @@
 
 (setq compilation-skip-threshold 2)
 
+(setq-default ispell-program-name "aspell")
+
 ;; TRAMP
 (require 'tramp)
 (setq tramp-completion-reread-directory-timeout nil)
@@ -622,7 +624,8 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
 (load-theme 'solarized-dark)
 
-(set-frame-font "Consolas-14")
+;;(set-frame-font "Consolas-14")
+(set-frame-font "Ubuntu Mono-14")
 
 (defun procera-psm-tickets ()
   "List relevant PSM tickets in RT"
