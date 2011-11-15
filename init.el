@@ -580,6 +580,18 @@
 (setq rt-liber-username "krig")
 (setq rt-liber-base-url "https://tracker.int.prnw.net/")
 
+;; COFFEESCRIPT
+(add-to-list 'load-path "~/.emacs.d/coffee-mode")
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+;; coffee uses 2 spaces
+(defun coffee-custom ()
+  "coffee-mode-hook"
+  (set (make-local-variable 'tab-width) 2))
+(add-hook 'coffee-mode-hook
+          '(lambda() (coffee-custom)))
+
 ;; SMEX
 (progn
   (require 'smex)
