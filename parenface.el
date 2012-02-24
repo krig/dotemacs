@@ -35,6 +35,7 @@
 (add-hook 'lisp-interaction-mode-hook (paren-face-add-support lisp-font-lock-keywords-2))
 (add-hook 'arc-mode-hook              (paren-face-add-support arc-font-lock-keywords-2))
 (add-hook 'inferior-arc-mode-hook     (paren-face-add-support arc-font-lock-keywords-2))
+(add-hook 'clojure-mode-hook     (paren-face-add-support clojure-font-lock-keywords))
 
 (provide 'parenface)
 

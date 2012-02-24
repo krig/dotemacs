@@ -16,3 +16,6 @@
 [submodule "rt-liberation"]
 	path = rt-liberation
 	url = http://yrk.nfshost.com/repos/rt-liberation.git/
+[submodule "emacs-color-theme-solarized"]
+	path = emacs-color-theme-solarized
+	url = https://github.com/sellout/emacs-color-theme-solarized.git

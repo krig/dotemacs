@@ -46,7 +46,8 @@
 
 ;; ELPA
 (require 'package)
-(setq package-archives (cons '("tromey" . "http://tromey.com/elpa/") package-archives))
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")))
 (add-to-list 'package-archives
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
@@ -365,6 +366,13 @@
 
 (load "~/.emacs.d/nxhtml/autostart.el")
 
+(defun krig-sh-mode-hook ()
+  (setq show-trailing-whitespace t)
+  (setq tab-width 4)
+  (setq indent-tabs-mode t)
+  (local-set-key [return] 'newline-and-indent)
+  (whitespace-mode))
+
 (defun krig-mode-hook ()
   (setq show-trailing-whitespace t)
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
@@ -388,7 +396,6 @@
 (dolist (hook '(
 		c-mode-hook
 		c++-mode-hook
-		sh-mode-hook
 		emacs-lisp-mode-hook
 		lisp-mode-hook
 		lisp-interaction-mode-hook
@@ -402,6 +409,8 @@
 		))
   (add-hook hook 'krig-mode-hook)
   (add-hook hook 'my-set-newline-and-indent))
+
+(add-hook 'sh-mode-hook 'krig-sh-mode-hook)
 
 (add-hook 'c-mode-hook 'my-c-style-fix)
 (add-hook 'c++-mode-hook 'my-c-style-fix)
