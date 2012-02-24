@@ -44,6 +44,7 @@
 	      vc-ignore-dir-regexp
 	      tramp-file-name-regexp))
 
+
 ;; ELPA
 (require 'package)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
@@ -165,6 +166,7 @@
 					; 'ido-complete)
   (define-key ido-mode-map "\C-t" 'ido-toggle-regexp) ; same as in isearch
   (define-key ido-mode-map "\C-d" 'ido-enter-dired)) ; cool
+(global-set-key (kbd "C-x C-c") 'ido-switch-buffer)
 
 ;; SMART TAB
 (require 'smart-tab)
@@ -181,6 +183,8 @@
         try-complete-file-name))
 
 
+
+
 ;; UNIQUIFY - better buffer names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward
@@ -192,6 +196,7 @@
 (setq recentf-max-menu-items 25)
 
 ;; OPEN FOR DIRED
+(require 'dired-x)
 (defun dired-open-mac ()
        (interactive)
        (let ((file-name (dired-get-file-for-visit)))
@@ -618,6 +623,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(line-number-mode t)
  '(column-number-mode t)
  '(custom-safe-themes (quote ("b0950b032aa3c8faab4864ae288296dd66b92eca" "0174d99a8f1fdc506fa54403317072982656f127" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "36c5ca198b60e4ac862195b3f0533ad31cc1a4ff" "f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default)))
  '(quack-default-program "racket")
