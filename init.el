@@ -47,21 +47,20 @@
 ;; ELPA
 (require 'package)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")))
-(add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+                          ("gnu" . "http://elpa.gnu.org/packages/")
+                          ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
 (require 'el-get)
 
 (setq el-get-sources
-      '((:name ruby-mode 
+      '((:name ruby-mode
                :type elpa
                :load "ruby-mode.el"
                :after (lambda () (ruby-mode-hook)))
         (:name inf-ruby  :type elpa)
         (:name ruby-compilation :type elpa)
-        (:name css-mode 
+        (:name css-mode
                :type elpa
                :load "css-mode.el"
                :after (lambda () (css-mode-hook)))
@@ -603,14 +602,14 @@
 
 ;; SMEX
 (progn
+  (add-to-list 'load-path "~/.emacs.d/smex")
   (require 'smex)
   (setq smex-save-file "~/.emacs.d/smex.save")
-  (setq smex-prompt-string ">> ")
+  (setq smex-prompt-string "M-x ")
   (smex-initialize)
   (smex-auto-update) ;; refresh caches after 60 seconds of idle time
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-  (global-set-key (kbd "C-c M-x") 'smex-update-and-run)
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
@@ -620,7 +619,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-safe-themes (quote ("0174d99a8f1fdc506fa54403317072982656f127" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "36c5ca198b60e4ac862195b3f0533ad31cc1a4ff" "f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default)))
+ '(custom-safe-themes (quote ("b0950b032aa3c8faab4864ae288296dd66b92eca" "0174d99a8f1fdc506fa54403317072982656f127" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "36c5ca198b60e4ac862195b3f0533ad31cc1a4ff" "f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default)))
  '(quack-default-program "racket")
  '(quack-remap-find-file-bindings-p nil)
  '(quack-run-scheme-always-prompts-p nil)
@@ -634,19 +633,14 @@
  )
 
 ;; THEME
-;;(set-frame-font "Monofur-13")
-;;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;;(load-theme 'wombat) ;; not finished
-;;(load-theme 'tango)
-
-;; 1. Add the `emacs-color-theme-solarized` directory to your Emacs `load-path`.
-;; 2. `M-x enable-theme`, then either `solarized-light` or `solarized-dark`.
 (add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
 (load-theme 'solarized-dark)
 
-;;(set-frame-font "Consolas-14")
 (set-frame-font "Ubuntu Mono-14")
+
+(when (string-match "apple-darwin" system-configuration)
+  (setq mac-allow-anti-aliasing t))
 
 (defun procera-psm-tickets ()
   "List relevant PSM tickets in RT"
