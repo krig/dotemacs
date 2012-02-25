@@ -1,3 +1,7 @@
+(setq custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
+(load-theme 'solarized-dark)
+
 ;; emacs configuration
 (autoload 'magit-status "magit" nil t)
 
@@ -73,12 +77,6 @@
                :type git
                :url "git://github.com/defunkt/textmate.el"
                :load "textmate.el")
-;;        (:name rvm
-;;               :type git
-;;               :url "http://github.com/djwhitt/rvm.el.git"
-;;               :load "rvm.el"
-;;               :compile ("rvm.el")
-;;               :after (lambda() (rvm-use-default)))
         (:name rhtml
                :type git
                :url "https://github.com/eschulte/rhtml.git"
@@ -90,7 +88,7 @@
                :features yaml-mode
                :after (lambda () (yaml-mode-hook)))
         (:name magit
-               :after (lambda () (global-set-key (kbd "C-x C-z") 'magit-status)))))
+               :after (lambda () (global-set-key (kbd "C-x C-a") 'magit-status)))))
 
 (defun ruby-mode-hook ()
   (autoload 'ruby-mode "ruby-mode" nil t)
@@ -159,14 +157,17 @@
 (setq ido-enable-flex-matching t)
 (setq confirm-nonexistent-file-or-buffer nil)
 (add-hook 'ido-define-mode-map-hook 'ido-my-keys)
+
 (defun ido-my-keys ()
   (define-key ido-mode-map "\t" 'ido-complete)
-					;tab is better for completion lists
-					;(define-key ido-mode-map (kbd "tab")
-					; 'ido-complete)
   (define-key ido-mode-map "\C-t" 'ido-toggle-regexp) ; same as in isearch
   (define-key ido-mode-map "\C-d" 'ido-enter-dired)) ; cool
 (global-set-key (kbd "C-x C-c") 'ido-switch-buffer)
+
+;; Display ido results vertically, rather than horizontally
+(setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
+(defun ido-disable-line-truncation () (set (make-local-variable 'truncate-lines) nil))
+(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
 
 ;; SMART TAB
 (require 'smart-tab)
@@ -202,8 +203,11 @@
        (let ((file-name (dired-get-file-for-visit)))
          (if (file-exists-p file-name)
              (call-process "/usr/bin/open" nil 0 nil file-name))))
-(define-key dired-mode-map "o" 'dired-open-mac)
 
+(when (string-match "apple-darwin" system-configuration)
+  (define-key dired-mode-map "o" 'dired-open-mac)
+  (setq ls-lisp-use-insert-directory-program t)      ;; use external ls
+  (setq insert-directory-program "/usr/local/bin/gls"))
 
 ;; PASTE.SE
 (defun paste-se-encode-uri-component (str)
@@ -618,15 +622,17 @@
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(line-number-mode t)
  '(column-number-mode t)
- '(custom-safe-themes (quote ("b0950b032aa3c8faab4864ae288296dd66b92eca" "0174d99a8f1fdc506fa54403317072982656f127" "5600dc0bb4a2b72a613175da54edb4ad770105aa" "36c5ca198b60e4ac862195b3f0533ad31cc1a4ff" "f9d68c6c4216f3afd89d4439fd378a5dce869034" "e17065576593ed80494c2e275e151805bb9428a8" default)))
+ '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
+ '(line-number-mode t)
  '(quack-default-program "racket")
+ '(quack-fontify-style (quote emacs))
  '(quack-remap-find-file-bindings-p nil)
  '(quack-run-scheme-always-prompts-p nil)
  '(show-paren-mode t)
@@ -639,9 +645,9 @@
  )
 
 ;; THEME
-(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
-(load-theme 'solarized-dark)
+;(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;(load-theme 'pastels-on-dark)
 
 (set-frame-font "Ubuntu Mono-14")
 
