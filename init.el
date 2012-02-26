@@ -577,6 +577,10 @@
 			     file-assoc-list))))))
 (global-set-key "\C-x\C-r" 'recentf-ido-find-file)
 
+(setq imenu-auto-rescan t)
+(autoload 'idomenu "idomenu" nil t)
+(global-set-key "\C-x\C-\\" 'idomenu)
+
 (defun zap-space-forward () ; adapted from `delete-horizontal-space'
   "*Delete all spaces, tabs and newlines after point."
   (interactive "*")
