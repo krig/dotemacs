@@ -1,5 +1,9 @@
+(when (string-match "apple-darwin" system-configuration)
+  (setq mac-allow-anti-aliasing t))
+(set-frame-font "Ubuntu Mono-14")
 (setq custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa/tron-theme-11")
 (load-theme 'solarized-dark)
 
 ;; emacs configuration
@@ -633,7 +637,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
+ '(custom-safe-themes (quote ("1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "c89ac300e09bc27c612959a0a6b1050df2b6189273eae57ca204d9c2dc0fc3ea" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
  '(line-number-mode t)
  '(quack-default-program "racket")
  '(quack-fontify-style (quote emacs))
@@ -647,16 +651,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-;; THEME
-;(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized")
-;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;(load-theme 'pastels-on-dark)
-
-(set-frame-font "Ubuntu Mono-14")
-
-(when (string-match "apple-darwin" system-configuration)
-  (setq mac-allow-anti-aliasing t))
 
 (defun procera-psm-tickets ()
   "List relevant PSM tickets in RT"
