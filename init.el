@@ -1,10 +1,13 @@
 (when (string-match "apple-darwin" system-configuration)
   (setq mac-allow-anti-aliasing t))
 (set-frame-font "Ubuntu Mono-14")
-(setq custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
+(setq custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "21d9280256d9d3cf79cbcf62c3e7f3f243209e6251b215aede5026e0c5ad853f" default)))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa/tron-theme-11")
+;;(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa/tron-theme-11")
+;;(load "~/.emacs.d/elpa/tango-2-theme-1.0.0/tango-2-theme.el")
+;;(add-to-list 'custom-theme-load-path " ~/.emacs.d/elpa/tango-2-theme-1.0.0/")
 (load-theme 'solarized-dark)
+;;(load-theme 'whiteboard)
 
 ;; emacs configuration
 (autoload 'magit-status "magit" nil t)
@@ -33,6 +36,10 @@
 (tooltip-mode -1)
 (winner-mode 1)
 (global-auto-revert-mode t)
+
+;; use ibuffer instead of regular buffer list
+(autoload 'ibuffer "ibuffer" "List buffers." t)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; put something different in the scratch buffer
 (setq initial-scratch-message
@@ -152,6 +159,9 @@
 
 ;; PARENFACE
 (require 'parenface)
+
+;; HEXCOLOUR
+(require 'hexcolour)
 
 ;; IDO
 (ido-mode t)
@@ -595,16 +605,6 @@
 ;;(require 'undo-tree)
 ;;(global-undo-tree-mode)
 
-
-;; RT :(
-
-(add-to-list 'load-path "~/.emacs.d/rt-liberation/")
-(require 'rt-liberation)
-(setq rt-liber-rt-binary "~/bin/rt"
-      rt-liber-rt-version "3.8.2")
-(setq rt-liber-username "krig")
-(setq rt-liber-base-url "https://tracker.int.prnw.net/")
-
 ;; COFFEESCRIPT
 (add-to-list 'load-path "~/.emacs.d/coffee-mode")
 (require 'coffee-mode)
@@ -616,6 +616,19 @@
   (set (make-local-variable 'tab-width) 2))
 (add-hook 'coffee-mode-hook
           '(lambda() (coffee-custom)))
+
+;; SPEEDBAR
+(progn
+  (require 'sr-speedbar)
+  (setq speedbar-use-images nil)
+  (make-face 'speedbar-face)
+  (set-face-font 'speedbar-face "Inconsolata-12")
+  (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
+  (global-set-key (kbd "M-p") 'sr-speedbar-toggle))
+
+;; UNBOUND
+(progn
+  (require 'unbound))
 
 ;; SMEX
 (progn
@@ -637,7 +650,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
- '(custom-safe-themes (quote ("1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "c89ac300e09bc27c612959a0a6b1050df2b6189273eae57ca204d9c2dc0fc3ea" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
+ '(custom-safe-themes (quote ("21d9280256d9d3cf79cbcf62c3e7f3f243209e6251b215aede5026e0c5ad853f" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "c89ac300e09bc27c612959a0a6b1050df2b6189273eae57ca204d9c2dc0fc3ea" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
  '(line-number-mode t)
  '(quack-default-program "racket")
  '(quack-fontify-style (quote emacs))

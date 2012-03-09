@@ -11,7 +11,7 @@
 
 (defface paren-face
     '((((class color))
-       (:foreground "DimGray")))
+       (:foreground "#585858")));;"DimGray")))
   "Face for displaying a paren."
   :group 'faces)
 
