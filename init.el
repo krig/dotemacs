@@ -1,6 +1,7 @@
 (when (string-match "apple-darwin" system-configuration)
   (setq mac-allow-anti-aliasing t))
-(set-frame-font "Ubuntu Mono-14")
+;;(set-frame-font "Ubuntu Mono-14")
+(set-frame-font "Liberation Mono-13")
 (setq custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "21d9280256d9d3cf79cbcf62c3e7f3f243209e6251b215aede5026e0c5ad853f" default)))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
 ;;(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa/tron-theme-11")
@@ -8,6 +9,9 @@
 ;;(add-to-list 'custom-theme-load-path " ~/.emacs.d/elpa/tango-2-theme-1.0.0/")
 (load-theme 'solarized-dark)
 ;;(load-theme 'whiteboard)
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
 
 ;; emacs configuration
 (autoload 'magit-status "magit" nil t)
@@ -556,16 +560,17 @@
 (autoload 'flex-mode "flex-mode.el")
 (add-to-list 'auto-mode-alist '("\\.l\\'" . flex-mode))
 
-;; PARROT
+;; ;; PARROT
 
-(load "parrot")
-(load "pasm")
-(add-to-list 'auto-mode-alist '("\\.pasm\\'" . pasm-mode))
-(add-hook 'pasm-mode-hook
-          (function (lambda ()
-                      (setq indent-tabs-mode nil))))
-(autoload 'pir-mode "pir-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.pir\\'" . pir-mode))
+;; (progn
+;;   (load "parrot")
+;;   (load "pasm")
+;;   (add-to-list 'auto-mode-alist '("\\.pasm\\'" . pasm-mode))
+;;   (add-hook 'pasm-mode-hook
+;;             (function (lambda ()
+;;                         (setq indent-tabs-mode nil))))
+;;   (autoload 'pir-mode "pir-mode" nil t)
+;;   (add-to-list 'auto-mode-alist '("\\.pir\\'" . pir-mode)))
 
 ;; MAGIT
 (require 'magit)
@@ -622,7 +627,7 @@
   (require 'sr-speedbar)
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
-  (set-face-font 'speedbar-face "Inconsolata-12")
+  (set-face-font 'speedbar-face "Liberation Mono-9")
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (global-set-key (kbd "M-p") 'sr-speedbar-toggle))
 
@@ -642,41 +647,6 @@
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   ;; This is your old M-x.
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(custom-safe-themes (quote ("21d9280256d9d3cf79cbcf62c3e7f3f243209e6251b215aede5026e0c5ad853f" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "c89ac300e09bc27c612959a0a6b1050df2b6189273eae57ca204d9c2dc0fc3ea" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default)))
- '(line-number-mode t)
- '(quack-default-program "racket")
- '(quack-fontify-style (quote emacs))
- '(quack-remap-find-file-bindings-p nil)
- '(quack-run-scheme-always-prompts-p nil)
- '(show-paren-mode t)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-(defun procera-psm-tickets ()
-  "List relevant PSM tickets in RT"
-  (interactive)
-  (rt-liber-browse-query "( Status = 'new' OR Status = 'open' OR Status = 'stalled' ) AND (  'CF.{Component}' LIKE 'PSM' OR Queue = 'PSMBugs' OR Queue = 'PSMFeatures' )"))
-
-;; (defun procera-psm-open-ticket ()
-;;   "Open specific ticket in RT"
-;;   (interactive)
-;;   (let ((ticket (read-string "Ticket ID:")))
-;;     (rt-liber-browse-query
-;;      (rt-liber-compile-query
-;;       (id ticket)))))
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 ;; Originally from stevey, adapted to support moving to a new directory.
