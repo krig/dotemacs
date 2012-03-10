@@ -1,7 +1,7 @@
 (when (string-match "apple-darwin" system-configuration)
   (setq mac-allow-anti-aliasing t))
-;;(set-frame-font "Ubuntu Mono-14")
-(set-frame-font "Liberation Mono-13")
+(set-frame-font "Ubuntu Mono-14")
+;;(set-frame-font "Liberation Mono-13")
 (setq custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "21d9280256d9d3cf79cbcf62c3e7f3f243209e6251b215aede5026e0c5ad853f" default)))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
 ;;(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa/tron-theme-11")
@@ -9,6 +9,9 @@
 ;;(add-to-list 'custom-theme-load-path " ~/.emacs.d/elpa/tango-2-theme-1.0.0/")
 (load-theme 'solarized-dark)
 ;;(load-theme 'whiteboard)
+
+;;(load "~/.emacs.d/themes/subdued-theme.el")
+;;(load "~/.emacs.d/themes/pastels-on-dark-theme.el")
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
@@ -52,6 +55,13 @@
 (setq compilation-skip-threshold 2)
 
 (setq-default ispell-program-name "aspell")
+
+;; C SOURCE FOR EMACS
+(defun krig-find-emacs-source ()
+  "~/projects/sources/emacs/src")
+(if (eq system-type 'windows-nt)
+    (setq find-function-C-source-directory "C:/Program/Emacs/src/src")
+  (setq find-function-C-source-directory (krig-find-emacs-source)))
 
 ;; TRAMP
 (require 'tramp)
@@ -396,8 +406,8 @@
   (setq show-trailing-whitespace t)
   (setq tab-width 4)
   (setq indent-tabs-mode t)
-  (local-set-key [return] 'newline-and-indent)
-  (whitespace-mode))
+  (local-set-key [return] 'newline-and-indent))
+;;  (whitespace-mode))
 
 (defun krig-mode-hook ()
   (setq show-trailing-whitespace t)
@@ -442,6 +452,36 @@
 (add-hook 'c++-mode-hook 'my-c-style-fix)
 (add-hook 'objc-mode-hook 'my-c-style-fix)
 (add-hook 'java-mode-hook 'my-java-style-fix)
+
+;; FIX ENUM CLASS IN C++11
+
+(defun inside-class-enum-p (pos)
+  "Checks if POS is within the braces of a C++ \"enum class\"."
+  (ignore-errors
+    (save-excursion
+      (goto-char pos)
+      (up-list -1)
+      (backward-sexp 1)
+      (looking-back "enum[ \t]+class[ \t]+"))))
+
+(defun align-enum-class (langelem)
+  (if (inside-class-enum-p (c-langelem-pos langelem))
+      0
+    (c-lineup-topmost-intro-cont langelem)))
+
+(defun align-enum-class-closing-brace (langelem)
+  (if (inside-class-enum-p (c-langelem-pos langelem))
+      '-
+    '+))
+
+(defun fix-enum-class ()
+  "Setup `c++-mode' to better handle \"class enum\"."
+  (add-to-list 'c-offsets-alist '(topmost-intro-cont . align-enum-class))
+  (add-to-list 'c-offsets-alist
+               '(statement-cont . align-enum-class-closing-brace)))
+
+(add-hook 'c++-mode-hook 'fix-enum-class)
+
 
 (add-hook
  'java-mode-hook
@@ -542,6 +582,8 @@
 (add-to-list 'load-path "~/.emacs.d/haml-mode")
 (require 'haml-mode)
 
+;; ORG-MODE
+(setq org-startup-indented t)
 
 ;; SLIME
 
@@ -627,7 +669,7 @@
   (require 'sr-speedbar)
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
-  (set-face-font 'speedbar-face "Liberation Mono-9")
+  (set-face-font 'speedbar-face "Ubuntu Mono-11")
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (global-set-key (kbd "M-p") 'sr-speedbar-toggle))
 

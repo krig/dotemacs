@@ -11,6 +11,7 @@
  '(quack-remap-find-file-bindings-p nil)
  '(quack-run-scheme-always-prompts-p nil)
  '(show-paren-mode t)
+ '(speedbar-show-unknown-files t)
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
