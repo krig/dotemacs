@@ -1,17 +1,13 @@
+;; emacs config
+;; TODO:
+;; cleanup, modularize...
+;;
 (when (string-match "apple-darwin" system-configuration)
   (setq mac-allow-anti-aliasing t))
 (set-frame-font "Ubuntu Mono-14")
-;;(set-frame-font "Liberation Mono-13")
-(setq custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "21d9280256d9d3cf79cbcf62c3e7f3f243209e6251b215aede5026e0c5ad853f" default)))
-(add-to-list 'custom-theme-load-path "~/.emacs.d/emacs-color-theme-solarized")
-;;(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa/tron-theme-11")
-;;(load "~/.emacs.d/elpa/tango-2-theme-1.0.0/tango-2-theme.el")
-;;(add-to-list 'custom-theme-load-path " ~/.emacs.d/elpa/tango-2-theme-1.0.0/")
-(load-theme 'solarized-dark)
-;;(load-theme 'whiteboard)
-
-;;(load "~/.emacs.d/themes/subdued-theme.el")
-;;(load "~/.emacs.d/themes/pastels-on-dark-theme.el")
+(setq custom-safe-themes '("bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" default))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'tomorrow-night)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
@@ -23,11 +19,12 @@
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (add-to-list 'load-path "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d/smart-tab")
+(add-to-list 'load-path "~/.emacs.d/smarttabs")
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
-(setq-default tab-width 8)
-(setq-default indent-tabs-mode nil)
+;;(setq-default tab-width 8)
+;;(setq-default indent-tabs-mode nil)
 (setq inhibit-startup-message t)
 (setq visible-bell t)
 
@@ -49,8 +46,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; put something different in the scratch buffer
-(setq initial-scratch-message
-      ";; scratch buffer\n")
+(setq initial-scratch-message ";)\n")
 
 (setq compilation-skip-threshold 2)
 
@@ -149,6 +145,9 @@
 
 (defun sass-mode-hook ()
   (autoload 'sass-mode "css-mode" nil t))
+
+;; SCSS
+(setq scss-compile-at-save nil)
 
 (defun is-rails-project ()
   (when (textmate-project-root)
@@ -284,6 +283,12 @@
   (interactive)
   (untabify (point-min) (point-max)))
 
+(defun tabify-buffer ()
+  "Tabify current buffer"
+  (interactive)
+  (tabify (point-min) (point-max)))
+
+
 (require 'generic-x)
 
 ;; CREATE SCRATCH BUFFER
@@ -402,6 +407,16 @@
 
 (load "~/.emacs.d/nxhtml/autostart.el")
 
+(setq tab-width 4)
+
+(require 'smart-tabs-mode)
+(smart-tabs-advice c-indent-line c-basic-offset)
+(smart-tabs-advice c-indent-region c-basic-offset)
+(smart-tabs-advice js2-indent-line js2-basic-offset)
+(smart-tabs-advice cperl-indent-line cperl-indent-level)
+(smart-tabs-advice python-indent-line-1 python-indent)
+(smart-tabs-advice ruby-indent-line ruby-indent-level)
+
 (defun krig-sh-mode-hook ()
   (setq show-trailing-whitespace t)
   (setq tab-width 4)
@@ -410,18 +425,17 @@
 ;;  (whitespace-mode))
 
 (defun krig-mode-hook ()
+  (smart-tabs-mode-enable)
   (setq show-trailing-whitespace t)
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
   (local-set-key [return] 'newline-and-indent))
 
 (defun my-c-style-fix ()
   (c-set-style "bsd")
-  (setq c-basic-offset 4)
   (setq tab-width 4)
-  (setq indent-tabs-mode nil))
+  (setq indent-tabs-mode t))
 
 (defun my-java-style-fix ()
-  (setq c-basic-offset 4)
   (setq tab-width 4)
   (setq indent-tabs-mode t))
 
@@ -542,7 +556,6 @@
 (require 'go-mode-load)
 
 (defun my-go-style-fix ()
-  (setq c-basic-offset 4)
   (setq tab-width 4)
   (setq indent-tabs-mode nil))
 
@@ -587,10 +600,12 @@
 
 ;; SLIME
 
-(add-to-list 'load-path "~/.emacs.d/slime/")  ; your SLIME directory
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+
+;(add-to-list 'load-path "~/.emacs.d/slime/")  ; your SLIME directory
 (setq inferior-lisp-program "sbcl --noinform") ; your Lisp system
-(require 'slime)
-(slime-setup '(slime-fancy))
+;(require 'slime)
+;(slime-setup '(slime-fancy))
 
 ;; QUACK
 
@@ -601,6 +616,10 @@
 
 (autoload 'flex-mode "flex-mode.el")
 (add-to-list 'auto-mode-alist '("\\.l\\'" . flex-mode))
+
+(load "~/.emacs.d/haskell-mode-2.8.0/haskell-site-file")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;; ;; PARROT
 
@@ -613,6 +632,7 @@
 ;;                         (setq indent-tabs-mode nil))))
 ;;   (autoload 'pir-mode "pir-mode" nil t)
 ;;   (add-to-list 'auto-mode-alist '("\\.pir\\'" . pir-mode)))
+
 
 ;; MAGIT
 (require 'magit)
@@ -651,18 +671,6 @@
 
 ;;(require 'undo-tree)
 ;;(global-undo-tree-mode)
-
-;; COFFEESCRIPT
-(add-to-list 'load-path "~/.emacs.d/coffee-mode")
-(require 'coffee-mode)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-;; coffee uses 2 spaces
-(defun coffee-custom ()
-  "coffee-mode-hook"
-  (set (make-local-variable 'tab-width) 2))
-(add-hook 'coffee-mode-hook
-          '(lambda() (coffee-custom)))
 
 ;; SPEEDBAR
 (progn
@@ -782,7 +790,7 @@
 or just one char if that's not possible"
   (interactive)
   (if indent-tabs-mode
-      (call-interactively 'backward-delete-char-untabify)
+      (call-interactively 'backward-delete-char)
     (let ((movement (% (current-column) tab-width))
           (p (point)))
       (when (= movement 0) (setq movement tab-width))
@@ -791,3 +799,10 @@ or just one char if that's not possible"
             (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
         (call-interactively 'backward-delete-char-untabify))))))
 
+(defun backward-delete-char-hungry (arg &optional killp)
+  "*Delete characters backward in \"hungry\" mode.
+    See the documentation of `backward-delete-char-untabify' and
+    `backward-delete-char-untabify-method' for details."
+  (interactive "*p\nP")
+  (let ((backward-delete-char-untabify-method 'hungry))
+    (backward-delete-char-untabify arg killp)))

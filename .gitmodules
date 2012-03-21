@@ -22,3 +22,6 @@
 [submodule "smex"]
 	path = smex
 	url = https://github.com/nonsequitur/smex/
+[submodule "smarttabs"]
+	path = smarttabs
+	url = https://github.com/jcsalomon/smarttabs.git
