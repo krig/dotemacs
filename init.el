@@ -45,9 +45,6 @@
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;; put something different in the scratch buffer
-(setq initial-scratch-message ";)\n")
-
 (setq compilation-skip-threshold 2)
 
 (setq-default ispell-program-name "aspell")
@@ -172,6 +169,14 @@
 
 ;; PARENFACE
 (require 'parenface)
+
+;; PAREDIT
+;; (autoload 'paredit-mode "paredit"
+;;   "Minor mode for pseudo-structurally editing Lisp code." t)
+;; (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+;; (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+;; (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
+;; (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
 
 ;; HEXCOLOUR
 (require 'hexcolour)
@@ -413,20 +418,27 @@
 (smart-tabs-advice c-indent-line c-basic-offset)
 (smart-tabs-advice c-indent-region c-basic-offset)
 (smart-tabs-advice js2-indent-line js2-basic-offset)
-(smart-tabs-advice cperl-indent-line cperl-indent-level)
-(smart-tabs-advice python-indent-line-1 python-indent)
+;(smart-tabs-advice cperl-indent-line cperl-indent-level)
+;(smart-tabs-advice python-indent-line-1 python-indent)
 (smart-tabs-advice ruby-indent-line ruby-indent-level)
+
+;; FIXME: IN COMMENTS
+(require 'fic-mode)
+
+;; MODE HOOKS
 
 (defun krig-sh-mode-hook ()
   (setq show-trailing-whitespace t)
   (setq tab-width 4)
   (setq indent-tabs-mode t)
+  (turn-on-fic-mode)
   (local-set-key [return] 'newline-and-indent))
 ;;  (whitespace-mode))
 
 (defun krig-mode-hook ()
   (smart-tabs-mode-enable)
   (setq show-trailing-whitespace t)
+  (turn-on-fic-mode)
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
   (local-set-key [return] 'newline-and-indent))
 
@@ -534,6 +546,7 @@
 (add-to-list 'interpreter-mode-alist '("python2.5" . python-mode))
 (defun mypy-extra-stuff ()
   (setq show-trailing-whitespace t)
+  (setq tab-width 4)
   (setq indent-tabs-mode nil))
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
 (add-hook 'python-mode-hook 'mypy-extra-stuff)
@@ -555,26 +568,22 @@
 ;; GOOGLE GO MODE
 (require 'go-mode-load)
 
-(defun my-go-style-fix ()
-  (setq tab-width 4)
-  (setq indent-tabs-mode nil))
-
 (dolist (hook '(
 		go-mode-hook
 		))
-  (add-hook hook 'my-go-style-fix)
   (add-hook hook 'krig-mode-hook))
 
 ;; IMPROVED JAVASCRIPT MODE
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 
 (load "js2-setup.el")
 
 (defun krig-js2-style-fix ()
   (setq show-trailing-whitespace t))
 (add-hook 'js2-mode-hook 'krig-js2-style-fix)
+(add-hook 'js-mode-hook 'krig-js2-style-fix)
 
 ;; MUSTACHE MODE
 ;;(add-to-list 'load-path "~/.emacs.d/mustache-mode.el")
@@ -806,3 +815,7 @@ or just one char if that's not possible"
   (interactive "*p\nP")
   (let ((backward-delete-char-untabify-method 'hungry))
     (backward-delete-char-untabify arg killp)))
+
+
+;; put something different in the scratch buffer
+(setq initial-scratch-message ";)\n")

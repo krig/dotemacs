@@ -25,3 +25,6 @@
 [submodule "smarttabs"]
 	path = smarttabs
 	url = https://github.com/jcsalomon/smarttabs.git
+[submodule "mythryl-mode"]
+	path = mythryl-mode
+	url = https://github.com/rev22/mythryl-mode.git
