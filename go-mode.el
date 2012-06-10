@@ -33,8 +33,8 @@
     ;; Operators (punctuation)
     (modify-syntax-entry ?+  "." st)
     (modify-syntax-entry ?-  "." st)
-    (modify-syntax-entry ?*  "." st)
-    (modify-syntax-entry ?/  "." st)
+    (modify-syntax-entry ?*  ". 23" st)   ; also part of comments
+    (modify-syntax-entry ?/  ". 124b" st) ; ditto
     (modify-syntax-entry ?%  "." st)
     (modify-syntax-entry ?&  "." st)
     (modify-syntax-entry ?|  "." st)
@@ -49,6 +49,9 @@
     (modify-syntax-entry ?\' "." st)
     (modify-syntax-entry ?`  "." st)
     (modify-syntax-entry ?\\ "." st)
+
+    ;; Newline is a comment-ender.
+    (modify-syntax-entry ?\n "> b" st)
 
     st)
   "Syntax table for Go mode.")
@@ -545,8 +548,9 @@ token on the line."
          (not (looking-at go-mode-non-terminating-keywords-regexp)))))))
 
 (defun go-mode-whitespace-p (char)
-  "Is char whitespace in the syntax table for go."
-  (eq 32 (char-syntax char)))
+  "Is newline, or char whitespace in the syntax table for go."
+  (or (eq char ?\n)
+      (eq 32 (char-syntax char))))
 
 (defun go-mode-backward-skip-comments ()
   "Skip backward over comments and whitespace."
@@ -739,34 +743,37 @@ Replace the current buffer on success; display errors on failure."
   (let ((currconf (current-window-configuration)))
     (let ((srcbuf (current-buffer)))
       (with-temp-buffer
-	(let ((outbuf (current-buffer))
-	      (errbuf (get-buffer-create "*Gofmt Errors*"))
-	      (coding-system-for-read 'utf-8)    ;; use utf-8 with subprocesses
-	      (coding-system-for-write 'utf-8))
-	  (with-current-buffer errbuf (erase-buffer))
-	  (with-current-buffer srcbuf
-	    (save-restriction
-	      (let (deactivate-mark)
-		(widen)
-		(if (= 0 (shell-command-on-region (point-min) (point-max) "gofmt"
-						  outbuf nil errbuf))
-		    ;; restore window config
-		    ;; gofmt succeeded: replace the current buffer with outbuf,
-		    ;; restore the mark and point, and discard errbuf.
-		    (let ((old-mark (mark t)) (old-point (point)))
-		      (set-window-configuration currconf)
-		      (erase-buffer)
-		      (insert-buffer-substring outbuf)
-		      (goto-char (min old-point (point-max)))
-		      (if old-mark (push-mark (min old-mark (point-max)) t))
-		      (kill-buffer errbuf))
+        (let ((outbuf (current-buffer))
+              (errbuf (get-buffer-create "*Gofmt Errors*"))
+              (coding-system-for-read 'utf-8)    ;; use utf-8 with subprocesses
+              (coding-system-for-write 'utf-8))
+          (with-current-buffer errbuf (erase-buffer))
+          (with-current-buffer srcbuf
+            (save-restriction
+              (let (deactivate-mark)
+                (widen)
+                (if (= 0 (shell-command-on-region (point-min) (point-max) "gofmt"
+                                                  outbuf nil errbuf))
+                    ;; restore window config
+                    ;; gofmt succeeded: replace the current buffer with outbuf,
+                    ;; restore the mark and point, and discard errbuf.
+                    (let ((old-mark (mark t))
+                          (old-point (point))
+                          (old-start (window-start)))
+                      (erase-buffer)
+                      (insert-buffer-substring outbuf)
+                      (set-window-configuration currconf)
+                      (set-window-start (selected-window) (min old-start (point-max)))
+                      (goto-char (min old-point (point-max)))
+                      (if old-mark (push-mark (min old-mark (point-max)) t))
+                      (kill-buffer errbuf))
 
-		  ;; gofmt failed: display the errors
-		  (display-buffer errbuf)))))
+                  ;; gofmt failed: display the errors
+                  (display-buffer errbuf)))))
 
-	  ;; Collapse any window opened on outbuf if shell-command-on-region
-	  ;; displayed it.
-	  (delete-windows-on outbuf))))))
+          ;; Collapse any window opened on outbuf if shell-command-on-region
+          ;; displayed it.
+          (delete-windows-on outbuf))))))
 
 ;;;###autoload
 (defun gofmt-before-save ()

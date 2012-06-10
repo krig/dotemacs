@@ -4,10 +4,9 @@
 ;;
 (when (string-match "apple-darwin" system-configuration)
   (setq mac-allow-anti-aliasing t))
-(set-frame-font "Ubuntu Mono-14")
-(setq custom-safe-themes '("bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" default))
+(set-frame-font "Ubuntu Mono-13")
+(setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'tomorrow-night)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
@@ -143,6 +142,28 @@
 (defun sass-mode-hook ()
   (autoload 'sass-mode "css-mode" nil t))
 
+;; MONOKAI THEME
+(load-theme 'wombat)
+
+;; PRETTY-LAMBDADA
+(require 'pretty-lambdada)
+(pretty-lambda-for-modes)
+
+;; PARENFACE
+(progn
+  (require 'parenface)
+  (set-face-foreground 'parenface-paren-face "#585858")
+  (set-face-foreground 'parenface-bracket-face "#808080")
+  (set-face-foreground 'parenface-curly-face "#808888")
+  (add-hook 'scheme-mode-hook           (paren-face-add-support scheme-font-lock-keywords-2))
+  (add-hook 'inferior-scheme-mode-hook  (paren-face-add-support scheme-font-lock-keywords-2))
+  (add-hook 'lisp-mode-hook             (paren-face-add-support lisp-font-lock-keywords-2))
+  (add-hook 'emacs-lisp-mode-hook       (paren-face-add-support lisp-font-lock-keywords-2))
+  (add-hook 'lisp-interaction-mode-hook (paren-face-add-support lisp-font-lock-keywords-2))
+  (add-hook 'arc-mode-hook              (paren-face-add-support arc-font-lock-keywords-2))
+  (add-hook 'inferior-arc-mode-hook     (paren-face-add-support arc-font-lock-keywords-2))
+  (add-hook 'clojure-mode-hook          (paren-face-add-support clojure-font-lock-keywords)))
+
 ;; SCSS
 (setq scss-compile-at-save nil)
 
@@ -166,9 +187,6 @@
 
 ;; TEXTMATE
 (textmate-mode)
-
-;; PARENFACE
-(require 'parenface)
 
 ;; PAREDIT
 ;; (autoload 'paredit-mode "paredit"
@@ -479,6 +497,12 @@
 (add-hook 'objc-mode-hook 'my-c-style-fix)
 (add-hook 'java-mode-hook 'my-java-style-fix)
 
+
+;; RUST MODE
+
+(require 'rust-mode)
+
+
 ;; FIX ENUM CLASS IN C++11
 
 (defun inside-class-enum-p (pos)
@@ -688,6 +712,7 @@
   (make-face 'speedbar-face)
   (set-face-font 'speedbar-face "Ubuntu Mono-11")
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
+  (sr-speedbar-refresh-turn-on)
   (global-set-key (kbd "M-p") 'sr-speedbar-toggle))
 
 ;; UNBOUND
