@@ -4,7 +4,9 @@
 ;;
 (when (string-match "apple-darwin" system-configuration)
   (setq mac-allow-anti-aliasing t))
-(set-frame-font "Ubuntu Mono-13")
+;;(set-frame-font "Liberation Mono-13.5")
+(set-frame-font "Consolas-13")
+;;(set-frame-font "Anonymous Pro-12")
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
@@ -143,11 +145,13 @@
   (autoload 'sass-mode "css-mode" nil t))
 
 ;; MONOKAI THEME
-(load-theme 'wombat)
+;;(load-theme 'monokai)
+;;(load-theme 'wombat)
+(load-theme 'tomorrow-night)
 
 ;; PRETTY-LAMBDADA
-(require 'pretty-lambdada)
-(pretty-lambda-for-modes)
+;;(require 'pretty-lambdada)
+;;(pretty-lambda-for-modes)
 
 ;; PARENFACE
 (progn
@@ -428,7 +432,7 @@
 (when (not (eq system-type 'windows-nt))
   (server-start))
 
-(load "~/.emacs.d/nxhtml/autostart.el")
+;;(load "~/.emacs.d/nxhtml/autostart.el")
 
 (setq tab-width 4)
 
@@ -603,6 +607,7 @@
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 
 (load "js2-setup.el")
+(setq js2-use-font-lock-faces t)
 
 (defun krig-js2-style-fix ()
   (setq show-trailing-whitespace t))
@@ -615,13 +620,13 @@
 
 
 ;; RUBY HTML.ERB MODE
-(setq
- nxhtml-global-minor-mode t
- mumamo-chunk-coloring 5
- nxhtml-skip-welcome t
- indent-region-mode t
- rng-nxml-auto-validate-flag nil
- nxml-degraded t)
+;; (setq
+;;  nxhtml-global-minor-mode t
+;;  mumamo-chunk-coloring 5
+;;  nxhtml-skip-welcome t
+;;  indent-region-mode t
+;;  rng-nxml-auto-validate-flag nil
+;;  nxml-degraded t)
 (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
 
 ;; HAML-MODE
@@ -844,3 +849,4 @@ or just one char if that's not possible"
 
 ;; put something different in the scratch buffer
 (setq initial-scratch-message ";)\n")
+
