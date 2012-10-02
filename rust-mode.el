@@ -1,3 +1,10 @@
+;;; rust-mode.el --- A major emacs mode for editing Rust source code
+
+;; Version: 0.1.0
+;; Author: Mozilla
+;; Package-Requires: ((cm-mode "0.1.0"))
+;; Url: https://github.com/mozilla/rust
+
 (require 'cm-mode)
 (require 'cc-mode)
 
@@ -13,9 +20,6 @@
 (defvar rust-syntax-table (let ((table (make-syntax-table)))
                             (c-populate-syntax-table table)
                             table))
-
-(add-to-list 'auto-mode-alist '("\\.rs$" . rust-mode))
-(add-to-list 'auto-mode-alist '("\\.rc$" . rust-mode))
 
 (defun make-rust-state ()
   (vector 'rust-token-base
@@ -52,13 +56,25 @@
 (defvar rust-punc-chars "()[].,{}:;")
 (defvar rust-value-keywords
   (let ((table (make-hash-table :test 'equal)))
-    (dolist (word '("mod" "type" "resource" "fn" "enum" "iface" "impl"))
+    (dolist (word '("mod" "const" "class" "type"
+                    "trait" "struct" "fn" "enum"
+                    "impl"))
       (puthash word 'def table))
-    (dolist (word '("if" "else" "while" "do" "for" "break" "cont" "ret" "be" "fail" "const"
-                    "check" "assert" "claim" "prove" "native" "import" "export" "let" "mut" "log"
-                    "use" "pure" "unsafe"))
+    (dolist (word '("again" "assert"
+                    "break"
+                    "copy"
+                    "do" "drop"
+                    "else" "export" "extern"
+                    "fail" "for"
+                    "if" "use"
+                    "let" "log" "loop"
+                    "move" "new"
+                    "pure" "pub" "priv"
+                    "return" "static"
+                    "unchecked" "unsafe"
+                    "while"))
       (puthash word t table))
-    (puthash "alt" 'alt table)
+    (puthash "match" 'alt table)
     (dolist (word '("true" "false")) (puthash word 'atom table))
     table))
 ;; FIXME type-context keywords
@@ -255,8 +271,7 @@
       (setf cx parent parent (caddr (rust-state-context st))))
     (let* ((tp (rust-context-type cx))
            (closing (eq tp (char-after)))
-           (unit (if (member (rust-context-info cx) '(alt-inner alt-outer))
-                     (/ rust-indent-unit 2) rust-indent-unit))
+           (unit rust-indent-unit)
            (base (if (and (eq tp 'statement) parent (rust-context-align parent))
                      (rust-context-column parent) (rust-context-indent cx))))
       (cond ((eq tp 'comment) base)
@@ -265,6 +280,7 @@
             ((eq (rust-context-align cx) t) (+ (rust-context-column cx) (if closing -1 0)))
             (t (+ base (if closing 0 unit)))))))
 
+;;;###autoload
 (define-derived-mode rust-mode fundamental-mode "Rust"
   "Major mode for editing Rust source files."
   (set-syntax-table rust-syntax-table)
@@ -280,4 +296,11 @@
 (define-key rust-mode-map "}" 'rust-electric-brace)
 (define-key rust-mode-map "{" 'rust-electric-brace)
 
+;;;###autoload
+(progn
+  (add-to-list 'auto-mode-alist '("\\.rs$" . rust-mode))
+  (add-to-list 'auto-mode-alist '("\\.rc$" . rust-mode)))
+
 (provide 'rust-mode)
+
+;;; rust-mode.el ends here

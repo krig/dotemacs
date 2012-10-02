@@ -5,7 +5,8 @@
 (when (string-match "apple-darwin" system-configuration)
   (setq mac-allow-anti-aliasing t))
 ;;(set-frame-font "Liberation Mono-13.5")
-(set-frame-font "Consolas-13")
+;;(set-frame-font "Consolas-13")
+(set-frame-font "Source Sans-12")
 ;;(set-frame-font "Anonymous Pro-12")
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -509,32 +510,32 @@
 
 ;; FIX ENUM CLASS IN C++11
 
-(defun inside-class-enum-p (pos)
-  "Checks if POS is within the braces of a C++ \"enum class\"."
-  (ignore-errors
-    (save-excursion
-      (goto-char pos)
-      (up-list -1)
-      (backward-sexp 1)
-      (looking-back "enum[ \t]+class[ \t]+"))))
+;; (defun inside-class-enum-p (pos)
+;;   "Checks if POS is within the braces of a C++ \"enum class\"."
+;;   (ignore-errors
+;;     (save-excursion
+;;       (goto-char pos)
+;;       (up-list -1)
+;;       (backward-sexp 1)
+;;       (looking-back "enum[ \t]+class[ \t]+"))))
 
-(defun align-enum-class (langelem)
-  (if (inside-class-enum-p (c-langelem-pos langelem))
-      0
-    (c-lineup-topmost-intro-cont langelem)))
+;; (defun align-enum-class (langelem)
+;;   (if (inside-class-enum-p (c-langelem-pos langelem))
+;;       0
+;;     (c-lineup-topmost-intro-cont langelem)))
 
-(defun align-enum-class-closing-brace (langelem)
-  (if (inside-class-enum-p (c-langelem-pos langelem))
-      '-
-    '+))
+;; (defun align-enum-class-closing-brace (langelem)
+;;   (if (inside-class-enum-p (c-langelem-pos langelem))
+;;       '-
+;;     '+))
 
-(defun fix-enum-class ()
-  "Setup `c++-mode' to better handle \"class enum\"."
-  (add-to-list 'c-offsets-alist '(topmost-intro-cont . align-enum-class))
-  (add-to-list 'c-offsets-alist
-               '(statement-cont . align-enum-class-closing-brace)))
+;; (defun fix-enum-class ()
+;;   "Setup `c++-mode' to better handle \"class enum\"."
+;;   (add-to-list 'c-offsets-alist '(topmost-intro-cont . align-enum-class))
+;;   (add-to-list 'c-offsets-alist
+;;                '(statement-cont . align-enum-class-closing-brace)))
 
-(add-hook 'c++-mode-hook 'fix-enum-class)
+;;(add-hook 'c++-mode-hook 'fix-enum-class)
 
 
 (add-hook
@@ -850,3 +851,5 @@ or just one char if that's not possible"
 ;; put something different in the scratch buffer
 (setq initial-scratch-message ";)\n")
 
+(put 'ido-exit-minibuffer 'disabled nil)
+(put 'downcase-region 'disabled nil)
