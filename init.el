@@ -639,10 +639,10 @@
 
 ;; SLIME
 
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
+;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
 
 ;(add-to-list 'load-path "~/.emacs.d/slime/")  ; your SLIME directory
-(setq inferior-lisp-program "sbcl --noinform") ; your Lisp system
+;;(setq inferior-lisp-program "sbcl --noinform") ; your Lisp system
 ;(require 'slime)
 ;(slime-setup '(slime-fancy))
 

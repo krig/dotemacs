@@ -28,3 +28,6 @@
 [submodule "mythryl-mode"]
 	path = mythryl-mode
 	url = https://github.com/rev22/mythryl-mode.git
+[submodule "haskell-mode"]
+	path = haskell-mode
+	url = https://github.com/haskell/haskell-mode.git
