@@ -82,17 +82,17 @@
       '((:name ruby-mode
                :type elpa
                :load "ruby-mode.el"
-               :after (lambda () (ruby-mode-hook)))
+               :after (progn (ruby-mode-hook)))
         (:name inf-ruby  :type elpa)
         (:name ruby-compilation :type elpa)
         (:name css-mode
                :type elpa
                :load "css-mode.el"
-               :after (lambda () (css-mode-hook)))
+               :after (progn (css-mode-hook)))
         (:name sass-mode
                :type elpa
                :load "sass-mode.el"
-               :after (lambda () (sass-mode-hook)))
+               :after (progn (sass-mode-hook)))
         (:name textmate
                :type git
                :url "git://github.com/defunkt/textmate.el"
@@ -101,14 +101,14 @@
                :type git
                :url "https://github.com/eschulte/rhtml.git"
                :features rhtml-mode
-               :after (lambda () (rhtml-mode-hook)))
+               :after (progn (rhtml-mode-hook)))
         (:name yaml-mode
                :type git
                :url "http://github.com/yoshiki/yaml-mode.git"
                :features yaml-mode
-               :after (lambda () (yaml-mode-hook)))
+               :after (progn (yaml-mode-hook)))
         (:name magit
-               :after (lambda () (global-set-key (kbd "C-x C-a") 'magit-status)))))
+               :after (progn (global-set-key (kbd "C-x C-a") 'magit-status)))))
 
 (defun ruby-mode-hook ()
   (autoload 'ruby-mode "ruby-mode" nil t)
@@ -187,7 +187,7 @@
     (ruby-compilation-this-buffer)))
 
 ;; SYNC EL-GET
-;;(el-get 'sync)
+(el-get 'sync)
 (el-get)
 
 ;; TEXTMATE
@@ -437,12 +437,30 @@
 
 (setq tab-width 4)
 
-(require 'smart-tabs-mode)
+(autoload 'smart-tabs-mode "smart-tabs-mode"
+  "Intelligently indent with tabs, align with spaces!")
+(autoload 'smart-tabs-mode-enable "smart-tabs-mode")
+(autoload 'smart-tabs-advice "smart-tabs-mode")
+
+;; C/C++
+;;(add-hook 'c-mode-hook 'smart-tabs-mode-enable)
 (smart-tabs-advice c-indent-line c-basic-offset)
 (smart-tabs-advice c-indent-region c-basic-offset)
+
+;; JavaScript
+;;(add-hook 'js2-mode-hook 'smart-tabs-mode-enable)
 (smart-tabs-advice js2-indent-line js2-basic-offset)
-;(smart-tabs-advice cperl-indent-line cperl-indent-level)
-;(smart-tabs-advice python-indent-line-1 python-indent)
+
+;; Perl
+;;(add-hook 'cperl-mode-hook 'smart-tabs-mode-enable)
+(smart-tabs-advice cperl-indent-line cperl-indent-level)
+
+;; Python
+;;(add-hook 'python-mode-hook 'smart-tabs-mode-enable)
+(smart-tabs-advice python-indent-line-1 python-indent)
+
+;; Ruby
+;;(add-hook 'ruby-mode-hook 'smart-tabs-mode-enable)
 (smart-tabs-advice ruby-indent-line ruby-indent-level)
 
 ;; FIXME: IN COMMENTS
@@ -465,19 +483,6 @@
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
   (local-set-key [return] 'newline-and-indent))
 
-(defun my-c-style-fix ()
-  (c-set-style "bsd")
-  (setq tab-width 4)
-  (setq indent-tabs-mode t))
-
-(defun my-java-style-fix ()
-  (setq tab-width 4)
-  (setq indent-tabs-mode t))
-
-;; newline-and-indent
-(defun my-set-newline-and-indent()
-  (local-set-key [return] 'newline-and-indent))
-
 (dolist (hook '(
 		c-mode-hook
 		c++-mode-hook
@@ -492,16 +497,9 @@
 		java-mode-hook
 		objc-mode-hook
 		))
-  (add-hook hook 'krig-mode-hook)
-  (add-hook hook 'my-set-newline-and-indent))
+  (add-hook hook 'krig-mode-hook))
 
 (add-hook 'sh-mode-hook 'krig-sh-mode-hook)
-
-(add-hook 'c-mode-hook 'my-c-style-fix)
-(add-hook 'c++-mode-hook 'my-c-style-fix)
-(add-hook 'objc-mode-hook 'my-c-style-fix)
-(add-hook 'java-mode-hook 'my-java-style-fix)
-
 
 ;; RUST MODE
 
