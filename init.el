@@ -3,11 +3,14 @@
 ;; cleanup, modularize...
 ;;
 (when (string-match "apple-darwin" system-configuration)
-  (setq mac-allow-anti-aliasing t))
-;;(set-frame-font "Liberation Mono-13.5")
+  (setq mac-allow-anti-aliasing nil))
+;;(set-frame-font "Liberation Mono-12")
+;;(set-frame-font "Monaco-12")
 ;;(set-frame-font "Consolas-13")
-(set-frame-font "Source Sans-12")
-;;(set-frame-font "Anonymous Pro-12")
+;;(set-frame-font "Source Sans-12")
+;;(set-frame-font "Droid Sans Mono-12")
+(set-frame-font "Anonymous Pro-12")
+;;(set-frame-font "Ubuntu Mono-12")
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
@@ -148,7 +151,7 @@
 ;; MONOKAI THEME
 ;;(load-theme 'monokai)
 ;;(load-theme 'wombat)
-(load-theme 'tomorrow-night)
+;;(load-theme 'tomorrow-night)
 
 ;; PRETTY-LAMBDADA
 ;;(require 'pretty-lambdada)
@@ -457,7 +460,7 @@
 
 ;; Python
 ;;(add-hook 'python-mode-hook 'smart-tabs-mode-enable)
-(smart-tabs-advice python-indent-line-1 python-indent)
+;;(smart-tabs-advice python-indent-line-1 python-indent)
 
 ;; Ruby
 ;;(add-hook 'ruby-mode-hook 'smart-tabs-mode-enable)
