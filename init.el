@@ -3,14 +3,15 @@
 ;; cleanup, modularize...
 ;;
 (when (string-match "apple-darwin" system-configuration)
-  (setq mac-allow-anti-aliasing nil))
+  (setq mac-allow-anti-aliasing t))
 ;;(set-frame-font "Liberation Mono-12")
+;;(set-frame-font "Menlo-12")
 ;;(set-frame-font "Monaco-12")
 ;;(set-frame-font "Consolas-13")
 ;;(set-frame-font "Source Sans-12")
 ;;(set-frame-font "Droid Sans Mono-12")
-(set-frame-font "Anonymous Pro-12")
-;;(set-frame-font "Ubuntu Mono-12")
+;;(set-frame-font "Anonymous Pro-12")
+(set-frame-font "Ubuntu Mono-14")
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
@@ -148,11 +149,6 @@
 (defun sass-mode-hook ()
   (autoload 'sass-mode "css-mode" nil t))
 
-;; MONOKAI THEME
-;;(load-theme 'monokai)
-;;(load-theme 'wombat)
-;;(load-theme 'tomorrow-night)
-
 ;; PRETTY-LAMBDADA
 ;;(require 'pretty-lambdada)
 ;;(pretty-lambda-for-modes)
@@ -203,9 +199,6 @@
 ;; (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
 ;; (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
 ;; (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
-
-;; HEXCOLOUR
-(require 'hexcolour)
 
 ;; IDO
 (ido-mode t)
@@ -358,30 +351,6 @@
   '(smart-tab-mode)
   "A mode for lord programmaton files")
 
-;; BDSM
-
-(defvar bdsm-tab-width 4)
-
-(defun bdsm-mode-setup () ; use c-indent-command
-  (setq tab-width bdsm-tab-width)
-  (setq indent-tabs-mode t)
-  (setq indent-line-function 'insert-tab)
-  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
-  (smart-tab-mode))
-
-(define-generic-mode 'bdsm-mode
-  '("#")
-  '("any" "all" "in" "not")
-  '(("[a-z][a-zA-Z0-9_]*" . 'font-lock-reference-face)
-    ("[0-9]+" . 'font-lock-variable-name-face)
-    ("^[ ]+" . 'trailing-whitespace)
-    ("/" . 'font-lock-type-face)
-    ("?" . 'font-lock-builtin-face)
-    ("!" . 'font-lock-function-name-face))
-  '()
-  '(bdsm-mode-setup)
-  "A mode for BDSM grammars")
-
 ;; HEADER SWITCH
 (defun switch-cc-to-h ()
   "Switch fromm *.<impl> to *.<head> and vice versa."
@@ -509,7 +478,7 @@
 (require 'rust-mode)
 
 
-;; FIX ENUM CLASS IN C++11
+;; FIX ENUM CLASS IN C++11 (broken)
 
 ;; (defun inside-class-enum-p (pos)
 ;;   "Checks if POS is within the braces of a C++ \"enum class\"."
@@ -720,7 +689,7 @@
   (require 'sr-speedbar)
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
-  (set-face-font 'speedbar-face "Cousine-10")
+  (set-face-font 'speedbar-face "Liberation Mono-9")
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
   (global-set-key (kbd "M-p") 'sr-speedbar-toggle))
@@ -857,3 +826,8 @@ or just one char if that's not possible"
 
 (put 'ido-exit-minibuffer 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+;; WHY DOES THIS NOT WORK :(
+;;(package-activate
+;;(load-theme 'github)
+(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
