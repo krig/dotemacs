@@ -43,6 +43,7 @@
      (light-mocca "#5c3b0f")
      (deep-red "#330000")
      (deep-mocca "#231300")
+     (stone "#9999CC")
      (cosmic-turquoise "#9CFFCE"))
   (custom-theme-set-faces
    'latte

@@ -720,7 +720,7 @@
   (require 'sr-speedbar)
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
-  (set-face-font 'speedbar-face "Ubuntu Mono-11")
+  (set-face-font 'speedbar-face "Cousine-10")
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
   (global-set-key (kbd "M-p") 'sr-speedbar-toggle))
