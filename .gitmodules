@@ -30,4 +30,4 @@
 	url = https://github.com/rev22/mythryl-mode.git
 [submodule "haskell-mode"]
 	path = haskell-mode
-	url = https://github.com/haskell/haskell-mode.git
+  url = git@github.com:krig/haskell-mode.git
