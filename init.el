@@ -46,6 +46,7 @@
 (tooltip-mode -1)
 (winner-mode 1)
 (global-auto-revert-mode t)
+(setq calendar-week-start-day 1)
 
 ;; use ibuffer instead of regular buffer list
 (autoload 'ibuffer "ibuffer" "List buffers." t)
@@ -72,6 +73,13 @@
 	      vc-ignore-dir-regexp
 	      tramp-file-name-regexp))
 
+
+;; ESHELL
+(require 'eshell)
+(require 'em-smart)
+(setq eshell-where-to-jump 'begin)
+(setq eshell-review-quick-commands nil)
+(setq eshell-smart-space-goes-to-end t)
 
 ;; ELPA
 (require 'package)
@@ -214,6 +222,23 @@
   (define-key ido-mode-map "\C-t" 'ido-toggle-regexp) ; same as in isearch
   (define-key ido-mode-map "\C-d" 'ido-enter-dired)) ; cool
 (global-set-key (kbd "C-x C-c") 'ido-switch-buffer)
+
+(defun aw-ido-completing-read-with-default (prompt entries predicate)
+  (let* ((maybedft (find-tag-default))
+         (compl (all-completions "" entries predicate))
+         (dft (assoc-string maybedft compl)))
+    (ido-completing-read
+            prompt
+            compl
+            nil
+            t
+            nil
+            nil
+            dft)))
+
+(defun aw-ido-find-tag ()
+  (interactive)
+  (find-tag (aw-ido-completing-read-with-default "Tag: " (tags-lazy-completion-table) nil)))
 
 ;; Display ido results vertically, rather than horizontally
 (setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
@@ -377,6 +402,10 @@
        ((file-exists-p (concat name ".m")))))))))
 (global-set-key [C-s-up] 'switch-cc-to-h)
 
+(global-set-key (kbd "M-[") 'beginning-of-defun)
+(global-set-key (kbd "M-]") 'end-of-defun)
+
+
 ;; REINDENT BUFFER
 (defun reindent-buffer ()
   "Reindent the contents of the entire buffer."
@@ -438,6 +467,9 @@
 ;; FIXME: IN COMMENTS
 (require 'fic-mode)
 
+;; Whitespace fixes
+(setq whitespace-line-column 130)
+
 ;; MODE HOOKS
 
 (defun krig-sh-mode-hook ()
@@ -445,6 +477,7 @@
   (setq tab-width 4)
   (setq indent-tabs-mode t)
   (turn-on-fic-mode)
+  (setq sh-indent-comment t)
   (local-set-key [return] 'newline-and-indent))
 ;;  (whitespace-mode))
 
@@ -607,6 +640,54 @@
 ;; ORG-MODE
 (setq org-startup-indented t)
 
+;; FLYMAKE
+
+;;(require 'flymake)
+;;(setq flymake-gui-warnings-enabled nil)
+;;(setq flymake-log-level 0)
+
+; don't enable flymake if running over tramp
+(defun aw-flymake-if-buffer-isnt-tramp ()
+  (if (not (and (boundp 'tramp-file-name-structure)
+                (string-match (car tramp-file-name-structure) (buffer-file-name))))
+      (flymake-mode t)))
+
+; enables flymake mode iff buffer has a filename set,
+; otherwise things breaks badly for things such as emerge
+(defun aw-flymake-if-buffer-has-filename ()
+  (if (buffer-file-name)
+      (aw-flymake-if-buffer-isnt-tramp)))
+
+(defun aw-flymake-get-err ()
+  "Gets first error message for current line"
+  (let ((fm-err (car (flymake-find-err-info flymake-err-info (flymake-current-line-no)))))
+    (if fm-err
+        (flymake-ler-text (nth 0 fm-err)))))
+
+(defun aw-flymake-display-err ()
+  (interactive)
+  (let ((err (aw-flymake-get-err)))
+    (message (format "FLYMAKE: %s" err))))
+
+(defmacro aw-flymake-add-simple (ptrn cmd)
+  `(add-to-list 'flymake-allowed-file-name-masks
+                (list ,ptrn
+                      (lambda ()
+                        (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                                           'flymake-create-temp-inplace))
+                               (local-file (file-relative-name
+                                            temp-file
+                                            (file-name-directory buffer-file-name))))
+                          (list ,cmd (list local-file)))))))
+
+; enable flymake on c
+;(add-hook 'c-mode-hook 'aw-flymake-if-buffer-has-filename t)
+; enable flymake on py
+;(add-hook 'python-mode-hook 'aw-flymake-if-buffer-has-filename t)
+
+; Or lets do a global enable global enable
+;;(add-hook 'find-file-hook 'aw-flymake-if-buffer-has-filename)
+
 ;; SLIME
 
 ;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
@@ -628,6 +709,8 @@
 
 ;;(load "~/.emacs.d/haskell-mode-2.8.0/haskell-site-file")
 (load "~/.emacs.d/haskell-mode/haskell-site-file")
+;;sadly doesn't work as it should
+;;(setq haskell-ghci-comint-prompt-regexp "^[[:nonascii:]]> ")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
@@ -826,6 +909,17 @@ or just one char if that's not possible"
 
 (put 'ido-exit-minibuffer 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+(defun mrc-dired-do-command (command)
+  "Run COMMAND on marked files. Any files not already open will be opened.
+After this command has been run, any buffers it's modified will remain
+open and unsaved."
+  (interactive "CRun on marked files M-x ")
+  (save-window-excursion
+    (mapc (lambda (filename)
+            (find-file filename)
+            (call-interactively command))
+          (dired-get-marked-files))))
 
 ;; WHY DOES THIS NOT WORK :(
 ;;(package-activate
