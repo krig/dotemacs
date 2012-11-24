@@ -6,7 +6,7 @@
  '(ansi-color-names-vector ["#1d1f21" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#81a2be" "#c5c8c6"])
  '(ansi-term-color-vector [unspecified "#1d1f21" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#81a2be" "#c5c8c6"])
  '(column-number-mode t)
- '(custom-safe-themes (quote ("76ad6dce266746c98a76c56e28d86c741c486b2b359c1979c55ab17461e50016" "6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" "71b172ea4aad108801421cc5251edb6c792f3adbaecfa1c52e94e3d99634dee7" "d2622a2a2966905a5237b54f35996ca6fda2f79a9253d44793cfe31079e3c92b" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "e119ba6f90741cab01d166f7d81fad4af75ded7ff3ca3dc33e1661f8c1b9ff40" "2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "4cf06c815dc1c843fb464c51e30c6e9064d175e98e050f3768f842bc8842af6e" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" "09929ab00966e9a7ae1fec937c745f84319c3b515f6ed7a1d31d2f34fce82164" "e66e116cd1ea59c79e4ee22b7df5a3390ffb195ac9a933bd8b0b45b731aedca7" "0b93042b1805f0a09c2f641ec5581f33cd0b17f9a44e1a37b650f9d00834b6a5" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" default)))
+ '(custom-safe-themes (quote ("c582c1d99904ddc0677f87ba7eb6596cf9321a7e6233857dc4bd6ae587893194" "76ad6dce266746c98a76c56e28d86c741c486b2b359c1979c55ab17461e50016" "6cfe5b2f818c7b52723f3e121d1157cf9d95ed8923dbc1b47f392da80ef7495d" "71b172ea4aad108801421cc5251edb6c792f3adbaecfa1c52e94e3d99634dee7" "d2622a2a2966905a5237b54f35996ca6fda2f79a9253d44793cfe31079e3c92b" "5e1d1564b6a2435a2054aa345e81c89539a72c4cad8536cfe02583e0b7d5e2fa" "e119ba6f90741cab01d166f7d81fad4af75ded7ff3ca3dc33e1661f8c1b9ff40" "2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "4cf06c815dc1c843fb464c51e30c6e9064d175e98e050f3768f842bc8842af6e" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" "09929ab00966e9a7ae1fec937c745f84319c3b515f6ed7a1d31d2f34fce82164" "e66e116cd1ea59c79e4ee22b7df5a3390ffb195ac9a933bd8b0b45b731aedca7" "0b93042b1805f0a09c2f641ec5581f33cd0b17f9a44e1a37b650f9d00834b6a5" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" default)))
  '(global-rainbow-delimiters-mode t)
  '(line-number-mode t)
  '(quack-default-program "racket")
@@ -25,5 +25,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(flymake-errline ((((class color)) (:underline "tomato" :background nil))))
- '(flymake-warnline ((((class color)) (:underline "orchid" :background nil))))
- )
+ '(flymake-warnline ((((class color)) (:underline "orchid" :background nil)))))

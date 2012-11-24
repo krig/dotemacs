@@ -3,7 +3,8 @@
 ;; cleanup, modularize...
 ;;
 (when (string-match "apple-darwin" system-configuration)
-  (setq mac-allow-anti-aliasing t))
+  (setq mac-allow-anti-aliasing t)
+  (set-frame-font "Ubuntu Mono-14"))
 ;;(set-frame-font "Liberation Mono-12")
 ;;(set-frame-font "Menlo-12")
 ;;(set-frame-font "Monaco-12")
@@ -11,7 +12,10 @@
 ;;(set-frame-font "Source Sans-12")
 ;;(set-frame-font "Droid Sans Mono-12")
 ;;(set-frame-font "Anonymous Pro-12")
-(set-frame-font "Ubuntu Mono-14")
+
+(when (string-match "pc-linux" system-configuration)
+  (set-frame-font "Ubuntu Mono-12"))
+
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
@@ -26,6 +30,7 @@
 (add-to-list 'load-path "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d/smart-tab")
 (add-to-list 'load-path "~/.emacs.d/smarttabs")
+(add-to-list 'load-path "~/.emacs.d/haml-mode")
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -196,6 +201,9 @@
 ;; SYNC EL-GET
 (el-get 'sync)
 (el-get)
+
+;; HAML-MODE
+(require 'haml-mode)
 
 ;; TEXTMATE
 (textmate-mode)
@@ -650,10 +658,6 @@ symbol, not word, as I need this for programming the most."
 ;;  rng-nxml-auto-validate-flag nil
 ;;  nxml-degraded t)
 (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
-
-;; HAML-MODE
-(add-to-list 'load-path "~/.emacs.d/haml-mode")
-(require 'haml-mode)
 
 ;; ORG-MODE
 (setq org-startup-indented t)
