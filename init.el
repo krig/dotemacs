@@ -53,6 +53,9 @@
 (global-auto-revert-mode t)
 (setq calendar-week-start-day 1)
 
+;; put something different in the scratch buffer
+(setq initial-scratch-message ";)\n")
+
 ;; use ibuffer instead of regular buffer list
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -201,9 +204,6 @@
 ;; SYNC EL-GET
 (el-get 'sync)
 (el-get)
-
-;; HAML-MODE
-(require 'haml-mode)
 
 ;; TEXTMATE
 (textmate-mode)
@@ -659,6 +659,9 @@ symbol, not word, as I need this for programming the most."
 ;;  nxml-degraded t)
 (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
 
+;; HAML-MODE
+(require 'haml-mode)
+
 ;; ORG-MODE
 (setq org-startup-indented t)
 
@@ -977,10 +980,6 @@ or just one char if that's not possible"
   (interactive "*p\nP")
   (let ((backward-delete-char-untabify-method 'hungry))
     (backward-delete-char-untabify arg killp)))
-
-
-;; put something different in the scratch buffer
-(setq initial-scratch-message ";)\n")
 
 (put 'ido-exit-minibuffer 'disabled nil)
 (put 'downcase-region 'disabled nil)
