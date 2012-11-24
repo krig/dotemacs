@@ -245,6 +245,24 @@
 (defun ido-disable-line-truncation () (set (make-local-variable 'truncate-lines) nil))
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
 
+;; Search for Symbol at Point
+;; http://blog.jorgenschaefer.de/2012/11/emacs-search-for-symbol-at-point.html
+(define-key isearch-mode-map (kbd "C-d")
+  'fc/isearch-yank-symbol)
+(defun fc/isearch-yank-symbol ()
+  "Yank the symbol at point into the isearch minibuffer.
+
+C-w does something similar in isearch, but it only looks for
+the rest of the word. I want to look for the whole string. And
+symbol, not word, as I need this for programming the most."
+  (interactive)
+  (isearch-yank-string
+   (save-excursion
+     (when (and (not isearch-forward)
+                isearch-other-end)
+       (goto-char isearch-other-end))
+     (thing-at-point 'symbol))))
+
 ;; SMART TAB
 (require 'smart-tab)
 (global-smart-tab-mode 1)
@@ -580,7 +598,7 @@
   (setq show-trailing-whitespace t)
   (setq tab-width 4)
   (setq indent-tabs-mode nil))
-(add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
+;;(add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
 (add-hook 'python-mode-hook 'mypy-extra-stuff)
 
 ;;;; `Cython' mode.
@@ -642,9 +660,36 @@
 
 ;; FLYMAKE
 
-;;(require 'flymake)
-;;(setq flymake-gui-warnings-enabled nil)
+(require 'flymake)
+(setq flymake-gui-warnings-enabled nil)
+(setq help-at-pt-timer-delay 0.9)
+(setq help-at-pt-display-when-idle '(flymake-overlay))
 ;;(setq flymake-log-level 0)
+
+
+(defun flymake-Haskell-init ()
+  (flymake-simple-make-init-impl
+   'flymake-create-temp-with-folder-structure nil nil
+   (file-name-nondirectory buffer-file-name)
+   'flymake-get-Haskell-cmdline))
+
+(defun flymake-get-Haskell-cmdline (source base-dir)
+  (list (expand-file-name "~/.emacs.d/flymake-haskell.pl")
+	(list source base-dir)))
+
+(progn
+  (push '(".+\\.hs$" flymake-Haskell-init flymake-simple-java-cleanup)
+	flymake-allowed-file-name-masks)
+  (push '(".+\\.lhs$" flymake-Haskell-init flymake-simple-java-cleanup)
+	flymake-allowed-file-name-masks)
+  (push
+   '("^\\(\.+\.hs\\|\.lhs\\):\\([0-9]+\\):\\([0-9]+\\):\\(.+\\)"
+     1 2 3 4) flymake-err-line-patterns))
+
+;;(add-hook
+;; 'haskell-mode-hook
+;; '(lambda ()
+;;    (if (not (null buffer-file-name)) (flymake-mode))))
 
 ; don't enable flymake if running over tramp
 (defun aw-flymake-if-buffer-isnt-tramp ()
@@ -688,6 +733,31 @@
 ; Or lets do a global enable global enable
 ;;(add-hook 'find-file-hook 'aw-flymake-if-buffer-has-filename)
 
+;; For problems with PATH on mac os X, see
+;; http://stackoverflow.com/questions/9388315/how-to-make-emacs-pickup-the-correct-python-in-snow-leopard/9388555#9388555
+;;(setenv "PYMACS_PYTHON" "/usr/local/bin/python2.7")
+;;(package-initialize)
+;;(require 'pymacs)
+;;(setq python-check-command (expand-file-name "~/bin/python-check.sh"))
+;;(elpy-enable)
+;;(elpy-use-ipython)
+;;
+;;(pymacs-load "ropemacs" "rope-")
+
+;; Pyflakes for python
+;;(require 'flymake)
+;;(defun flymake-pychecker-init ()
+;;  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;; 		     'flymake-create-temp-inplace))
+;; 	 (local-file (file-relative-name
+;; 		      temp-file
+;; 		      (file-name-directory buffer-file-name))))
+;;     (list (expand-file-name "~/bin/pepflakes") (list local-file))))
+;; (add-to-list 'flymake-allowed-file-name-masks
+;; 	     '("\\.py\\'" flymake-pychecker-init))
+
+
+
 ;; SLIME
 
 ;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
@@ -714,7 +784,7 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
-
+(add-to-list 'completion-ignored-extensions ".hi")
 
 ;; ;; PARROT
 
@@ -775,6 +845,7 @@
   (set-face-font 'speedbar-face "Liberation Mono-9")
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
+  (speedbar-add-supported-extension ".hs")
   (global-set-key (kbd "M-p") 'sr-speedbar-toggle))
 
 ;; UNBOUND

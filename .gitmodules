@@ -24,10 +24,16 @@
 	url = https://github.com/nonsequitur/smex/
 [submodule "smarttabs"]
 	path = smarttabs
-	url = https://github.com/jcsalomon/smarttabs.git
+	url = git@github.com:krig/smarttabs.git
 [submodule "mythryl-mode"]
 	path = mythryl-mode
 	url = https://github.com/rev22/mythryl-mode.git
 [submodule "haskell-mode"]
 	path = haskell-mode
   url = git@github.com:krig/haskell-mode.git
+[submodule "ace-jump-mode"]
+	path = ace-jump-mode
+	url = https://github.com/winterTTr/ace-jump-mode.git
+[submodule "browse-kill-ring"]
+	path = browse-kill-ring
+	url = https://github.com/samaaron/browse-kill-ring.git
