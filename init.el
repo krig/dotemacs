@@ -60,6 +60,8 @@
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+(global-set-key (kbd "C-s-q") 'save-buffers-kill-emacs)
+
 (setq compilation-skip-threshold 2)
 
 (setq-default ispell-program-name "aspell")
@@ -464,31 +466,13 @@ symbol, not word, as I need this for programming the most."
 
 (setq tab-width 4)
 
-(autoload 'smart-tabs-mode "smart-tabs-mode"
-  "Intelligently indent with tabs, align with spaces!")
+
+
+;; 'javascript 'python
+(require 'smart-tabs-mode)
 (autoload 'smart-tabs-mode-enable "smart-tabs-mode")
 (autoload 'smart-tabs-advice "smart-tabs-mode")
-
-;; C/C++
-;;(add-hook 'c-mode-hook 'smart-tabs-mode-enable)
-(smart-tabs-advice c-indent-line c-basic-offset)
-(smart-tabs-advice c-indent-region c-basic-offset)
-
-;; JavaScript
-;;(add-hook 'js2-mode-hook 'smart-tabs-mode-enable)
-(smart-tabs-advice js2-indent-line js2-basic-offset)
-
-;; Perl
-;;(add-hook 'cperl-mode-hook 'smart-tabs-mode-enable)
-(smart-tabs-advice cperl-indent-line cperl-indent-level)
-
-;; Python
-;;(add-hook 'python-mode-hook 'smart-tabs-mode-enable)
-;;(smart-tabs-advice python-indent-line-1 python-indent)
-
-;; Ruby
-;;(add-hook 'ruby-mode-hook 'smart-tabs-mode-enable)
-(smart-tabs-advice ruby-indent-line ruby-indent-level)
+(smart-tabs-insinuate 'c 'cperl 'ruby 'nxml)
 
 ;; FIXME: IN COMMENTS
 (require 'fic-mode)
@@ -508,7 +492,6 @@ symbol, not word, as I need this for programming the most."
 ;;  (whitespace-mode))
 
 (defun krig-mode-hook ()
-  (smart-tabs-mode-enable)
   (setq show-trailing-whitespace t)
   (turn-on-fic-mode)
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
