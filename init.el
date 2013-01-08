@@ -311,7 +311,15 @@ symbol, not word, as I need this for programming the most."
 (when (string-match "apple-darwin" system-configuration)
   (define-key dired-mode-map "o" 'dired-open-mac)
   (setq ls-lisp-use-insert-directory-program t)      ;; use external ls
-  (setq insert-directory-program "/usr/local/bin/gls"))
+  (setq insert-directory-program "/usr/local/bin/gls")
+  (global-set-key [(hyper a)] 'mark-whole-buffer)
+  (global-set-key [(hyper v)] 'yank)
+  (global-set-key [(hyper c)] 'kill-ring-save)
+  (global-set-key [(hyper s)] 'save-buffer)
+  (global-set-key [(hyper l)] 'goto-line)
+  (global-set-key [(hyper z)] 'undo)
+  (setq mac-option-modifier 'meta)
+  (setq mac-command-modifier 'hyper))
 
 ;; PASTE.SE
 (defun paste-se-encode-uri-component (str)
@@ -491,6 +499,9 @@ symbol, not word, as I need this for programming the most."
   (local-set-key [return] 'newline-and-indent))
 ;;  (whitespace-mode))
 
+(defun krig-smart-tabs-hook ()
+  (smart-tabs-mode-enable))
+
 (defun krig-mode-hook ()
   (setq show-trailing-whitespace t)
   (turn-on-fic-mode)
@@ -512,6 +523,12 @@ symbol, not word, as I need this for programming the most."
 		objc-mode-hook
 		))
   (add-hook hook 'krig-mode-hook))
+
+(dolist (hook '(
+		c-mode-hook
+		c++-mode-hook
+		))
+  (add-hook hook 'krig-smart-tabs-hook))
 
 (add-hook 'sh-mode-hook 'krig-sh-mode-hook)
 
