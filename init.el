@@ -52,6 +52,7 @@
 (winner-mode 1)
 (global-auto-revert-mode t)
 (setq calendar-week-start-day 1)
+(setq transient-mark-mode nil)
 
 ;; put something different in the scratch buffer
 (setq initial-scratch-message ";)\n")
@@ -60,7 +61,7 @@
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(global-set-key (kbd "C-s-q") 'save-buffers-kill-emacs)
+(global-set-key (kbd "H-q") 'save-buffers-kill-emacs)
 
 (setq compilation-skip-threshold 2)
 
@@ -998,4 +999,5 @@ open and unsaved."
 ;; WHY DOES THIS NOT WORK :(
 ;;(package-activate
 ;;(load-theme 'github)
-(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
+;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
+(add-hook 'after-init-hook '(lambda () (load-theme 'tomorrow-night)))
