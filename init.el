@@ -34,8 +34,10 @@
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
-;;(setq-default tab-width 8)
-;;(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
+(setq-default c-default-style "linux")
+(setq-default c-basic-offset 4)
 (setq inhibit-startup-message t)
 (setq visible-bell t)
 
@@ -473,7 +475,7 @@ symbol, not word, as I need this for programming the most."
 
 ;;(load "~/.emacs.d/nxhtml/autostart.el")
 
-(setq tab-width 4)
+;;(setq tab-width 4)
 
 
 
@@ -481,6 +483,7 @@ symbol, not word, as I need this for programming the most."
 (require 'smart-tabs-mode)
 (autoload 'smart-tabs-mode-enable "smart-tabs-mode")
 (autoload 'smart-tabs-advice "smart-tabs-mode")
+(autoload 'smart-tabs-insinuate "smart-tabs-mode")
 (smart-tabs-insinuate 'c 'cperl 'ruby 'nxml)
 
 ;; FIXME: IN COMMENTS
