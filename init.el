@@ -37,7 +37,7 @@
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq-default c-default-style "linux")
-(setq-default c-basic-offset 4)
+;(setq-default c-basic-offset 4)
 (setq inhibit-startup-message t)
 (setq visible-bell t)
 
@@ -63,7 +63,7 @@
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(global-set-key (kbd "H-q") 'save-buffers-kill-emacs)
+
 
 (setq compilation-skip-threshold 2)
 
@@ -314,15 +314,16 @@ symbol, not word, as I need this for programming the most."
 (when (string-match "apple-darwin" system-configuration)
   (define-key dired-mode-map "o" 'dired-open-mac)
   (setq ls-lisp-use-insert-directory-program t)      ;; use external ls
-  (setq insert-directory-program "/usr/local/bin/gls")
-  (global-set-key [(hyper a)] 'mark-whole-buffer)
-  (global-set-key [(hyper v)] 'yank)
-  (global-set-key [(hyper c)] 'kill-ring-save)
-  (global-set-key [(hyper s)] 'save-buffer)
-  (global-set-key [(hyper l)] 'goto-line)
-  (global-set-key [(hyper z)] 'undo)
-  (setq mac-option-modifier 'meta)
-  (setq mac-command-modifier 'hyper))
+  (setq insert-directory-program "/usr/local/bin/gls"))
+;  (global-set-key [(hyper a)] 'mark-whole-buffer)
+;  (global-set-key [(hyper v)] 'yank)
+;  (global-set-key [(hyper c)] 'kill-ring-save)
+;  (global-set-key [(hyper s)] 'save-buffer)
+;  (global-set-key [(hyper l)] 'goto-line)
+;  (global-set-key [(hyper z)] 'undo)
+;  (global-set-key (kbd "H-q") 'save-buffers-kill-emacs)
+;  (setq mac-option-modifier 'meta)
+;  (setq mac-command-modifier 'hyper))
 
 ;; PASTE.SE
 (defun paste-se-encode-uri-component (str)
@@ -480,11 +481,31 @@ symbol, not word, as I need this for programming the most."
 
 
 ;; 'javascript 'python
-(require 'smart-tabs-mode)
+
+(autoload 'smart-tabs-mode "smart-tabs-mode"
+  "Intelligently indent with tabs, align with spaces!")
 (autoload 'smart-tabs-mode-enable "smart-tabs-mode")
 (autoload 'smart-tabs-advice "smart-tabs-mode")
-(autoload 'smart-tabs-insinuate "smart-tabs-mode")
-(smart-tabs-insinuate 'c 'cperl 'ruby 'nxml)
+
+;; C/C++
+;; (add-hook 'c-mode-hook 'smart-tabs-mode-enable)
+
+;; JavaScript
+;; (add-hook 'js2-mode-hook 'smart-tabs-mode-enable)
+;;(smart-tabs-advice js2-indent-line js2-basic-offset)
+
+;; Perl (cperl-mode)
+;; (add-hook 'cperl-mode-hook 'smart-tabs-mode-enable)
+;;(smart-tabs-advice cperl-indent-line cperl-indent-level)
+
+;; Python
+;;(add-hook 'python-mode-hook 'smart-tabs-mode-enable)
+;;(smart-tabs-advice python-indent-line-1 python-indent)
+
+;; Ruby
+;;(add-hook 'ruby-mode-hook 'smart-tabs-mode-enable)
+;;(smart-tabs-advice ruby-indent-line ruby-indent-level)
+
 
 ;; FIXME: IN COMMENTS
 (require 'fic-mode)
@@ -503,8 +524,18 @@ symbol, not word, as I need this for programming the most."
   (local-set-key [return] 'newline-and-indent))
 ;;  (whitespace-mode))
 
-(defun krig-smart-tabs-hook ()
-  (smart-tabs-mode-enable))
+
+(defun krig-cc-mode-hook ()
+  (setq c-basic-offset 4)
+  (setq c-default-style "linux")
+  (setq indent-tabs-mode t)
+  (smart-tabs-mode-enable)
+  (smart-tabs-advice c-indent-line c-basic-offset)
+  (smart-tabs-advice c-indent-region c-basic-offset)
+  (setq show-trailing-whitespace t)
+  (turn-on-fic-mode)
+  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
+  (local-set-key [return] 'newline-and-indent))
 
 (defun krig-mode-hook ()
   (setq show-trailing-whitespace t)
@@ -513,8 +544,6 @@ symbol, not word, as I need this for programming the most."
   (local-set-key [return] 'newline-and-indent))
 
 (dolist (hook '(
-		c-mode-hook
-		c++-mode-hook
 		emacs-lisp-mode-hook
 		lisp-mode-hook
 		lisp-interaction-mode-hook
@@ -532,7 +561,7 @@ symbol, not word, as I need this for programming the most."
 		c-mode-hook
 		c++-mode-hook
 		))
-  (add-hook hook 'krig-smart-tabs-hook))
+  (add-hook hook 'krig-cc-mode-hook))
 
 (add-hook 'sh-mode-hook 'krig-sh-mode-hook)
 
@@ -1002,5 +1031,5 @@ open and unsaved."
 ;; WHY DOES THIS NOT WORK :(
 ;;(package-activate
 ;;(load-theme 'github)
-;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
-(add-hook 'after-init-hook '(lambda () (load-theme 'tomorrow-night)))
+(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
+;(add-hook 'after-init-hook '(lambda () (load-theme 'tomorrow-night)))
