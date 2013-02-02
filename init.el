@@ -42,12 +42,13 @@
 (add-to-list 'load-path "~/.emacs.d/smarttabs")
 (add-to-list 'load-path "~/.emacs.d/haml-mode")
 
+(setq comment-style 'indent)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq-default c-default-style "linux")
-;(setq-default c-basic-offset 4)
+;;(setq-default c-basic-offset 4)
 (setq inhibit-startup-message t)
 (setq visible-bell t)
 
@@ -91,8 +92,8 @@
 ;;(add-to-list 'tramp-remote-path "~/bin")
 (setq vc-ignore-dir-regexp
       (format "\\(%s\\)\\|\\(%s\\)"
-	      vc-ignore-dir-regexp
-	      tramp-file-name-regexp))
+              vc-ignore-dir-regexp
+              tramp-file-name-regexp))
 
 
 ;; ESHELL
@@ -102,11 +103,14 @@
 (setq eshell-review-quick-commands nil)
 (setq eshell-smart-space-goes-to-end t)
 
+;; PARENFACE
+(require 'parenface)
+
 ;; ELPA
 (require 'package)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                          ("gnu" . "http://elpa.gnu.org/packages/")
-                          ("marmalade" . "http://marmalade-repo.org/packages/")))
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
 (require 'el-get)
@@ -182,9 +186,6 @@
 ;;(require 'pretty-lambdada)
 ;;(pretty-lambda-for-modes)
 
-;; PARENFACE
-(require 'parenface)
-
 ;; NREPL / CLOJURE
 
 (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
@@ -243,13 +244,13 @@
          (compl (all-completions "" entries predicate))
          (dft (assoc-string maybedft compl)))
     (ido-completing-read
-            prompt
-            compl
-            nil
-            t
-            nil
-            nil
-            dft)))
+     prompt
+     compl
+     nil
+     t
+     nil
+     nil
+     dft)))
 
 (defun aw-ido-find-tag ()
   (interactive)
@@ -308,42 +309,43 @@ symbol, not word, as I need this for programming the most."
 ;; OPEN FOR DIRED
 (require 'dired-x)
 (defun dired-open-mac ()
-       (interactive)
-       (let ((file-name (dired-get-file-for-visit)))
-         (if (file-exists-p file-name)
-             (call-process "/usr/bin/open" nil 0 nil file-name))))
+  (interactive)
+  (let ((file-name (dired-get-file-for-visit)))
+    (if (file-exists-p file-name)
+        (call-process "/usr/bin/open" nil 0 nil file-name))))
 
 (when (string-match "apple-darwin" system-configuration)
   (define-key dired-mode-map "o" 'dired-open-mac)
   (setq ls-lisp-use-insert-directory-program t)      ;; use external ls
   (setq insert-directory-program "/usr/local/bin/gls"))
-;  (global-set-key [(hyper a)] 'mark-whole-buffer)
-;  (global-set-key [(hyper v)] 'yank)
-;  (global-set-key [(hyper c)] 'kill-ring-save)
-;  (global-set-key [(hyper s)] 'save-buffer)
-;  (global-set-key [(hyper l)] 'goto-line)
-;  (global-set-key [(hyper z)] 'undo)
-;  (global-set-key (kbd "H-q") 'save-buffers-kill-emacs)
-;  (setq mac-option-modifier 'meta)
-;  (setq mac-command-modifier 'hyper))
+
+;;  (global-set-key [(hyper a)] 'mark-whole-buffer)
+;;  (global-set-key [(hyper v)] 'yank)
+;;  (global-set-key [(hyper c)] 'kill-ring-save)
+;;  (global-set-key [(hyper s)] 'save-buffer)
+;;  (global-set-key [(hyper l)] 'goto-line)
+;;  (global-set-key [(hyper z)] 'undo)
+;;  (global-set-key (kbd "H-q") 'save-buffers-kill-emacs)
+;;  (setq mac-option-modifier 'meta)
+;;  (setq mac-command-modifier 'hyper))
 
 ;; PASTE.SE
 (defun paste-se-encode-uri-component (str)
   (mapconcat
    (lambda (x)
      (if (or (eq x 60) (eq x 62) (eq x 96)
-	     (and (>= x 34) (<= x 38)) (and (>= x 123) (<= x 255))
-	     (and (>= x 91) (<= x 94)) (and (>= x 0) (<= x 9))
-	     (and (>= x 11) (<= x 32)))
-	 (format "%%%x" x)
+             (and (>= x 34) (<= x 38)) (and (>= x 123) (<= x 255))
+             (and (>= x 91) (<= x 94)) (and (>= x 0) (<= x 9))
+             (and (>= x 11) (<= x 32)))
+         (format "%%%x" x)
        (char-to-string x)))
    str ""))
 
 (defun paste-se-query-string (pairs)
   (mapconcat
    (lambda (x) (format "%s=%s"
-		       (paste-se-encode-uri-component (car x))
-		       (paste-se-encode-uri-component (cdr x))))
+                       (paste-se-encode-uri-component (car x))
+                       (paste-se-encode-uri-component (cdr x))))
    pairs "&"))
 
 (defun paste-se-paste-region (beg end)
@@ -355,16 +357,16 @@ symbol, not word, as I need this for programming the most."
 
 (defun paste-se-paste-string (paste-string)
   (let ((url-request-method "POST")
-	(url-request-data (paste-se-query-string
-			   (list (cons "paste" paste-string)
-				 (cons "lang" "text")
-				 (cons "user" "")
-				 (cons "desc" ""))))
-	(url-request-extra-headers
-	 '(("Content-Type" . "application/x-www-form-urlencoded")))
-	(paste-cb (lambda (&rest args)
-		    (set buffer (car (cdr args)))
-		    (insert (plist-get (car args) :redirect)))))
+        (url-request-data (paste-se-query-string
+                           (list (cons "paste" paste-string)
+                                 (cons "lang" "text")
+                                 (cons "user" "")
+                                 (cons "desc" ""))))
+        (url-request-extra-headers
+         '(("Content-Type" . "application/x-www-form-urlencoded")))
+        (paste-cb (lambda (&rest args)
+                    (set buffer (car (cdr args)))
+                    (insert (plist-get (car args) :redirect)))))
     (let ((oldbuf (current-buffer)))
       (url-retrieve "http://paste.se/index.py" 'paste-cb (list oldbuf)))))
 
@@ -396,13 +398,13 @@ symbol, not word, as I need this for programming the most."
   "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
   (interactive)
   (let ((n 0)
-	bufname)
+        bufname)
     (while (progn
-	     (setq bufname (concat "*scratch"
-				   (if (= n 0) "" (int-to-string n))
-				   "*"))
-	     (setq n (1+ n))
-	     (get-buffer bufname)))
+             (setq bufname (concat "*scratch"
+                                   (if (= n 0) "" (int-to-string n))
+                                   "*"))
+             (setq n (1+ n))
+             (get-buffer bufname)))
     (switch-to-buffer (get-buffer-create bufname))
     (scratch-mode)))
 
@@ -424,24 +426,24 @@ symbol, not word, as I need this for programming the most."
   (interactive)
   (when (string-match "^\\(.*\\)\\.\\([^.]*\\)$" buffer-file-name)
     (let ((name (match-string 1 buffer-file-name))
-	  (suffix (match-string 2 buffer-file-name)))
+          (suffix (match-string 2 buffer-file-name)))
       (cond ((string-match suffix "c\\|cc\\|C\\|cpp\\|m")
-	     (cond ((file-exists-p (concat name ".h"))
-		    (find-file (concat name ".h")))
-		   ((file-exists-p (concat name ".hh"))
-		    (find-file (concat name ".hh")))
-		   ((file-exists-p (concat name ".hpp"))
-		    (find-file (concat name ".hpp")))))
-	    ((string-match suffix "h\\|hh\\|hpp")
-	     (cond ((file-exists-p (concat name ".cc"))
-		    (find-file (concat name ".cc")))
-		   ((file-exists-p (concat name ".C"))
-		    (find-file (concat name ".C")))
-		   ((file-exists-p (concat name ".cpp"))
-		    (find-file (concat name ".cpp")))
-		   ((file-exists-p (concat name ".c"))
-		    (find-file (concat name ".c")))
-       ((file-exists-p (concat name ".m")))))))))
+             (cond ((file-exists-p (concat name ".h"))
+                    (find-file (concat name ".h")))
+                   ((file-exists-p (concat name ".hh"))
+                    (find-file (concat name ".hh")))
+                   ((file-exists-p (concat name ".hpp"))
+                    (find-file (concat name ".hpp")))))
+            ((string-match suffix "h\\|hh\\|hpp")
+             (cond ((file-exists-p (concat name ".cc"))
+                    (find-file (concat name ".cc")))
+                   ((file-exists-p (concat name ".C"))
+                    (find-file (concat name ".C")))
+                   ((file-exists-p (concat name ".cpp"))
+                    (find-file (concat name ".cpp")))
+                   ((file-exists-p (concat name ".c"))
+                    (find-file (concat name ".c")))
+                   ((file-exists-p (concat name ".m")))))))))
 (global-set-key [C-s-up] 'switch-cc-to-h)
 
 (global-set-key (kbd "M-[") 'beginning-of-defun)
@@ -512,9 +514,6 @@ symbol, not word, as I need this for programming the most."
 ;; FIXME: IN COMMENTS
 (require 'fic-mode)
 
-; doesn't work...
-; (require 'jira)
-
 ;; Whitespace fixes
 (setq whitespace-line-column 130)
 
@@ -550,23 +549,24 @@ symbol, not word, as I need this for programming the most."
   (local-set-key [return] 'newline-and-indent))
 
 (dolist (hook '(
-		emacs-lisp-mode-hook
-		lisp-mode-hook
-		lisp-interaction-mode-hook
-		scheme-mode-hook
-		perl-mode-hook
-		vala-mode-hook
-		ruby-mode-hook
-		csharp-mode-hook
-		java-mode-hook
-		objc-mode-hook
-		))
+                emacs-lisp-mode-hook
+                lisp-mode-hook
+                clojure-mode-hook
+                lisp-interaction-mode-hook
+                scheme-mode-hook
+                perl-mode-hook
+                vala-mode-hook
+                ruby-mode-hook
+                csharp-mode-hook
+                java-mode-hook
+                objc-mode-hook
+                ))
   (add-hook hook 'krig-mode-hook))
 
 (dolist (hook '(
-		c-mode-hook
-		c++-mode-hook
-		))
+                c-mode-hook
+                c++-mode-hook
+                ))
   (add-hook hook 'krig-cc-mode-hook))
 
 (add-hook 'sh-mode-hook 'krig-sh-mode-hook)
@@ -654,20 +654,20 @@ symbol, not word, as I need this for programming the most."
   (font-lock-add-keywords
    nil
    `((,(concat "\\<\\(NULL"
-	       "\\|c\\(def\\|har\\|typedef\\)"
-	       "\\|e\\(num\\|xtern\\)"
-	       "\\|float"
-	       "\\|in\\(clude\\|t\\)"
-	       "\\|object\\|public\\|struct\\|type\\|union\\|void"
-	       "\\)\\>")
+               "\\|c\\(def\\|har\\|typedef\\)"
+               "\\|e\\(num\\|xtern\\)"
+               "\\|float"
+               "\\|in\\(clude\\|t\\)"
+               "\\|object\\|public\\|struct\\|type\\|union\\|void"
+               "\\)\\>")
       1 font-lock-keyword-face t))))
 
 ;; GOOGLE GO MODE
 (require 'go-mode-load)
 
 (dolist (hook '(
-		go-mode-hook
-		))
+                go-mode-hook
+                ))
   (add-hook hook 'krig-mode-hook))
 
 ;; IMPROVED JAVASCRIPT MODE
@@ -721,13 +721,13 @@ symbol, not word, as I need this for programming the most."
 
 (defun flymake-get-Haskell-cmdline (source base-dir)
   (list (expand-file-name "~/.emacs.d/flymake-haskell.pl")
-	(list source base-dir)))
+        (list source base-dir)))
 
 (progn
   (push '(".+\\.hs$" flymake-Haskell-init flymake-simple-java-cleanup)
-	flymake-allowed-file-name-masks)
+        flymake-allowed-file-name-masks)
   (push '(".+\\.lhs$" flymake-Haskell-init flymake-simple-java-cleanup)
-	flymake-allowed-file-name-masks)
+        flymake-allowed-file-name-masks)
   (push
    '("^\\(\.+\.hs\\|\.lhs\\):\\([0-9]+\\):\\([0-9]+\\):\\(.+\\)"
      1 2 3 4) flymake-err-line-patterns))
@@ -737,14 +737,14 @@ symbol, not word, as I need this for programming the most."
 ;; '(lambda ()
 ;;    (if (not (null buffer-file-name)) (flymake-mode))))
 
-; don't enable flymake if running over tramp
+;; don't enable flymake if running over tramp
 (defun aw-flymake-if-buffer-isnt-tramp ()
   (if (not (and (boundp 'tramp-file-name-structure)
                 (string-match (car tramp-file-name-structure) (buffer-file-name))))
       (flymake-mode t)))
 
-; enables flymake mode iff buffer has a filename set,
-; otherwise things breaks badly for things such as emerge
+;; enables flymake mode iff buffer has a filename set,
+;; otherwise things breaks badly for things such as emerge
 (defun aw-flymake-if-buffer-has-filename ()
   (if (buffer-file-name)
       (aw-flymake-if-buffer-isnt-tramp)))
@@ -771,12 +771,12 @@ symbol, not word, as I need this for programming the most."
                                             (file-name-directory buffer-file-name))))
                           (list ,cmd (list local-file)))))))
 
-; enable flymake on c
-;(add-hook 'c-mode-hook 'aw-flymake-if-buffer-has-filename t)
-; enable flymake on py
-;(add-hook 'python-mode-hook 'aw-flymake-if-buffer-has-filename t)
+;; enable flymake on c
+;;(add-hook 'c-mode-hook 'aw-flymake-if-buffer-has-filename t)
+;; enable flymake on py
+;;(add-hook 'python-mode-hook 'aw-flymake-if-buffer-has-filename t)
 
-; Or lets do a global enable global enable
+;; Or lets do a global enable global enable
 ;;(add-hook 'find-file-hook 'aw-flymake-if-buffer-has-filename)
 
 ;; For problems with PATH on mac os X, see
@@ -808,10 +808,10 @@ symbol, not word, as I need this for programming the most."
 
 ;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
 
-;(add-to-list 'load-path "~/.emacs.d/slime/")  ; your SLIME directory
-;;(setq inferior-lisp-program "sbcl --noinform") ; your Lisp system
-;(require 'slime)
-;(slime-setup '(slime-fancy))
+;; (add-to-list 'load-path "~/.emacs.d/slime/")  ; your SLIME directory
+;; (setq inferior-lisp-program "sbcl --noinform") ; your Lisp system
+;; (require 'slime)
+;; (slime-setup '(slime-fancy))
 
 ;; QUACK
 
@@ -853,20 +853,20 @@ symbol, not word, as I need this for programming the most."
   "Find a recent file using Ido."
   (interactive)
   (let* ((file-assoc-list
-	  (mapcar (lambda (x)
-		    (cons (file-name-nondirectory x)
-			  x))
-		  recentf-list))
-	 (filename-list
-	  (remove-duplicates (mapcar #'car file-assoc-list)
-			     :test #'string=))
-	 (filename (ido-completing-read "Choose recent file: "
-					filename-list
-					nil
-					t)))
+          (mapcar (lambda (x)
+                    (cons (file-name-nondirectory x)
+                          x))
+                  recentf-list))
+         (filename-list
+          (remove-duplicates (mapcar #'car file-assoc-list)
+                             :test #'string=))
+         (filename (ido-completing-read "Choose recent file: "
+                                        filename-list
+                                        nil
+                                        t)))
     (when filename
       (find-file (cdr (assoc filename
-			     file-assoc-list))))))
+                             file-assoc-list))))))
 (global-set-key "\C-x\C-r" 'recentf-ido-find-file)
 
 (setq imenu-auto-rescan t)
@@ -939,25 +939,25 @@ symbol, not word, as I need this for programming the most."
         (save-buffer)
       ;; Clear buffer-modified flag caused by set-visited-file-name
       (set-buffer-modified-p nil))
-  (message "Renamed to %s." new-name)))
+    (message "Renamed to %s." new-name)))
 
 ;; someday might want to rotate windows if more than 2 of them
 (defun swap-windows ()
- "If you have 2 windows, it swaps them."
- (interactive)
- (cond
-  ((not (= (count-windows) 2)) (message "You need exactly 2 windows to do this."))
-  (t
-   (let* ((w1 (first (window-list)))
-          (w2 (second (window-list)))
-          (b1 (window-buffer w1))
-          (b2 (window-buffer w2))
-          (s1 (window-start w1))
-          (s2 (window-start w2)))
-     (set-window-buffer w1 b2)
-     (set-window-buffer w2 b1)
-     (set-window-start w1 s2)
-     (set-window-start w2 s1)))))
+  "If you have 2 windows, it swaps them."
+  (interactive)
+  (cond
+   ((not (= (count-windows) 2)) (message "You need exactly 2 windows to do this."))
+   (t
+    (let* ((w1 (first (window-list)))
+           (w2 (second (window-list)))
+           (b1 (window-buffer w1))
+           (b2 (window-buffer w2))
+           (s1 (window-start w1))
+           (s2 (window-start w2)))
+      (set-window-buffer w1 b2)
+      (set-window-buffer w2 b1)
+      (set-window-start w1 s2)
+      (set-window-start w2 s1)))))
 
 ;; Never understood why Emacs doesn't have this function, either.
 ;;
@@ -981,22 +981,22 @@ symbol, not word, as I need this for programming the most."
         t))))
 
 (defun set-tab-stop-width (width)
-      "Set all tab stops to WIDTH in current buffer.
+  "Set all tab stops to WIDTH in current buffer.
     This updates `tab-stop-list', but not `tab-width'.
     By default, `indent-for-tab-command' uses tabs to indent, see
     `indent-tabs-mode'."
-      (interactive "nTab width: ")
-      (let* ((max-col (car (last tab-stop-list)))
-             ;; If width is not a factor of max-col,
-             ;; then max-col could be reduced with each call.
-             (n-tab-stops (/ max-col width)))
-        (set (make-local-variable 'tab-stop-list)
-             (mapcar (lambda (x) (* width x))
-                     (number-sequence 1 n-tab-stops)))
-        ;; So preserve max-col, by adding to end.
-        (unless (zerop (% max-col width))
-          (setcdr (last tab-stop-list)
-                  (list max-col)))))
+  (interactive "nTab width: ")
+  (let* ((max-col (car (last tab-stop-list)))
+         ;; If width is not a factor of max-col,
+         ;; then max-col could be reduced with each call.
+         (n-tab-stops (/ max-col width)))
+    (set (make-local-variable 'tab-stop-list)
+         (mapcar (lambda (x) (* width x))
+                 (number-sequence 1 n-tab-stops)))
+    ;; So preserve max-col, by adding to end.
+    (unless (zerop (% max-col width))
+      (setcdr (last tab-stop-list)
+              (list max-col)))))
 
 (defun backward-delete-whitespace-to-column ()
   "delete back to the previous column of whitespace, or as much whitespace as possible,
@@ -1010,7 +1010,7 @@ or just one char if that's not possible"
       (save-match-data
         (if (string-match "\\w*\\(\\s-+\\)$" (buffer-substring-no-properties (- p movement) p))
             (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
-        (call-interactively 'backward-delete-char-untabify))))))
+          (call-interactively 'backward-delete-char-untabify))))))
 
 (defun backward-delete-char-hungry (arg &optional killp)
   "*Delete characters backward in \"hungry\" mode.
@@ -1035,6 +1035,6 @@ open and unsaved."
           (dired-get-marked-files))))
 
 ;; THEME
-;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
-;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
+;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
+;;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
 (add-hook 'after-init-hook '(lambda () (load-theme 'tomorrow-night)))
