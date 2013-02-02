@@ -43,7 +43,7 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(delete-selection-mode t)
+(delete-selection-mode nil)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (blink-cursor-mode t)
@@ -188,6 +188,13 @@
   (add-hook 'arc-mode-hook              (paren-face-add-support arc-font-lock-keywords-2))
   (add-hook 'inferior-arc-mode-hook     (paren-face-add-support arc-font-lock-keywords-2))
   (add-hook 'clojure-mode-hook          (paren-face-add-support clojure-font-lock-keywords)))
+
+
+;; NREPL / CLOJURE
+
+(add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
+
+
 
 ;; SCSS
 (setq scss-compile-at-save nil)
@@ -510,6 +517,9 @@ symbol, not word, as I need this for programming the most."
 ;; FIXME: IN COMMENTS
 (require 'fic-mode)
 
+; doesn't work...
+; (require 'jira)
+
 ;; Whitespace fixes
 (setq whitespace-line-column 130)
 
@@ -524,7 +534,6 @@ symbol, not word, as I need this for programming the most."
   (local-set-key [return] 'newline-and-indent))
 ;;  (whitespace-mode))
 
-
 (defun krig-cc-mode-hook ()
   (setq c-basic-offset 4)
   (setq c-default-style "linux")
@@ -532,6 +541,7 @@ symbol, not word, as I need this for programming the most."
   (smart-tabs-mode-enable)
   (smart-tabs-advice c-indent-line c-basic-offset)
   (smart-tabs-advice c-indent-region c-basic-offset)
+  (subword-mode 1)
   (setq show-trailing-whitespace t)
   (turn-on-fic-mode)
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
@@ -540,6 +550,7 @@ symbol, not word, as I need this for programming the most."
 (defun krig-mode-hook ()
   (setq show-trailing-whitespace t)
   (turn-on-fic-mode)
+  (subword-mode 1)
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
   (local-set-key [return] 'newline-and-indent))
 
@@ -1031,5 +1042,5 @@ open and unsaved."
 ;; WHY DOES THIS NOT WORK :(
 ;;(package-activate
 ;;(load-theme 'github)
-(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
+(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
 ;(add-hook 'after-init-hook '(lambda () (load-theme 'tomorrow-night)))
