@@ -2,7 +2,17 @@
 ;; TODO:
 ;; cleanup, modularize...
 ;;
-(when (string-match "apple-darwin" system-configuration)
+
+(defun krig-macp ()
+  (string-match "apple-darwin" system-configuration))
+
+(defun krig-linuxp ()
+  (string-match "linux" system-configuration))
+
+(defun krig-winp ()
+  (eq system-type 'windows-nt))
+
+(when (krig-macp)
   (setq mac-allow-anti-aliasing t)
   (set-frame-font "Ubuntu Mono-14"))
 ;;(set-frame-font "Liberation Mono-12")
@@ -13,7 +23,7 @@
 ;;(set-frame-font "Droid Sans Mono-12")
 ;;(set-frame-font "Anonymous Pro-12")
 
-(when (string-match "pc-linux" system-configuration)
+(when (krig-linuxp)
   (set-frame-font "Ubuntu Mono-12"))
 
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
@@ -70,11 +80,9 @@
 (setq-default ispell-program-name "aspell")
 
 ;; C SOURCE FOR EMACS
-(defun krig-find-emacs-source ()
-  "~/projects/sources/emacs/src")
-(if (eq system-type 'windows-nt)
+(if (krig-winp)
     (setq find-function-C-source-directory "C:/Program/Emacs/src/src")
-  (setq find-function-C-source-directory (krig-find-emacs-source)))
+  (setq find-function-C-source-directory "~/Personal/Sources/emacs/src"))
 
 ;; TRAMP
 (require 'tramp)
@@ -175,20 +183,7 @@
 ;;(pretty-lambda-for-modes)
 
 ;; PARENFACE
-(progn
-  (require 'parenface)
-  (set-face-foreground 'parenface-paren-face "#585858")
-  (set-face-foreground 'parenface-bracket-face "#808080")
-  (set-face-foreground 'parenface-curly-face "#808888")
-  (add-hook 'scheme-mode-hook           (paren-face-add-support scheme-font-lock-keywords-2))
-  (add-hook 'inferior-scheme-mode-hook  (paren-face-add-support scheme-font-lock-keywords-2))
-  (add-hook 'lisp-mode-hook             (paren-face-add-support lisp-font-lock-keywords-2))
-  (add-hook 'emacs-lisp-mode-hook       (paren-face-add-support lisp-font-lock-keywords-2))
-  (add-hook 'lisp-interaction-mode-hook (paren-face-add-support lisp-font-lock-keywords-2))
-  (add-hook 'arc-mode-hook              (paren-face-add-support arc-font-lock-keywords-2))
-  (add-hook 'inferior-arc-mode-hook     (paren-face-add-support arc-font-lock-keywords-2))
-  (add-hook 'clojure-mode-hook          (paren-face-add-support clojure-font-lock-keywords)))
-
+(require 'parenface)
 
 ;; NREPL / CLOJURE
 
@@ -1039,8 +1034,7 @@ open and unsaved."
             (call-interactively command))
           (dired-get-marked-files))))
 
-;; WHY DOES THIS NOT WORK :(
-;;(package-activate
-;;(load-theme 'github)
-(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
-;(add-hook 'after-init-hook '(lambda () (load-theme 'tomorrow-night)))
+;; THEME
+;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
+;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
+(add-hook 'after-init-hook '(lambda () (load-theme 'tomorrow-night)))

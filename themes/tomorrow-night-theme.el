@@ -81,6 +81,10 @@
 
    `(magit-item-highlight ((t (:background ,background-plus))))
 
+   `(parenface-paren-face ((t (:foreground "#585858"))))
+   `(parenface-bracket-face ((t (:foreground "#808080"))))
+   `(parenface-curly-face ((t (:foreground "#808888"))))
+
    )
 
   (custom-theme-set-variables

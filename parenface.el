@@ -47,19 +47,29 @@
       (unless (eq (cdr match2) parenface-curly-face)
 	(setq ,keywords (append (list (cons re2 parenface-curly-face)) ,keywords))))))
 
+(defun paren-face-add-keyword ()
+  "Adds paren-face support to the mode."
+  (font-lock-add-keywords nil '(("(\\|)" . parenface-paren-face)
+                                ("\\[\\|]" . parenface-bracket-face)
+                                ("{\\|}" . parenface-curly-face))))
+
 ;; Keep the compiler quiet.
 (eval-when-compile
   (defvar scheme-font-lock-keywords-2 nil)
-  (defvar lisp-font-lock-keywords-2 nil))
+  (defvar lisp-font-lock-keywords-2 nil)
+  (defvar arc-font-lock-keywords-2 nil)
+  (defvar clojure-font-lock-keywords nil))
 
-;; (add-hook 'scheme-mode-hook           (paren-face-add-support scheme-font-lock-keywords-2))
-;; (add-hook 'inferior-scheme-mode-hook  (paren-face-add-support scheme-font-lock-keywords-2))
-;; (add-hook 'lisp-mode-hook             (paren-face-add-support lisp-font-lock-keywords-2))
-;; (add-hook 'emacs-lisp-mode-hook       (paren-face-add-support lisp-font-lock-keywords-2))
-;; (add-hook 'lisp-interaction-mode-hook (paren-face-add-support lisp-font-lock-keywords-2))
-;; (add-hook 'arc-mode-hook              (paren-face-add-support arc-font-lock-keywords-2))
-;; (add-hook 'inferior-arc-mode-hook     (paren-face-add-support arc-font-lock-keywords-2))
-;; (add-hook 'clojure-mode-hook          (paren-face-add-support clojure-font-lock-keywords))
+(add-hook 'scheme-mode-hook           (paren-face-add-support scheme-font-lock-keywords-2))
+(add-hook 'inferior-scheme-mode-hook  (paren-face-add-support scheme-font-lock-keywords-2))
+(add-hook 'lisp-mode-hook             (paren-face-add-support lisp-font-lock-keywords-2))
+(add-hook 'emacs-lisp-mode-hook       (paren-face-add-support lisp-font-lock-keywords-2))
+(add-hook 'lisp-interaction-mode-hook (paren-face-add-support lisp-font-lock-keywords-2))
+(add-hook 'arc-mode-hook              (paren-face-add-support arc-font-lock-keywords-2))
+(add-hook 'inferior-arc-mode-hook     (paren-face-add-support arc-font-lock-keywords-2))
+(add-hook 'clojure-mode-hook          (paren-face-add-support clojure-font-lock-keywords))
+(add-hook 'nrepl-mode-hook            'paren-face-add-keyword)
+(add-hook 'slime-repl-mode-hook       'paren-face-add-keyword)
 
 (provide 'parenface)
 
