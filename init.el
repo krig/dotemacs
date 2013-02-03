@@ -665,10 +665,20 @@ symbol, not word, as I need this for programming the most."
 ;; GOOGLE GO MODE
 (require 'go-mode-load)
 
+(defun krig-go-mode-hook ()
+  (setq show-trailing-whitespace t)
+  (turn-on-fic-mode)
+  (subword-mode 1)
+  (setq tab-width 8)
+  (setq indent-tabs-mode t)
+  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
+  (local-set-key [return] 'newline-and-indent))
+
+
 (dolist (hook '(
                 go-mode-hook
                 ))
-  (add-hook hook 'krig-mode-hook))
+  (add-hook hook 'krig-go-mode-hook))
 
 ;; IMPROVED JAVASCRIPT MODE
 (autoload 'js2-mode "js2-mode" nil t)
