@@ -3,6 +3,11 @@
 ;; cleanup, modularize...
 ;;
 
+(setq user-full-name "Kristoffer Grönlund"
+      user-mail-address (concat "krig@" "koru" ".se"))
+
+(setq frame-title-format "%b %*")
+
 (defun krig-macp ()
   (string-match "apple-darwin" system-configuration))
 
@@ -14,7 +19,11 @@
 
 (when (krig-macp)
   (setq mac-allow-anti-aliasing t)
-  (set-frame-font "Ubuntu Mono-14"))
+  (set-frame-font "Inconsolata-14")
+  ; nicer lambdas
+  (set-fontset-font "fontset-default"
+                    'greek-iso8859-7
+                    '("Consolas" . "iso10646-1")))
 ;;(set-frame-font "Liberation Mono-12")
 ;;(set-frame-font "Menlo-12")
 ;;(set-frame-font "Monaco-12")
@@ -55,6 +64,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (delete-selection-mode nil)
+;;(setq delete-active-region nil)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (blink-cursor-mode t)
@@ -111,7 +121,6 @@
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")))
-(package-initialize)
 
 (require 'el-get)
 
@@ -182,9 +191,7 @@
 (defun sass-mode-hook ()
   (autoload 'sass-mode "css-mode" nil t))
 
-;; PRETTY-LAMBDADA
-;;(require 'pretty-lambdada)
-;;(pretty-lambda-for-modes)
+(package-initialize)
 
 ;; NREPL / CLOJURE
 
@@ -1047,4 +1054,11 @@ open and unsaved."
 ;; THEME
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
-(add-hook 'after-init-hook '(lambda () (load-theme 'tomorrow-night)))
+(add-hook 'after-init-hook '(lambda ()
+                              ;; PRETTY-LAMBDADA
+                              (require 'pretty-lambdada)
+                              (pretty-lambda-for-modes)
+                              (load-theme 'tomorrow-night)))
+
+(find-file "~/.todo")
+(rename-buffer "*todo*")
