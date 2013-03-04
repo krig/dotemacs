@@ -19,18 +19,13 @@
 
 (when (krig-macp)
   (setq mac-allow-anti-aliasing t)
-  (set-frame-font "Inconsolata-13")
+  (if (> (display-pixel-width) 1900)
+    (set-frame-font "Inconsolata-15")
+    (set-frame-font "Inconsolata-13"))
   ; nicer lambdas
   (set-fontset-font "fontset-default"
                     'greek-iso8859-7
                     '("Consolas" . "iso10646-1")))
-;;(set-frame-font "Liberation Mono-12")
-;;(set-frame-font "Menlo-12")
-;;(set-frame-font "Monaco-12")
-;;(set-frame-font "Consolas-13")
-;;(set-frame-font "Source Sans-12")
-;;(set-frame-font "Droid Sans Mono-12")
-;;(set-frame-font "Anonymous Pro-12")
 
 (when (krig-linuxp)
   (set-frame-font "Ubuntu Mono-12"))
