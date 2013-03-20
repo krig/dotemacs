@@ -19,7 +19,7 @@
 
 (when (krig-macp)
   (setq mac-allow-anti-aliasing t)
-  (set-frame-font "Inconsolata-14")
+  (set-frame-font "Inconsolata-13")
   ; nicer lambdas
   (set-fontset-font "fontset-default"
                     'greek-iso8859-7
@@ -844,9 +844,15 @@ symbol, not word, as I need this for programming the most."
 (load "~/.emacs.d/haskell-mode/haskell-site-file")
 ;;sadly doesn't work as it should
 ;;(setq haskell-ghci-comint-prompt-regexp "^[[:nonascii:]]> ")
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+
+(defun krig-haskell-mode-hook ()
+  (turn-on-haskell-doc-mode)
+  (turn-on-haskell-indentation)
+  (imenu-add-menubar-index)
+  (subword-mode 1))
+
+(add-hook 'haskell-mode-hook 'krig-haskell-mode-hook)
+
 (add-to-list 'completion-ignored-extensions ".hi")
 
 ;; ;; PARROT
