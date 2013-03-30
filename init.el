@@ -108,20 +108,6 @@
 (setq eshell-review-quick-commands nil)
 (setq eshell-smart-space-goes-to-end t)
 
-;; RAINBOW-DELIMITERS
-(progn
-  (require 'rainbow-delimiters)
-  (global-rainbow-delimiters-mode)
-  (set-face-foreground 'rainbow-delimiters-depth-1-face "#696969")
-  (set-face-foreground 'rainbow-delimiters-depth-2-face "#727272")
-  (set-face-foreground 'rainbow-delimiters-depth-3-face "#767676")
-  (set-face-foreground 'rainbow-delimiters-depth-4-face "#7a7a7a")
-  (set-face-foreground 'rainbow-delimiters-depth-5-face "#7e7e7e")
-  (set-face-foreground 'rainbow-delimiters-depth-6-face "#838383")
-  (set-face-foreground 'rainbow-delimiters-depth-7-face "#878787")
-  (set-face-foreground 'rainbow-delimiters-depth-8-face "#8b8b8b")
-  (set-face-foreground 'rainbow-delimiters-depth-9-face "#8f8f8f"))
-
 ;; ELPA
 (require 'package)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
@@ -228,6 +214,25 @@
 
 ;; TEXTMATE
 (textmate-mode)
+
+;; RAINBOW-DELIMITERS
+
+(defun krig-intensity-clr (intensity)
+  (format "#%X%X%X" intensity intensity intensity))
+
+(defun krig-paren-clr (depth)
+  (let ((intensity (+ ?\x59 (* (- depth 1) 8))))
+    (krig-intensity-clr intensity)))
+
+(defun krig-rainbow-face-n (n)
+  (intern (concat "rainbow-delimiters-depth-" (number-to-string n) "-face")))
+
+(progn
+  (require 'rainbow-delimiters)
+  (global-rainbow-delimiters-mode)
+  (cl-loop for i from 1 to 9 do
+           (set-face-foreground (krig-rainbow-face-n i)
+                                (krig-paren-clr i))))
 
 ;; PAREDIT
 ;; (autoload 'paredit-mode "paredit"
