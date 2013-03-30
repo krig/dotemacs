@@ -108,8 +108,19 @@
 (setq eshell-review-quick-commands nil)
 (setq eshell-smart-space-goes-to-end t)
 
-;; PARENFACE
-(require 'parenface)
+;; RAINBOW-DELIMITERS
+(progn
+  (require 'rainbow-delimiters)
+  (global-rainbow-delimiters-mode)
+  (set-face-foreground 'rainbow-delimiters-depth-1-face "#696969")
+  (set-face-foreground 'rainbow-delimiters-depth-2-face "#727272")
+  (set-face-foreground 'rainbow-delimiters-depth-3-face "#767676")
+  (set-face-foreground 'rainbow-delimiters-depth-4-face "#7a7a7a")
+  (set-face-foreground 'rainbow-delimiters-depth-5-face "#7e7e7e")
+  (set-face-foreground 'rainbow-delimiters-depth-6-face "#838383")
+  (set-face-foreground 'rainbow-delimiters-depth-7-face "#878787")
+  (set-face-foreground 'rainbow-delimiters-depth-8-face "#8b8b8b")
+  (set-face-foreground 'rainbow-delimiters-depth-9-face "#8f8f8f"))
 
 ;; ELPA
 (require 'package)
