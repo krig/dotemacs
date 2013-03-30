@@ -70,7 +70,7 @@
 (winner-mode 1)
 (global-auto-revert-mode t)
 (setq calendar-week-start-day 1)
-(setq transient-mark-mode nil)
+(transient-mark-mode 0)
 
 ;; put something different in the scratch buffer
 (setq initial-scratch-message ";)\n")
@@ -217,15 +217,12 @@
 
 ;; RAINBOW-DELIMITERS
 
-(defun krig-intensity-clr (intensity)
-  (format "#%X%X%X" intensity intensity intensity))
-
-(defun krig-paren-clr (depth)
-  (let ((intensity (+ ?\x59 (* (- depth 1) 8))))
-    (krig-intensity-clr intensity)))
+(defun krig-paren-clr (n)
+  (let ((c (+ ?\x59 (* (1- n) 8))))
+    (format "#%X%X%X" c c c)))
 
 (defun krig-rainbow-face-n (n)
-  (intern (concat "rainbow-delimiters-depth-" (number-to-string n) "-face")))
+  (intern (format "rainbow-delimiters-depth-%d-face" n)))
 
 (progn
   (require 'rainbow-delimiters)
