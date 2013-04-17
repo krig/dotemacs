@@ -464,6 +464,8 @@ symbol, not word, as I need this for programming the most."
 (global-set-key (kbd "M-[") 'beginning-of-defun)
 (global-set-key (kbd "M-]") 'end-of-defun)
 
+(global-set-key (kbd "M-j") 'join-line)
+
 
 ;; REINDENT BUFFER
 (defun reindent-buffer ()
@@ -471,6 +473,16 @@ symbol, not word, as I need this for programming the most."
   (interactive)
   (mark-whole-buffer)
   (indent-region (region-beginning) (region-end)))
+
+;; KILL-AND-JOIN-FORWARD
+(defun kill-and-join-forward (&optional arg)
+  "If at end of line, join with following; otherwise kill line.
+    Deletes whitespace at join."
+  (interactive "P")
+  (if (and (eolp) (not (bolp)))
+      (delete-indentation t)
+    (kill-line arg)))
+(global-set-key "\C-k" 'kill-and-join-forward)
 
 ;; OPEN INIT.EL
 (defun dot-emacs ()
@@ -1064,6 +1076,19 @@ open and unsaved."
             (find-file filename)
             (call-interactively command))
           (dired-get-marked-files))))
+
+
+(require 'whitespace)
+
+(defun krig-twitter-time ()
+  "time to compose a tweet"
+  (interactive)
+  (make-local-variable 'whitespace-style)
+  (make-local-variable 'whitespace-line-column)
+  (setq whitespace-line-column 140)
+  (setq whitespace-style '(face tabs lines-tail trailing))
+  (whitespace-mode 1)
+  (auto-fill-mode 0))
 
 ;; THEME
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
