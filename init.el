@@ -1095,8 +1095,8 @@ open and unsaved."
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
 (add-hook 'after-init-hook '(lambda ()
                               ;; PRETTY-LAMBDADA
-                              (require 'pretty-lambdada)
-                              (pretty-lambda-for-modes)
+                              ;; (require 'pretty-lambdada)
+                              ;; (pretty-lambda-for-modes)
                               (load-theme 'tomorrow-night)))
 
 (find-file "~/.todo")
