@@ -32,6 +32,7 @@
 
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/noctilux")
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
@@ -1097,7 +1098,7 @@ open and unsaved."
                               ;; PRETTY-LAMBDADA
                               ;; (require 'pretty-lambdada)
                               ;; (pretty-lambda-for-modes)
-                              (load-theme 'tomorrow-night)))
+                              (load-theme 'noctilux)))
 
 (find-file "~/.todo")
 (rename-buffer "*todo*")

@@ -37,3 +37,6 @@
 [submodule "browse-kill-ring"]
 	path = browse-kill-ring
 	url = https://github.com/samaaron/browse-kill-ring.git
+[submodule "themes/noctilux"]
+	path = themes/noctilux
+	url = git@github.com:krig/noctilux-theme.git
