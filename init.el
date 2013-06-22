@@ -95,7 +95,7 @@
 ;; TRAMP
 (require 'tramp)
 (setq tramp-completion-reread-directory-timeout nil)
-(setq tramp-default-method "scpc")
+(setq tramp-default-method "scp")
 ;;(add-to-list 'tramp-remote-path "~/bin")
 (setq vc-ignore-dir-regexp
       (format "\\(%s\\)\\|\\(%s\\)"
