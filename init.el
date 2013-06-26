@@ -310,8 +310,10 @@ symbol, not word, as I need this for programming the most."
         try-complete-file-name-partially
         try-complete-file-name))
 
-
-
+(defun exit-emacs ()
+  (interactive)
+  (save-buffers-kill-emacs))
+;(global-set-key (kbd "s-Q") 'save-buffers-kill-emacs)
 
 ;; UNIQUIFY - better buffer names
 (require 'uniquify)
@@ -321,7 +323,7 @@ symbol, not word, as I need this for programming the most."
 ;; RECENT FILES
 (require 'recentf)
 (recentf-mode t)
-(setq recentf-max-menu-items 25)
+(setq recentf-max-menu-items 40)
 
 ;; OPEN FOR DIRED
 (require 'dired-x)
@@ -557,13 +559,44 @@ symbol, not word, as I need this for programming the most."
   (local-set-key [return] 'newline-and-indent))
 ;;  (whitespace-mode))
 
+(defun c-lineup-arglist-tabs-only (ignored)
+  "Line up argument lists by tabs, not spaces"
+  (let* ((anchor (c-langelem-pos c-syntactic-element))
+         (column (c-langelem-2nd-pos c-syntactic-element))
+         (offset (- (1+ column) anchor))
+         (steps (floor offset c-basic-offset)))
+    (* (max steps 1)
+       c-basic-offset)))
+
+(defun kernel-style-mode-hook ()
+  "Add kernel style"
+  (c-add-style
+   "linux-tabs-only"
+   '("linux" (c-offsets-alist
+              (arglist-cont-nonempty
+               c-lineup-gcc-asm-reg
+               c-lineup-arglist-tabs-only)))))
+
+(add-hook 'c-mode-common-hook 'kernel-style-mode-hook)
+
+;; TODO:
+;; better support for different modes for different trees
+
 (defun krig-cc-mode-hook ()
-  (setq c-basic-offset 4)
-  (setq c-default-style "linux")
-  (setq indent-tabs-mode t)
-  (smart-tabs-mode-enable)
-  (smart-tabs-advice c-indent-line c-basic-offset)
-  (smart-tabs-advice c-indent-region c-basic-offset)
+  (let ((filename (buffer-file-name)))
+    (cond
+     ((and filename (string-match (expand-file-name "~/src/linux-trees") filename))
+      (setq tab-width 8)
+      (setq c-basic-offset 8)
+      (setq indent-tabs-mode t)
+      (c-set-style "linux-tabs-only"))
+     (t
+      (setq c-basic-offset 4)
+      (setq c-default-style "linux")
+      (setq indent-tabs-mode t)
+      (smart-tabs-mode-enable)
+      (smart-tabs-advice c-indent-line c-basic-offset)
+      (smart-tabs-advice c-indent-region c-basic-offset))))
   (subword-mode 1)
   (setq show-trailing-whitespace t)
   (turn-on-fic-mode)
@@ -673,7 +706,10 @@ symbol, not word, as I need this for programming the most."
 (defun mypy-extra-stuff ()
   (setq show-trailing-whitespace t)
   (setq tab-width 4)
-  (setq indent-tabs-mode nil))
+  (setq indent-tabs-mode nil)
+  (define-key python-mode-map "\C-m" 'newline-and-indent))
+
+  ;(local-set-key [return] 'newline-and-indent))
 ;;(add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
 (add-hook 'python-mode-hook 'mypy-extra-stuff)
 
@@ -933,7 +969,7 @@ symbol, not word, as I need this for programming the most."
   (require 'sr-speedbar)
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
-  (set-face-font 'speedbar-face "Liberation Mono-9")
+  (set-face-font 'speedbar-face "Liberation Mono-8")
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
   (speedbar-add-supported-extension ".hs")
