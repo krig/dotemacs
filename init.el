@@ -471,6 +471,9 @@ symbol, not word, as I need this for programming the most."
 (global-set-key (kbd "M-j") 'join-line)
 
 
+;; LINUM MODE
+(global-linum-mode)
+
 ;; REINDENT BUFFER
 (defun reindent-buffer ()
   "Reindent the contents of the entire buffer."
