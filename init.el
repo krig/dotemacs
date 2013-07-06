@@ -969,7 +969,7 @@ symbol, not word, as I need this for programming the most."
 
 ;; SPEEDBAR
 (progn
-  (require 'sr-speedbar)
+  (load "sr-speedbar.el")
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
   (set-face-font 'speedbar-face "Liberation Mono-8")
