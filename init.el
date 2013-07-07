@@ -214,6 +214,18 @@
 (el-get 'sync)
 (el-get)
 
+(defun krig-setup-el-get ()
+  (interactive)
+  (mapcar 'el-get-install
+          '("textmate"
+            "magit"
+            "rainbow-delimiters"
+            "lua-mode")))
+
+;; check if textmate has been installed
+(unless (functionp 'textmate-mode)
+  (krig-setup-el-get))
+
 ;; TEXTMATE
 (textmate-mode)
 
