@@ -484,7 +484,7 @@ symbol, not word, as I need this for programming the most."
 
 
 ;; LINUM MODE
-(global-linum-mode)
+;;(global-linum-mode)
 
 ;; REINDENT BUFFER
 (defun reindent-buffer ()
