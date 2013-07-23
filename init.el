@@ -62,7 +62,7 @@
 
 (delete-selection-mode nil)
 ;;(setq delete-active-region nil)
-(scroll-bar-mode -1)
+(set-scroll-bar-mode nil)
 (tool-bar-mode -1)
 (blink-cursor-mode t)
 (show-paren-mode t)
@@ -993,6 +993,43 @@ symbol, not word, as I need this for programming the most."
 ;; UNBOUND
 (progn
   (require 'unbound))
+
+;; NOTMUCH
+
+;; Choose account label to feed msmtp -a option based on From header in Message buffer;
+;; This function must be added to message-send-mail-hook for on-the-fly change of From address
+;; before sending message since message-send-mail-hook is processed right before sending message.
+(defun cg-feed-msmtp ()
+  (if (message-mail-p)
+      (save-excursion
+        (let* ((from
+                (save-restriction
+                  (message-narrow-to-headers)
+                  (message-fetch-field "from")))
+               (account
+                (cond
+                 ((string-match (concat "kgronlund@" "suse" ".com") from) "suse")
+                 ((string-match (concat "krig@" "koru" ".se") from) "koru"))))
+          (setq message-sendmail-extra-arguments `("-a" ,account))))))
+
+(defun krig-notmuch-mark-as-read ()
+      "notmuch: mark as read toggle"
+      (interactive)
+      (notmuch-search-tag
+       (if (member "unread" (notmuch-search-get-tags))
+           "-unread" "+unread")))
+
+(progn
+  (require 'notmuch)
+  (setq mail-user-agent 'message-user-agent)
+  (setq sendmail-program "/usr/bin/msmtp")
+  (setq mail-specify-envelope-from t)
+  (setq mail-envelope-from 'header)
+  (setq message-sendmail-envelope-from 'header)
+  (add-hook 'message-send-mail-hook 'cg-feed-msmtp)
+  (require 'notmuch-address)
+  (setq notmuch-address-command (expand-file-name "~/bin/notmuch-addresses"))
+  (notmuch-address-message-insinuate))
 
 ;; SMEX
 (progn
