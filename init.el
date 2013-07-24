@@ -220,7 +220,13 @@
           '("textmate"
             "magit"
             "rainbow-delimiters"
-            "lua-mode")))
+            "lua-mode"
+            "python-mode"
+            "pymacs"
+            "python-pep8"
+            "python-pylint"
+            "flymake-python-pyflakes"
+            "ipython")))
 
 ;; check if textmate has been installed
 (unless (functionp 'textmate-mode)
@@ -892,7 +898,11 @@ symbol, not word, as I need this for programming the most."
 ;; (add-to-list 'flymake-allowed-file-name-masks
 ;; 	     '("\\.py\\'" flymake-pychecker-init))
 
+(require 'flymake-python-pyflakes)
+(setq flymake-python-pyflakes-executable "flake8")
+(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 
+(require 'ipython)
 
 ;; SLIME
 
