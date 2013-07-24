@@ -900,7 +900,13 @@ symbol, not word, as I need this for programming the most."
 
 (require 'flymake-python-pyflakes)
 (setq flymake-python-pyflakes-executable "flake8")
+(setq flymake-python-flymakes-extra-arguments "--max-complexity 10")
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
+;; Forces flymake to underline bad lines, instead of fully
+;; highlighting them; remove this if you prefer full highlighting.
+(custom-set-faces
+ '(flymake-errline ((((class color)) (:underline "#aa3333"))))
+ '(flymake-warnline ((((class color)) (:underline "#aa4444")))))
 
 (require 'ipython)
 
