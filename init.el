@@ -217,16 +217,9 @@
 (defun krig-setup-el-get ()
   (interactive)
   (mapcar 'el-get-install
-          '("textmate"
-            "magit"
-            "rainbow-delimiters"
-            "lua-mode"
-            "python-mode"
-            "pymacs"
-            "python-pep8"
-            "python-pylint"
-            "flymake-python-pyflakes"
-            "ipython")))
+          '("textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
+            "python-mode" "pymacs" "python-pep8" "python-pylint"
+            "flymake-python-pyflakes" "ipython")))
 
 ;; check if textmate has been installed
 (unless (functionp 'textmate-mode)
