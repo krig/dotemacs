@@ -36,6 +36,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/noctilux")
 
 (setq custom-file "~/.emacs.d/custom.el")
+
 (load custom-file 'noerror)
 
 ;; emacs configuration
@@ -210,16 +211,23 @@
         (pop-to-buffer (ruby-compilation-do filename command)))
     (ruby-compilation-this-buffer)))
 
+(message "krig: %s" "(el-get 'sync)")
+
 ;; SYNC EL-GET
 (el-get 'sync)
+
+(message "krig: %s" "(el-get)")
+
 (el-get)
+
 
 (defun krig-setup-el-get ()
   (interactive)
   (mapcar 'el-get-install
           '("textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
             "python-mode" "pymacs" "python-pep8" "python-pylint"
-            "flymake-python-pyflakes" "ipython")))
+            "ipython"))
+  (package-install "flymake-python-pyflakes"))
 
 ;; check if textmate has been installed
 (unless (functionp 'textmate-mode)
@@ -1008,37 +1016,37 @@ symbol, not word, as I need this for programming the most."
 ;; Choose account label to feed msmtp -a option based on From header in Message buffer;
 ;; This function must be added to message-send-mail-hook for on-the-fly change of From address
 ;; before sending message since message-send-mail-hook is processed right before sending message.
-(defun cg-feed-msmtp ()
-  (if (message-mail-p)
-      (save-excursion
-        (let* ((from
-                (save-restriction
-                  (message-narrow-to-headers)
-                  (message-fetch-field "from")))
-               (account
-                (cond
-                 ((string-match (concat "kgronlund@" "suse" ".com") from) "suse")
-                 ((string-match (concat "krig@" "koru" ".se") from) "koru"))))
-          (setq message-sendmail-extra-arguments `("-a" ,account))))))
+;; (defun cg-feed-msmtp ()
+;;   (if (message-mail-p)
+;;       (save-excursion
+;;         (let* ((from
+;;                 (save-restriction
+;;                   (message-narrow-to-headers)
+;;                   (message-fetch-field "from")))
+;;                (account
+;;                 (cond
+;;                  ((string-match (concat "kgronlund@" "suse" ".com") from) "suse-imap")
+;;                  ((string-match (concat "krig@" "koru" ".se") from) "koru"))))
+;;           (setq message-sendmail-extra-arguments `("-a" ,account))))))
 
-(defun krig-notmuch-mark-as-read ()
-      "notmuch: mark as read toggle"
-      (interactive)
-      (notmuch-search-tag
-       (if (member "unread" (notmuch-search-get-tags))
-           "-unread" "+unread")))
+;; (defun krig-notmuch-mark-as-read ()
+;;       "notmuch: mark as read toggle"
+;;       (interactive)
+;;       (notmuch-search-tag
+;;        (if (member "unread" (notmuch-search-get-tags))
+;;            "-unread" "+unread")))
 
-(progn
-  (require 'notmuch)
-  (setq mail-user-agent 'message-user-agent)
-  (setq sendmail-program "/usr/bin/msmtp")
-  (setq mail-specify-envelope-from t)
-  (setq mail-envelope-from 'header)
-  (setq message-sendmail-envelope-from 'header)
-  (add-hook 'message-send-mail-hook 'cg-feed-msmtp)
-  (require 'notmuch-address)
-  (setq notmuch-address-command (expand-file-name "~/bin/notmuch-addresses"))
-  (notmuch-address-message-insinuate))
+;; (progn
+;;   (require 'notmuch)
+;;   (setq mail-user-agent 'message-user-agent)
+;;   (setq sendmail-program "/usr/bin/msmtp")
+;;   (setq mail-specify-envelope-from t)
+;;   (setq mail-envelope-from 'header)
+;;   (setq message-sendmail-envelope-from 'header)
+;;   (add-hook 'message-send-mail-hook 'cg-feed-msmtp)
+;;   (require 'notmuch-address)
+;;   (setq notmuch-address-command (expand-file-name "~/bin/notmuch-addresses"))
+;;   (notmuch-address-message-insinuate))
 
 ;; SMEX
 (progn
