@@ -228,7 +228,7 @@
   (mapcar 'el-get-install
           '("textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
             "python-mode" "pymacs" "python-pep8" "python-pylint"
-            "ipython"))
+            "ipython" "markdown-mode"))
   (package-install "flymake-python-pyflakes"))
 
 ;; check if textmate has been installed
