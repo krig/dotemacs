@@ -61,7 +61,7 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(delete-selection-mode nil)
+(delete-selection-mode t)
 ;;(setq delete-active-region nil)
 (set-scroll-bar-mode nil)
 (tool-bar-mode -1)
@@ -75,7 +75,6 @@
 (global-auto-revert-mode t)
 (setq calendar-week-start-day 1)
 (setq mark-even-if-inactive nil)
-(transient-mark-mode 0)
 
 ;; put something different in the scratch buffer
 (setq initial-scratch-message ";)\n")
