@@ -10,4 +10,5 @@ el-get/*
 abbrev_defs
 url/*
 eshell/*
+tramp
 
