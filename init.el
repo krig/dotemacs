@@ -17,6 +17,8 @@
 (defun krig-winp ()
   (eq system-type 'windows-nt))
 
+(setq hostname (getenv "HOSTNAME"))
+
 (when (krig-macp)
   (setq mac-allow-anti-aliasing t)
   (if (> (display-pixel-width) 1900)
@@ -28,7 +30,9 @@
                     '("Consolas" . "iso10646-1")))
 
 (when (krig-linuxp)
-  (set-frame-font "Ubuntu Mono-14")
+  (if (string-match "kowloon" hostname)
+      (set-frame-font "Ubuntu Mono-14")
+    (set-frame-font "Ubuntu Mono-12"))
   (menu-bar-mode 0))
 
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
@@ -902,7 +906,7 @@ symbol, not word, as I need this for programming the most."
 
 (require 'flymake-python-pyflakes)
 (setq flymake-python-pyflakes-executable "flake8")
-(setq flymake-python-pyflakes-extra-arguments '("--max-complexity=10" "--max-line-length=120"))
+(setq flymake-python-pyflakes-extra-arguments '("--max-complexity=10" "--max-line-length=99"))
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 ;; Forces flymake to underline bad lines, instead of fully
 ;; highlighting them; remove this if you prefer full highlighting.
@@ -1002,7 +1006,9 @@ symbol, not word, as I need this for programming the most."
   (load "sr-speedbar.el")
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
-  (set-face-font 'speedbar-face "Ubuntu Mono-11")
+  (if (string-match "kowloon" hostname)
+      (set-face-font 'speedbar-face "Ubuntu Mono-11")
+    (set-face-font 'speedbar-face "Ubuntu Mono-8"))
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
   (speedbar-add-supported-extension ".hs")
