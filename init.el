@@ -231,7 +231,7 @@
   (mapcar 'el-get-install
           '("textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
             "python-mode" "pymacs" "python-pep8" "python-pylint"
-            "ipython" "markdown-mode"))
+            "ipython" "markdown-mode" "asciidoc" "doc-mode"))
   (package-install "flymake-python-pyflakes"))
 
 ;; check if textmate has been installed
@@ -240,6 +240,10 @@
 
 ;; TEXTMATE
 (textmate-mode)
+
+;; ASCIIDOC
+(add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
+(add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
 
 ;; RAINBOW-DELIMITERS
 
