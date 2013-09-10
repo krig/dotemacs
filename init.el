@@ -231,7 +231,7 @@
   (mapcar 'el-get-install
           '("textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
             "python-mode" "pymacs" "python-pep8" "python-pylint"
-            "ipython" "markdown-mode" "asciidoc" "doc-mode"))
+            "ipython" "markdown-mode" "asciidoc" "doc-mode" "nxhtml"))
   (package-install "flymake-python-pyflakes"))
 
 ;; check if textmate has been installed
@@ -1195,6 +1195,9 @@ open and unsaved."
             (call-interactively command))
           (dired-get-marked-files))))
 
+;; IGNORAMUS
+(require 'ignoramus)
+(ignoramus-setup)
 
 (require 'whitespace)
 
