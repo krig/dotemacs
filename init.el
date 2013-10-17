@@ -731,6 +731,9 @@ symbol, not word, as I need this for programming the most."
 (add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (autoload 'markdown-mode "markdown-mode" "Markdown editing mode." t)
+(defun md-extra-stuff ()
+  (auto-fill-mode 1))
+(add-hook 'markdown-mode-hook 'md-extra-stuff)
 
 ;; PYTHON !
 (add-to-list 'interpreter-mode-alist '("python2.5" . python-mode))
