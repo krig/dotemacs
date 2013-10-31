@@ -229,7 +229,7 @@
 (defun krig-setup-el-get ()
   (interactive)
   (mapcar 'el-get-install
-          '("textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
+          '("git-commit-mode" "textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
             "python-mode" "pymacs" "python-pep8" "python-pylint"
             "ipython" "markdown-mode" "asciidoc" "doc-mode" "nxhtml"))
   (package-install "flymake-python-pyflakes"))
