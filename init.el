@@ -1215,6 +1215,28 @@ open and unsaved."
   (auto-fill-mode 0))
 
 ;; THEME
+
+;; load-theme advice by nano
+(defadvice load-theme (after fixup-colors activate)
+  (pcase (symbol-name (ad-get-arg 0))
+    ("zenburn" (progn
+               (set-face-background 'whitespace-tab "#353535")
+               (set-face-background 'whitespace-trailing "#ff0000")
+               (set-face-background 'hl-line "#353535")
+               (set-face-underline 'hl-line  nil)
+               (set-face-background 'idle-highlight (face-background 'default))
+               (set-face-foreground 'idle-highlight "#ff8900")
+               (set-face-foreground 'show-paren-match-face "#ff8900")))
+    ("solarized-light" (progn
+                       (set-face-background 'whitespace-tab "#353535")
+                       (set-face-background 'whitespace-trailing "#ff0000")
+                       (set-face-background 'hl-line "#e5dfcf")
+                       (set-face-underline 'hl-line  nil)
+                       (set-face-background 'idle-highlight "#ffffff")
+                       (set-face-foreground 'idle-highlight "#ff8900")
+                       (set-face-foreground 'show-paren-match-face "#ff8900")))))
+
+
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
 (add-hook 'after-init-hook '(lambda ()
