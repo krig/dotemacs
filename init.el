@@ -62,6 +62,7 @@
 ;;(setq-default c-basic-offset 4)
 (setq inhibit-startup-message t)
 (setq visible-bell t)
+(auto-compression-mode 1)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -96,7 +97,9 @@
 ;; C SOURCE FOR EMACS
 (if (krig-winp)
     (setq find-function-C-source-directory "C:/Program/Emacs/src/src")
-  (setq find-function-C-source-directory "~/Personal/Sources/emacs/src"))
+  (if (string-match "ultralix" hostname)
+      (setq find-function-C-source-directory "~/src/extern/emacs-24.3/src")
+    (setq find-function-C-source-directory "~/Personal/Sources/emacs/src")))
 
 ;; TRAMP
 (require 'tramp)
@@ -1243,7 +1246,14 @@ open and unsaved."
                        (set-face-underline 'hl-line  nil)
                        (set-face-background 'idle-highlight "#ffffff")
                        (set-face-foreground 'idle-highlight "#ff8900")
-                       (set-face-foreground 'show-paren-match-face "#ff8900")))))
+                       (set-face-foreground 'show-paren-match-face "#ff8900")))
+    ("noctilux" (progn
+                  (set-face-background 'mode-line "#101010")
+                  (set-face-foreground 'mode-line "#999999")
+                  (set-face-inverse-video-p 'mode-line nil)
+                  (set-face-background 'mode-line-inactive "#101010")
+                  (set-face-foreground 'mode-line-inactive "#333333")
+                  (set-face-inverse-video-p 'mode-line-inactive nil)))))
 
 
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
