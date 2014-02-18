@@ -64,6 +64,9 @@
 (setq visible-bell t)
 (auto-compression-mode 1)
 
+;; hide warnings
+(setq warning-minimum-level :error)
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (delete-selection-mode t)
@@ -233,7 +236,7 @@
   (interactive)
   (mapcar 'el-get-install
           '("git-commit-mode" "textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
-            "python-mode" "pymacs" "python-pep8" "python-pylint"
+            "python-mode" "pymacs" "python-pep8" "python-pylint" "js2-mode"
             "ipython" "markdown-mode" "asciidoc" "doc-mode" "nxhtml"))
   (package-install "flymake-python-pyflakes"))
 
@@ -783,17 +786,17 @@ symbol, not word, as I need this for programming the most."
   (add-hook hook 'krig-go-mode-hook))
 
 ;; IMPROVED JAVASCRIPT MODE
-(autoload 'js2-mode "js2-mode" nil t)
+;; (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
 
-(load "js2-setup.el")
-(setq js2-use-font-lock-faces t)
+;; (load "js2-setup.el")
+;; (setq js2-use-font-lock-faces t)
 
-(defun krig-js2-style-fix ()
-  (setq show-trailing-whitespace t))
-(add-hook 'js2-mode-hook 'krig-js2-style-fix)
-(add-hook 'js-mode-hook 'krig-js2-style-fix)
+;; (defun krig-js2-style-fix ()
+;;   (setq show-trailing-whitespace t))
+;; (add-hook 'js2-mode-hook 'krig-js2-style-fix)
+;; (add-hook 'js-mode-hook 'krig-js2-style-fix)
 
 ;; MUSTACHE MODE
 ;;(add-to-list 'load-path "~/.emacs.d/mustache-mode.el")
@@ -808,7 +811,8 @@ symbol, not word, as I need this for programming the most."
 ;;  indent-region-mode t
 ;;  rng-nxml-auto-validate-flag nil
 ;;  nxml-degraded t)
-(add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
+(setq mumamo-chunk-coloring 3)
+;;(add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
 
 ;; HAML-MODE
 (require 'haml-mode)
