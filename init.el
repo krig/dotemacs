@@ -158,9 +158,7 @@
                :type git
                :url "http://github.com/yoshiki/yaml-mode.git"
                :features yaml-mode
-               :after (progn (yaml-mode-hook)))
-        (:name magit
-               :after (progn (global-set-key (kbd "C-x C-a") 'magit-status)))))
+               :after (progn (yaml-mode-hook)))))
 
 (defun ruby-mode-hook ()
   (autoload 'ruby-mode "ruby-mode" nil t)
@@ -237,7 +235,7 @@
   (mapcar 'el-get-install
           '("git-commit-mode" "textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
             "python-mode" "pymacs" "python-pep8" "python-pylint" "js2-mode"
-            "ipython" "markdown-mode" "asciidoc" "doc-mode" "nxhtml"))
+            "ipython" "markdown-mode" "asciidoc" "doc-mode"))
   (package-install "flymake-python-pyflakes"))
 
 ;; check if textmate has been installed
@@ -811,7 +809,7 @@ symbol, not word, as I need this for programming the most."
 ;;  indent-region-mode t
 ;;  rng-nxml-auto-validate-flag nil
 ;;  nxml-degraded t)
-(setq mumamo-chunk-coloring 3)
+;;(setq mumamo-chunk-coloring 3)
 ;;(add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo-mode))
 
 ;; HAML-MODE
@@ -988,6 +986,7 @@ symbol, not word, as I need this for programming the most."
 
 ;; MAGIT
 (require 'magit)
+(global-set-key (kbd "C-x C-a") 'magit-status)
 
 ;; IDO RECENTF
 (defun recentf-ido-find-file ()
