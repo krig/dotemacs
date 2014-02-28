@@ -147,16 +147,16 @@
                :after (progn (sass-mode-hook)))
         (:name textmate
                :type git
-               :url "git://github.com/defunkt/textmate.el"
+               :url "https://github.com/defunkt/textmate.el"
                :load "textmate.el")
         (:name rhtml
                :type git
-               :url "https://github.com/eschulte/rhtml.git"
+               :url "https://github.com/eschulte/rhtml"
                :features rhtml-mode
                :after (progn (rhtml-mode-hook)))
         (:name yaml-mode
                :type git
-               :url "http://github.com/yoshiki/yaml-mode.git"
+               :url "https://github.com/yoshiki/yaml-mode"
                :features yaml-mode
                :after (progn (yaml-mode-hook)))))
 
@@ -179,6 +179,7 @@
   (add-to-list 'auto-mode-alist '("\\.erb\\'" . rhtml-mode))
   (add-to-list 'auto-mode-alist '("\\.rjs\\'" . rhtml-mode))
   (add-hook 'rhtml-mode '(lambda ()
+                           (rinari-launch)
                            (define-key rhtml-mode-map (kbd "M-s") 'save-buffer))))
 
 (defun yaml-mode-hook ()
