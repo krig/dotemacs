@@ -37,3 +37,6 @@
 [submodule "themes/noctilux"]
 	path = themes/noctilux
 	url = git@github.com:krig/noctilux-theme.git
+[submodule "themes/flatui-theme"]
+	path = themes/flatui-theme
+	url = git@github.com:john2x/flatui-theme.el.git
