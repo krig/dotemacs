@@ -32,12 +32,13 @@
 (when (krig-linuxp)
   (if (string-match "kowloon" hostname)
       (set-frame-font "Ubuntu Mono-14")
-    (set-frame-font "Ubuntu Mono-12"))
+    (set-frame-font "Ubuntu Mono-14"))
   (menu-bar-mode -1))
 
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/noctilux")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/flatui-theme")
 
 (setq custom-file "~/.emacs.d/custom.el")
 
@@ -124,9 +125,10 @@
 
 ;; ELPA
 (require 'package)
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+(setq package-archives '(;("ELPA" . "http://tromey.com/elpa/")
+                         ;("gnu" . "http://elpa.gnu.org/packages/")
+                         ;("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 (require 'el-get)
 
@@ -825,6 +827,7 @@ symbol, not word, as I need this for programming the most."
 (setq flymake-gui-warnings-enabled nil)
 (setq help-at-pt-timer-delay 0.9)
 (setq help-at-pt-display-when-idle '(flymake-overlay))
+(global-set-key (kbd "M-n") 'flymake-goto-next-error)
 ;;(setq flymake-log-level 0)
 
 
@@ -1266,7 +1269,8 @@ open and unsaved."
                               ;; PRETTY-LAMBDADA
                               ;; (require 'pretty-lambdada)
                               ;; (pretty-lambda-for-modes)
-                              (load-theme 'noctilux)))
+                              ;;(load-theme 'noctilux)))
+                              (load-theme 'flatui)))
 
 (find-file "~/.todo")
 (rename-buffer "*todo*")
