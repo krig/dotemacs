@@ -276,6 +276,13 @@
 ;; (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
 ;; (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
 
+;; PRETTY-SYMBOLS-MODE
+(add-hook 'emacs-lisp-mode-hook 'pretty-symbols-mode)
+(add-hook 'lisp-mode-hook 'pretty-symbols-mode)
+(add-hook 'lisp-interaction-mode-hook 'pretty-symbols-mode)
+(add-hook 'scheme-mode-hook 'pretty-symbols-mode)
+
+
 ;; IDO
 (ido-mode t)
 (ido-everywhere t)
@@ -1232,6 +1239,11 @@ open and unsaved."
   (setq whitespace-style '(face tabs lines-tail trailing))
   (whitespace-mode 1)
   (auto-fill-mode 0))
+
+(defun now ()
+  "Insert string for the current time."
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d %H:%M")))
 
 ;; THEME
 
