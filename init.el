@@ -31,7 +31,7 @@
 
 (when (krig-linuxp)
   (if (string-match "kowloon" hostname)
-      (set-frame-font "Ubuntu Mono-14")
+      (set-frame-font "Ubuntu Mono-17")
     (set-frame-font "Ubuntu Mono-14"))
   (menu-bar-mode -1))
 

@@ -1,39 +1,39 @@
 [submodule "el-get/el-get"]
 	path = el-get/el-get
-	url = git://github.com/dimitri/el-get.git
+	url = git@github.com:dimitri/el-get.git
 [submodule "smart-tab"]
 	path = smart-tab
-	url = https://github.com/genehack/smart-tab.git
+	url = git@github.com:genehack/smart-tab.git
 [submodule "haml-mode"]
 	path = haml-mode
-	url = https://github.com/nex3/haml-mode.git
+	url = git@github.com:nex3/haml-mode.git
 [submodule "themes/zenburn"]
 	path = themes/zenburn
-	url = https://github.com/bbatsov/zenburn-emacs.git
+	url = git@github.com:bbatsov/zenburn-emacs.git
 [submodule "slime"]
 	path = slime
-	url = https://github.com/nablaone/slime.git
+	url = git@github.com:slime/slime.git
 [submodule "emacs-color-theme-solarized"]
 	path = emacs-color-theme-solarized
-	url = https://github.com/sellout/emacs-color-theme-solarized.git
+	url = git@github.com:sellout/emacs-color-theme-solarized.git
 [submodule "smex"]
 	path = smex
-	url = https://github.com/nonsequitur/smex/
+	url = git@github.com:nonsequitur/smex.git
 [submodule "smarttabs"]
 	path = smarttabs
 	url = git@github.com:krig/smarttabs.git
 [submodule "mythryl-mode"]
 	path = mythryl-mode
-	url = https://github.com/rev22/mythryl-mode.git
+	url = git@github.com:rev22/mythryl-mode.git
 [submodule "haskell-mode"]
 	path = haskell-mode
   url = git@github.com:krig/haskell-mode.git
 [submodule "ace-jump-mode"]
 	path = ace-jump-mode
-	url = https://github.com/winterTTr/ace-jump-mode.git
+	url = git@github.com:winterTTr/ace-jump-mode.git
 [submodule "browse-kill-ring"]
 	path = browse-kill-ring
-	url = https://github.com/samaaron/browse-kill-ring.git
+	url = git@github.com:samaaron/browse-kill-ring.git
 [submodule "themes/noctilux"]
 	path = themes/noctilux
 	url = git@github.com:krig/noctilux-theme.git
