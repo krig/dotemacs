@@ -447,27 +447,17 @@ symbol, not word, as I need this for programming the most."
 
 ;; CREATE SCRATCH BUFFER
 
-(define-generic-mode 'scratch-mode
-  '("#" ";") ; comment-list
-  '() ; keyword-list
-  '(("[0-9]+" . 'font-lock-variable-name-face)) ; font-lock-list
-  nil ; auto-mode-list
-  '(auto-fill-mode) ; function-list
-  "Major mode for scratch buffers.")
-
-(defun create-scratch-buffer nil
+(defun create-scratch-buffer ()
   "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
   (interactive)
   (let ((n 0)
         bufname)
     (while (progn
-             (setq bufname (concat "*scratch"
-                                   (if (= n 0) "" (int-to-string n))
-                                   "*"))
-             (setq n (1+ n))
+             (setq bufname (format "*scratch%s*" (if (= n 0) "" n))
+                   n (1+ n))
              (get-buffer bufname)))
     (switch-to-buffer (get-buffer-create bufname))
-    (scratch-mode)))
+    (lisp-interaction-mode)))
 
 ;; LORD PROGRAMMATON
 (define-generic-mode 'programmaton-mode
