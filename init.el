@@ -1281,8 +1281,8 @@ open and unsaved."
                               ;; PRETTY-LAMBDADA
                               ;; (require 'pretty-lambdada)
                               ;; (pretty-lambda-for-modes)
-                              ;;(load-theme 'noctilux)))
-                              (load-theme 'flatui)))
+                              (load-theme 'noctilux)))
+                              ;;(load-theme 'flatui)))
 
 (find-file "~/.todo")
 (rename-buffer "*todo*")
