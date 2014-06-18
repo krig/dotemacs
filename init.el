@@ -74,10 +74,10 @@
 ;;(setq delete-active-region nil)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
-(blink-cursor-mode t)
+(blink-cursor-mode -1)
 (show-paren-mode t)
 (line-number-mode t)
-(column-number-mode t)
+(column-number-mode -1)
 (set-fringe-style -1)
 (tooltip-mode -1)
 (winner-mode 1)
@@ -1281,7 +1281,8 @@ open and unsaved."
                               ;; PRETTY-LAMBDADA
                               ;; (require 'pretty-lambdada)
                               ;; (pretty-lambda-for-modes)
-                              (load-theme 'noctilux)))
+                              (load-theme 'noctilux))
+                              (scroll-bar-mode -1))
                               ;;(load-theme 'flatui)))
 
 (find-file "~/.todo")
