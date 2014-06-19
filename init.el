@@ -660,10 +660,7 @@ symbol, not word, as I need this for programming the most."
                 ))
   (add-hook hook 'krig-mode-hook))
 
-(dolist (hook '(
-                c-mode-hook
-                c++-mode-hook
-                ))
+(dolist (hook '(c-mode-hook c++-mode-hook))
   (add-hook hook 'krig-cc-mode-hook))
 
 (add-hook 'sh-mode-hook 'krig-sh-mode-hook)
