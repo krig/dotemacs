@@ -1027,7 +1027,7 @@ symbol, not word, as I need this for programming the most."
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
   (if (string-match "kowloon" hostname)
-      (set-face-font 'speedbar-face "Ubuntu Mono-11")
+      (set-face-font 'speedbar-face "Ubuntu Mono-12")
     (set-face-font 'speedbar-face "Ubuntu Mono-8"))
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
@@ -1265,11 +1265,8 @@ open and unsaved."
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
 (add-hook 'after-init-hook '(lambda ()
-                              ;; PRETTY-LAMBDADA
-                              ;; (require 'pretty-lambdada)
-                              ;; (pretty-lambda-for-modes)
-                              (load-theme 'noctilux))
-                              (scroll-bar-mode -1))
+                              (load-theme 'noctilux)
+                              (scroll-bar-mode -1)))
                               ;;(load-theme 'flatui)))
 
 (find-file "~/.todo")
