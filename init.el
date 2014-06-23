@@ -969,6 +969,10 @@ symbol, not word, as I need this for programming the most."
 
 (add-to-list 'completion-ignored-extensions ".hi")
 
+;; YASNIPPET
+(require 'yasnippet)
+(yas-global-mode 1)
+
 ;; ;; PARROT
 
 ;; (progn
