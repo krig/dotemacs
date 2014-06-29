@@ -251,6 +251,7 @@
 ;; ASCIIDOC
 (add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
 (add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
+(add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
 
 ;; RAINBOW-DELIMITERS
 
@@ -1272,6 +1273,12 @@ open and unsaved."
                               (load-theme 'noctilux)
                               (scroll-bar-mode -1)))
                               ;;(load-theme 'flatui)))
+
+(defun switch-to-flatui ()
+  "disable noctilux, enable flatui"
+  (interactive)
+  (disable-theme 'noctilux)
+  (load-theme 'flatui))
 
 (find-file "~/.todo")
 (rename-buffer "*todo*")
