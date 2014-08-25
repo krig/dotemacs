@@ -249,9 +249,10 @@
 (textmate-mode)
 
 ;; ASCIIDOC
-(add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
-(add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
-(add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode))
+(when (boundp 'doc-mode)
+  (add-to-list 'auto-mode-alist '("\\.doc$" . doc-mode))
+  (add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
+  (add-to-list 'auto-mode-alist '("\\.asciidoc$" . doc-mode)))
 
 ;; RAINBOW-DELIMITERS
 
@@ -278,10 +279,11 @@
 ;; (add-hook 'scheme-mode-hook           (lambda () (paredit-mode +1)))
 
 ;; PRETTY-SYMBOLS-MODE
-(add-hook 'emacs-lisp-mode-hook 'pretty-symbols-mode)
-(add-hook 'lisp-mode-hook 'pretty-symbols-mode)
-(add-hook 'lisp-interaction-mode-hook 'pretty-symbols-mode)
-(add-hook 'scheme-mode-hook 'pretty-symbols-mode)
+(when (boundp 'pretty-symbols-mode)
+  (add-hook 'emacs-lisp-mode-hook 'pretty-symbols-mode)
+  (add-hook 'lisp-mode-hook 'pretty-symbols-mode)
+  (add-hook 'lisp-interaction-mode-hook 'pretty-symbols-mode)
+  (add-hook 'scheme-mode-hook 'pretty-symbols-mode))
 
 
 ;; IDO
@@ -924,17 +926,19 @@ symbol, not word, as I need this for programming the most."
 ;; (add-to-list 'flymake-allowed-file-name-masks
 ;; 	     '("\\.py\\'" flymake-pychecker-init))
 
-(require 'flymake-python-pyflakes)
-(setq flymake-python-pyflakes-executable "flake8")
-(setq flymake-python-pyflakes-extra-arguments '("--max-complexity=10" "--max-line-length=99"))
-(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
+(when (boundp 'flymake-python-pyflakes)
+  (require 'flymake-python-pyflakes)
+  (setq flymake-python-pyflakes-executable "flake8")
+  (setq flymake-python-pyflakes-extra-arguments '("--max-complexity=10" "--max-line-length=99"))
+  (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
 ;; Forces flymake to underline bad lines, instead of fully
 ;; highlighting them; remove this if you prefer full highlighting.
 (custom-set-faces
  '(flymake-errline ((((class color)) (:underline "#aa3333"))))
  '(flymake-warnline ((((class color)) (:underline "#aa4444")))))
 
-(require 'ipython)
+;;(when (boundp 'ipython)
+;;  (require 'ipython))
 
 ;; SLIME
 
@@ -988,8 +992,9 @@ symbol, not word, as I need this for programming the most."
 
 
 ;; MAGIT
-(require 'magit)
-(global-set-key (kbd "C-x C-a") 'magit-status)
+(when (boundp 'magit)
+  (require 'magit)
+  (global-set-key (kbd "C-x C-a") 'magit-status))
 
 ;; IDO RECENTF
 (defun recentf-ido-find-file ()
