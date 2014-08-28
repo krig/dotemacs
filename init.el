@@ -981,8 +981,7 @@ Point is at the beginning of the next line."
 ;; (add-to-list 'flymake-allowed-file-name-masks
 ;; 	     '("\\.py\\'" flymake-pychecker-init))
 
-(when (boundp 'flymake-python-pyflakes)
-  (require 'flymake-python-pyflakes)
+(when (require 'flymake-python-pyflakes nil 'noerror)
   (setq flymake-python-pyflakes-executable "flake8")
   (setq flymake-python-pyflakes-extra-arguments '("--max-complexity=10" "--max-line-length=99"))
   (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
@@ -992,8 +991,7 @@ Point is at the beginning of the next line."
  '(flymake-errline ((((class color)) (:underline "#aa3333"))))
  '(flymake-warnline ((((class color)) (:underline "#aa4444")))))
 
-;;(when (boundp 'ipython)
-;;  (require 'ipython))
+(require 'ipython nil 'noerror)
 
 ;; SLIME
 
@@ -1047,8 +1045,7 @@ Point is at the beginning of the next line."
 
 
 ;; MAGIT
-(when (boundp 'magit)
-  (require 'magit)
+(when (require 'magit nil 'noerror)
   (global-set-key (kbd "C-x C-a") 'magit-status))
 
 ;; IDO RECENTF
