@@ -597,6 +597,55 @@ symbol, not word, as I need this for programming the most."
   (local-set-key [return] 'newline-and-indent))
 ;;  (whitespace-mode))
 
+;;;; SH-MODE HACK
+;; hack to fix sh-mode heredoc
+(defun sh--inside-noncommand-expression (pos)
+  (save-excursion
+    (let ((ppss (syntax-ppss pos)))
+      (when (nth 1 ppss)
+        (goto-char (nth 1 ppss))
+        (or
+         (pcase (char-after)
+           ;; ((...)) or $((...)) or $[...] or ${...}. Nested
+           ;; parenthesis can occur inside the first of these forms, so
+           ;; parse backward recursively.
+           (`?\( (eq ?\( (char-before)))
+           ((or `?\{ `?\[) (eq ?\$ (char-before))))
+         (sh--inside-noncommand-expression (1- (point))))))))
+
+(defun sh-font-lock-open-heredoc (start string eol)
+  "Determine the syntax of the \\n after a <<EOF.
+START is the position of <<.
+STRING is the actual word used as delimiter (e.g. \"EOF\").
+INDENTED is non-nil if the here document's content (and the EOF mark) can
+be indented (i.e. a <<- was used rather than just <<).
+Point is at the beginning of the next line."
+  (unless (or (memq (char-before start) '(?< ?>))
+	      (sh-in-comment-or-string start)
+              (sh--inside-noncommand-expression start))
+    ;; We're looking at <<STRING, so we add "^STRING$" to the syntactic
+    ;; font-lock keywords to detect the end of this here document.
+    (let ((str (replace-regexp-in-string "['\"]" "" string))
+          (ppss (save-excursion (syntax-ppss eol))))
+      (if (nth 4 ppss)
+          ;; The \n not only starts the heredoc but also closes a comment.
+          ;; Let's close the comment just before the \n.
+          (put-text-property (1- eol) eol 'syntax-table '(12))) ;">"
+      (if (or (nth 5 ppss) (> (count-lines start eol) 1))
+          ;; If the sh-escaped-line-re part of sh-here-doc-open-re has matched
+          ;; several lines, make sure we refontify them together.
+          ;; Furthermore, if (nth 5 ppss) is non-nil (i.e. the \n is
+          ;; escaped), it means the right \n is actually further down.
+          ;; Don't bother fixing it now, but place a multiline property so
+          ;; that when jit-lock-context-* refontifies the rest of the
+          ;; buffer, it also refontifies the current line with it.
+          (put-text-property start (1+ eol) 'syntax-multiline t))
+      (put-text-property eol (1+ eol) 'sh-here-doc-marker str)
+      (prog1 sh-here-doc-syntax
+        (goto-char (+ 2 start))))))
+
+;; END SH-MODE HACK
+
 (defun c-lineup-arglist-tabs-only (ignored)
   "Line up argument lists by tabs, not spaces"
   (let* ((anchor (c-langelem-pos c-syntactic-element))
