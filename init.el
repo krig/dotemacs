@@ -128,7 +128,8 @@
 (setq package-archives '(;("ELPA" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("elpy" . "http://jorgenschaefer.github.io/packages/")))
 
 (require 'el-get)
 
@@ -992,6 +993,9 @@ Point is at the beginning of the next line."
  '(flymake-warnline ((((class color)) (:underline "#aa4444")))))
 
 (require 'ipython nil 'noerror)
+
+;; ELPY
+(elpy-enable)
 
 ;; SLIME
 
