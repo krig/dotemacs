@@ -818,6 +818,12 @@ symbol, not word, as I need this for programming the most."
 ;; ORG-MODE
 (setq org-startup-indented t)
 
+;; GIT-MESSENGER
+(when (require 'git-messenger nil 'noerror)
+  (setq git-messenger:show-detail t)
+  (define-key git-messenger-map (kbd "C-k") 'git-messenger:copy-message)
+  (global-set-key (kbd "C-x v p") 'git-messenger:popup-message))
+
 ;; FLYMAKE
 
 (require 'flymake)
