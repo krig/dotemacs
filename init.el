@@ -32,7 +32,7 @@
 (when (krig-linuxp)
   (if (string-match "kowloon" hostname)
       (set-frame-font "Ubuntu Mono-17")
-    (set-frame-font "Ubuntu Mono-14"))
+    (set-frame-font "Ubuntu Mono-13"))
   (menu-bar-mode -1))
 
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
