@@ -227,24 +227,24 @@
 (message "krig: %s" "(el-get 'sync)")
 
 ;; SYNC EL-GET
-(el-get 'sync)
-
-(message "krig: %s" "(el-get)")
-
 (el-get)
 
-
-(defun krig-setup-el-get ()
+(defun krig-setup-packages ()
   (interactive)
-  (mapcar 'el-get-install
+  (el-get 'sync)
+  (message "krig: %s" "(el-get)")
+  (el-get)
+  (package-refresh-contents)
+  (mapcar 'package-install
           '("git-commit-mode" "textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
-            "python-mode" "pymacs" "python-pep8" "python-pylint" "js2-mode"
-            "ipython" "markdown-mode" "asciidoc" "doc-mode"))
+            "python-mode" "pymacs" "python-pep8" "python-pylint" "js2-mode" "elpy"
+            "git-messenger" "noctilux-theme" "flatui-theme" "clojure-mode" "cmake-mode"
+            "ipython" "markdown-mode" "adoc-mode" "github-browse-file" "jinja2-mode"
+            "pretty-symbols" "yasnippet"))
   (package-install "flymake-python-pyflakes"))
 
-;; check if textmate has been installed
-(unless (functionp 'textmate-mode)
-  (krig-setup-el-get))
+(unless (boundp 'textmate-mode)
+  (krig-setup-packages))
 
 ;; TEXTMATE
 (textmate-mode)
@@ -664,6 +664,28 @@ Point is at the beginning of the next line."
 
 ;; END SH-MODE HACK
 
+(defun backward-delete-whitespace-to-column ()
+  "delete back to the previous column of whitespace, or as much whitespace as possible,
+or just one char if that's not possible"
+  (interactive)
+  (if indent-tabs-mode
+      (call-interactively 'backward-delete-char)
+    (let ((movement (% (current-column) tab-width))
+          (p (point)))
+      (when (= movement 0) (setq movement tab-width))
+      (save-match-data
+        (if (string-match "\\w*\\(\\s-+\\)$" (buffer-substring-no-properties (- p movement) p))
+            (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
+          (call-interactively 'backward-delete-char-untabify))))))
+
+(defun backward-delete-char-hungry (arg &optional killp)
+  "*Delete characters backward in \"hungry\" mode.
+    See the documentation of `backward-delete-char-untabify' and
+    `backward-delete-char-untabify-method' for details."
+  (interactive "*p\nP")
+  (let ((backward-delete-char-untabify-method 'hungry))
+    (backward-delete-char-untabify arg killp)))
+
 (defun c-lineup-arglist-tabs-only (ignored)
   "Line up argument lists by tabs, not spaces"
   (let* ((anchor (c-langelem-pos c-syntactic-element))
@@ -1015,7 +1037,8 @@ Point is at the beginning of the next line."
 (require 'ipython nil 'noerror)
 
 ;; ELPY
-(elpy-enable)
+(when (boundp 'elpy-enable)
+  (elpy-enable))
 
 ;; SLIME
 
@@ -1260,28 +1283,6 @@ Point is at the beginning of the next line."
     (unless (zerop (% max-col width))
       (setcdr (last tab-stop-list)
               (list max-col)))))
-
-(defun backward-delete-whitespace-to-column ()
-  "delete back to the previous column of whitespace, or as much whitespace as possible,
-or just one char if that's not possible"
-  (interactive)
-  (if indent-tabs-mode
-      (call-interactively 'backward-delete-char)
-    (let ((movement (% (current-column) tab-width))
-          (p (point)))
-      (when (= movement 0) (setq movement tab-width))
-      (save-match-data
-        (if (string-match "\\w*\\(\\s-+\\)$" (buffer-substring-no-properties (- p movement) p))
-            (backward-delete-char-untabify (- (match-end 1) (match-beginning 1)))
-          (call-interactively 'backward-delete-char-untabify))))))
-
-(defun backward-delete-char-hungry (arg &optional killp)
-  "*Delete characters backward in \"hungry\" mode.
-    See the documentation of `backward-delete-char-untabify' and
-    `backward-delete-char-untabify-method' for details."
-  (interactive "*p\nP")
-  (let ((backward-delete-char-untabify-method 'hungry))
-    (backward-delete-char-untabify arg killp)))
 
 (put 'ido-exit-minibuffer 'disabled nil)
 (put 'downcase-region 'disabled nil)
