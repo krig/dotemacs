@@ -777,6 +777,9 @@ Point is at the beginning of the next line."
     (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
 
 
+(add-to-list 'auto-mode-alist '("\\.fsh$" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.vsh$" . c-mode))
+
 ;; '(js2-basic-offset 4)
 ;; '(js2-bounce-indent-flag nil)
 ;; '(js2-indent-on-enter-key t)
