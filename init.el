@@ -475,6 +475,23 @@ symbol, not word, as I need this for programming the most."
   '(smart-tab-mode)
   "A mode for lord programmaton files")
 
+;; crmsh
+(define-generic-mode 'crmsh-mode
+  '("#")
+  '("node" "primitive" "group" "clone" "master" "ms"
+    "location" "colocation" "order" "rsc_ticket" "rsc_template"
+    "property" "rsc_defaults" "op_defaults" "user" "role"
+    "fencing_topology" "tag")
+  '(("[A-Za-z_][A-Za-z0-9_-]+" . 'font-lock-variable-name-face)
+    ("[0-9]+" . 'font-lock-constant-face)
+    ("[\(\)]" . 'paren-face)
+    ("\\\"[^\\\"]*\\\"" . 'font-lock-string-face)
+    ("['][^']*[']" . 'font-lock-string-face))
+  '("\\.crm$")
+  '(smart-tab-mode)
+  "A mode for crmsh")
+
+
 ;; HEADER SWITCH
 (defun switch-cc-to-h ()
   "Switch fromm *.<impl> to *.<head> and vice versa."
