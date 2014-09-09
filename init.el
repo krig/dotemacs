@@ -201,6 +201,7 @@
 
 (package-initialize)
 
+
 ;; NREPL / CLOJURE
 
 (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
@@ -229,18 +230,24 @@
 ;; SYNC EL-GET
 (el-get)
 
+;; Packages I use:
+;; C-h v package-activated-list
+;; install the missing packages
 (defun krig-setup-packages ()
   (interactive)
   (el-get 'sync)
   (message "krig: %s" "(el-get)")
   (el-get)
-  (package-refresh-contents)
+
+  (unless package-archive-contents
+    (package-refresh-contents))
+
+  (dolist (package '(auto-yasnippet cm-mode cmake-mode ctags ctags-update elpy company find-file-in-project flymake-python-pyflakes flymake-easy git-messenger github-browse-file highlight-indentation idomenu ipython jinja2-mode js2-mode magit git-rebase-mode git-commit-mode popup pretty-symbols pymacs python-pep8 python-pylint pyvenv rinari jump inflections findr ruby-compilation inf-ruby ruby-mode rust-mode spacegray-theme sublime-themes sublimity yasnippet))
+    (unless (package-installed-p package)
+      (package-install package)))
+
   (mapcar 'package-install
-          '("git-commit-mode" "textmate" "smart-operator" "magit" "rainbow-delimiters" "lua-mode"
-            "python-mode" "pymacs" "python-pep8" "python-pylint" "js2-mode" "elpy"
-            "git-messenger" "noctilux-theme" "flatui-theme" "clojure-mode" "cmake-mode"
-            "ipython" "markdown-mode" "adoc-mode" "github-browse-file" "jinja2-mode"
-            "pretty-symbols" "yasnippet"))
+          '("git-commit-mode" "textmate" "smart-operator" "rainbow-delimiters" "lua-mode" "python-mode" "pymacs" "python-pep8" "python-pylint" "js2-mode" "elpy" "clojure-mode" "markdown-mode" "adoc-mode"))
   (package-install "flymake-python-pyflakes"))
 
 (unless (boundp 'textmate-mode)
