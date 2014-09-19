@@ -20,6 +20,7 @@
  '(quack-run-scheme-always-prompts-p nil)
  '(safe-local-variable-values (quote ((buffer-file-coding-system . utf-8-unix))))
  '(scroll-bar-mode (quote right))
+ '(send-mail-function (quote sendmail-send-it))
  '(show-paren-mode t)
  '(smart-tab-disabled-major-modes (quote (org-mode term-mode)))
  '(sml/active-background-color "#34495e")
