@@ -3,9 +3,6 @@
 ;; cleanup, modularize...
 ;;
 
-(setq user-full-name "Kristoffer Grönlund"
-      user-mail-address (concat "krig@" "koru" ".se"))
-
 (setq frame-title-format "%b %*")
 
 (defun krig-macp ()
@@ -19,6 +16,12 @@
 
 (setq hostname (getenv "HOSTNAME"))
 
+(pcase hostname
+  ("krigpad.site" (setq user-full-name "Kristoffer Grönlund"
+                        user-mail-address (concat "kgronlund@" "suse" ".com")))
+  (_ (setq user-full-name "Kristoffer Grönlund"
+           user-mail-address (concat "krig@" "koru" ".se"))))
+
 (when (krig-macp)
   (setq mac-allow-anti-aliasing t)
   (if (> (display-pixel-width) 1900)
@@ -30,9 +33,11 @@
                     '("Consolas" . "iso10646-1")))
 
 (when (krig-linuxp)
-  (if (string-match "kowloon" hostname)
-      (set-frame-font "Ubuntu Mono-17")
-    (set-frame-font "Ubuntu Mono-13"))
+  (set-frame-font
+   (pcase hostname
+     ("kowloon" "Ubuntu Mono-17")
+     ("krigpad.site" "Ubuntu Mono-14")
+     (_ "Ubuntu Mono-13")))
   (menu-bar-mode -1))
 
 (setq custom-safe-themes '("2233263f8185428aa9c6df1d32353cff86f09ec8a008983c9f799f4efc341b31" "bb27775d3f6e75ea0faa855ecf3eea6744e0951378474f9a3e29908f3fdfb3cd" "36afe64261e1de73fcfadedf154e4bc2c9ec1969bde0c21798d31366897bc4d2" default))
@@ -1189,6 +1194,7 @@ or just one char if that's not possible"
   (setq mail-specify-envelope-from t)
   (setq mail-envelope-from 'header)
   (setq message-sendmail-envelope-from 'header)
+  (setq message-kill-buffer-on-exit t)
   (define-key 'notmuch-show-mode-map "D" 'my-notmuch-show-view-as-patch)
   (require 'notmuch-address)
   (setq notmuch-address-command (expand-file-name "~/bin/nottoomuch-addresses.sh"))
@@ -1362,7 +1368,7 @@ open and unsaved."
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
 (add-hook 'after-init-hook '(lambda ()
-                              (load-theme 'noctilux)
+                              (load-theme 'flatui)
                               (scroll-bar-mode -1)))
                               ;;(load-theme 'flatui)))
 
@@ -1371,6 +1377,12 @@ open and unsaved."
   (interactive)
   (disable-theme 'noctilux)
   (load-theme 'flatui))
+
+(defun switch-to-noctilux ()
+  "enable noctilux, disable flatui"
+  (interactive)
+  (disable-theme 'flatui)
+  (load-theme 'noctilux))
 
 (find-file "~/.todo")
 (rename-buffer "*todo*")
