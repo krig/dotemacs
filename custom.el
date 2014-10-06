@@ -14,6 +14,7 @@
  '(hl-paren-background-colors (quote ("#3498db" "#9b59b6" "#f1c40f")))
  '(hl-paren-colors (quote ("#ecf0f1" "#ecf0f1" "#ecf0f1")))
  '(mark-even-if-inactive t)
+ '(notmuch-saved-searches (quote ((:name "inbox" :query "tag:inbox" :key "i") (:name "unread" :query "tag:unread" :key "u") (:name "flagged" :query "tag:flagged" :key "f") (:name "sent" :query "tag:sent" :key "t") (:name "drafts" :query "tag:draft" :key "d") (:name "all mail" :query "*" :key "a") (:name "unread-list" :query "tag:list and tag:unread"))))
  '(quack-default-program "racket")
  '(quack-fontify-style (quote emacs))
  '(quack-remap-find-file-bindings-p nil)

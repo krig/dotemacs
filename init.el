@@ -1195,7 +1195,7 @@ or just one char if that's not possible"
   (setq mail-envelope-from 'header)
   (setq message-sendmail-envelope-from 'header)
   (setq message-kill-buffer-on-exit t)
-  (setq notmuch-search-oldest-first nil)
+  ;(setq notmuch-search-oldest-first nil) ;; second thought on this :P
   (define-key 'notmuch-show-mode-map "D" 'my-notmuch-show-view-as-patch)
   (require 'notmuch-address)
   (setq notmuch-address-command (expand-file-name "~/bin/nottoomuch-addresses.sh"))
