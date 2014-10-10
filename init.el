@@ -1385,5 +1385,27 @@ open and unsaved."
   (disable-theme 'flatui)
   (load-theme 'noctilux))
 
+(defun s-trim-left (s)
+  "Remove whitespace at the beginning of S."
+  (if (string-match "\\`[ \t\n\r]+" s)
+      (replace-match "" t t s)
+    s))
+
+(defun s-trim-right (s)
+  "Remove whitespace at the end of S."
+  (if (string-match "[ \t\n\r]+\\'" s)
+      (replace-match "" t t s)
+    s))
+
+(defun s-trim (s)
+  "Remove whitespace at the beginning and end of S."
+  (s-trim-left (s-trim-right s)))
+
+(defun open-worklog ()
+  "creates the worklog for today if it doesn't exist and opens it in emacs"
+  (interactive)
+  (let ((fn (shell-command-to-string "sh ~/annex/doc/work/SUSE/create-entry.sh")))
+    (find-file (s-trim fn))))
+
 (find-file "~/.todo")
 (rename-buffer "*todo*")
