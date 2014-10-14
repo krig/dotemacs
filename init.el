@@ -36,7 +36,7 @@
   (set-frame-font
    (pcase hostname
      ("kowloon" "Ubuntu Mono-17")
-     ("krigpad.site" "Ubuntu Mono-14")
+     ("krigpad.site" "Ubuntu Mono-12")
      (_ "Ubuntu Mono-13")))
   (menu-bar-mode -1))
 
