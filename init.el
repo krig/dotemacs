@@ -589,6 +589,10 @@ symbol, not word, as I need this for programming the most."
   "Intelligently indent with tabs, align with spaces!")
 (autoload 'smart-tabs-mode-enable "smart-tabs-mode")
 (autoload 'smart-tabs-advice "smart-tabs-mode")
+(autoload 'smart-tabs-insinuate "smart-tabs-mode")
+
+
+(smart-tabs-insinuate 'c 'c++ 'java)
 
 ;; C/C++
 ;; (add-hook 'c-mode-hook 'smart-tabs-mode-enable)
@@ -722,20 +726,13 @@ or just one char if that's not possible"
 ;; better support for different modes for different trees
 
 (defun krig-cc-mode-hook ()
-  (let ((filename (buffer-file-name)))
-    (cond
-     ((and filename (string-match (expand-file-name "~/src/linux-trees") filename))
-      (setq tab-width 8)
-      (setq c-basic-offset 8)
-      (setq indent-tabs-mode t)
-      (c-set-style "linux-tabs-only"))
-     (t
-      (setq c-basic-offset 4)
-      (setq c-default-style "linux")
-      (setq indent-tabs-mode t)
-      (smart-tabs-mode-enable)
-      (smart-tabs-advice c-indent-line c-basic-offset)
-      (smart-tabs-advice c-indent-region c-basic-offset))))
+  (setq tab-width 8)
+  (setq c-basic-offset 8)
+  (setq indent-tabs-mode t)
+  (c-set-style "linux")
+  ;;(smart-tabs-mode-enable)
+  ;;(smart-tabs-advice c-indent-line c-basic-offset)
+  ;;(smart-tabs-advice c-indent-region c-basic-offset)
   (subword-mode 1)
   (setq show-trailing-whitespace t)
   (turn-on-fic-mode)
@@ -768,6 +765,15 @@ or just one char if that's not possible"
   (add-hook hook 'krig-cc-mode-hook))
 
 (add-hook 'sh-mode-hook 'krig-sh-mode-hook)
+
+
+(add-hook 'align-load-hook (lambda ()
+       (add-to-list 'align-rules-list
+                    '(text-column-whitespace
+                      (regexp  . "\\(^\\|\\S-\\)\\([ \t]+\\)")
+                      (group   . 2)
+                      (modes   . align-text-modes)
+                      (repeat  . t)))))
 
 ;; RUST MODE
 
@@ -1301,6 +1307,40 @@ or just one char if that's not possible"
       (setcdr (last tab-stop-list)
               (list max-col)))))
 
+(defun un-camelcase-string (s &optional sep start)
+    "Convert CamelCase string S to lower case with word separator SEP.
+    Default for SEP is an underscore \"_\".
+    If third argument START is non-nil, convert words after that
+    index in STRING."
+    (let ((case-fold-search nil))
+      (while (string-match "[A-Z]" s (or start 1))
+        (setq s (replace-match (concat (or sep "_")
+                                       (downcase (match-string 0 s)))
+                               t nil s)))
+      (downcase s)))
+
+(defun snakecase-region (start end)
+  "Changes region from camelCase to snake_case"
+  (interactive "r")
+  (save-restriction (narrow-to-region start end)
+                    (let ((s (un-camelcase-string (buffer-substring (point-min) (point-max)))))
+                      (delete-region (point-min) (point-max))
+                      (goto-char (point-min))
+                      (insert s))))
+
+(defun snakecase-word-or-region ()
+  "Changes word or region from camelCase to snake_case"
+  (interactive)
+  (let (pos1 pos2 bds)
+    (if (and transient-mark-mode mark-active)
+        (setq pos1 (region-beginning) pos2 (region-end))
+      (progn
+        (setq bds (bounds-of-thing-at-point 'symbol))
+        (setq pos1 (car bds) pos2 (cdr bds))))
+    (snakecase-region pos1 pos2)))
+
+(global-set-key (kbd "C-c C--") 'snakecase-word-or-region)
+
 (put 'ido-exit-minibuffer 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
@@ -1369,7 +1409,7 @@ open and unsaved."
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
 (add-hook 'after-init-hook '(lambda ()
-                              (load-theme 'flatui)
+                              (load-theme 'noctilux)
                               (scroll-bar-mode -1)))
                               ;;(load-theme 'flatui)))
 
