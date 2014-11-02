@@ -1155,7 +1155,7 @@ or just one char if that's not possible"
   (make-face 'speedbar-face)
   (if (string-match "kowloon" hostname)
       (set-face-font 'speedbar-face "Ubuntu Mono-12")
-    (set-face-font 'speedbar-face "Ubuntu Mono-8"))
+    (set-face-font 'speedbar-face "Ubuntu Mono-9"))
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
   (speedbar-add-supported-extension ".hs")
@@ -1401,7 +1401,7 @@ open and unsaved."
                   (set-face-background 'mode-line "#101010")
                   (set-face-foreground 'mode-line "#999999")
                   (set-face-inverse-video 'mode-line nil)
-                  (set-face-background 'mode-line-inactive "#101010")
+                  (set-face-background 'mode-line-inactive "#121414")
                   (set-face-foreground 'mode-line-inactive "#333333")
                   (set-face-inverse-video 'mode-line-inactive nil)))))
 
