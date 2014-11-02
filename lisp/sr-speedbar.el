@@ -617,9 +617,7 @@ And the example function that can occur above problem is `pop-to-buffer'."
              (sr-speedbar-window-dedicated-only-one-p) ;just have one `non-dedicated' window
              (sr-speedbar-window-exist-p sr-speedbar-window)
              (not (sr-speedbar-window-p)) ;not in `sr-speedbar' window
-             (if (featurep 'helm)
-		 (not helm-alive-p)
-	       t))
+             (if (featurep 'helm) (not helm-alive-p) t))
     (split-window-vertically)
     (windmove-down)))
 

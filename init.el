@@ -1400,10 +1400,10 @@ open and unsaved."
     ("noctilux" (progn
                   (set-face-background 'mode-line "#101010")
                   (set-face-foreground 'mode-line "#999999")
-                  (set-face-inverse-video-p 'mode-line nil)
+                  (set-face-inverse-video 'mode-line nil)
                   (set-face-background 'mode-line-inactive "#101010")
                   (set-face-foreground 'mode-line-inactive "#333333")
-                  (set-face-inverse-video-p 'mode-line-inactive nil)))))
+                  (set-face-inverse-video 'mode-line-inactive nil)))))
 
 
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
