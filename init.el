@@ -54,7 +54,7 @@
 
 (push "/usr/local/bin" exec-path)
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/smart-tab")
 (add-to-list 'load-path "~/.emacs.d/smarttabs")
 (add-to-list 'load-path "~/.emacs.d/haml-mode")
