@@ -1409,7 +1409,8 @@ open and unsaved."
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'github)))
 ;;(add-hook 'after-init-hook '(lambda () (load-theme 'wombat)))
 (add-hook 'after-init-hook '(lambda ()
-                              (load-theme 'noctilux)
+                              (load-theme 'tomorrow-night-eighties)
+                              ;;(load-theme 'noctilux)
                               (scroll-bar-mode -1)))
                               ;;(load-theme 'flatui)))
 
