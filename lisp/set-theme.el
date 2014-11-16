@@ -14,6 +14,7 @@
 (when (krig-linuxp)
   (set-frame-font
    (pcase hostname
+     ("walker.kri.gs" "Ubuntu Mono-17")
      ("kowloon" "Ubuntu Mono-17")
      ("krigpad.site" "Ubuntu Mono-14")
      (_ "Ubuntu Mono-13")))
@@ -22,7 +23,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/tomorrow")
 
 ;; use the after-init-hook to work around a scrollbar bug..
-(add-hook 'after-init-hook 
+(add-hook 'after-init-hook
 	  '(lambda ()
 	     (load-theme 'tomorrow-night-eighties)
 	     (scroll-bar-mode -1)))
