@@ -268,3 +268,12 @@ or just one char if that's not possible"
            (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
 
 
+;; lisp modes
+
+(progn
+  (add-to-list 'load-path "~/.emacs.d/tools/slime")
+  (require 'slime-autoloads)
+  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (setq slime-contribs '(slime-fancy)))
+
+

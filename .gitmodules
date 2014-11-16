@@ -28,3 +28,6 @@
 [submodule "tools/rainbow-delimiters"]
 	path = tools/rainbow-delimiters
 	url = git@github.com:Fanael/rainbow-delimiters.git
+[submodule "tools/slime"]
+	path = tools/slime
+	url = git@github.com:slime/slime.git
