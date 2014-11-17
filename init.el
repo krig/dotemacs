@@ -91,6 +91,9 @@
 (when (not (eq system-type 'windows-nt))
   (server-start))
 
+;; notmuch
+(when (string-prefix-p "krigpad" hostname)
+  (load "notmuch-config.el"))
 
 ;; set the theme
 (load "set-theme.el")
