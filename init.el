@@ -36,14 +36,10 @@
   (auto-compression-mode 1)
   (setq warning-minimum-level :error)
   (fset 'yes-or-no-p 'y-or-n-p)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
   (blink-cursor-mode -1)
   (show-paren-mode t)
   (line-number-mode t)
   (column-number-mode -1)
-  (set-fringe-style -1)
-  (tooltip-mode -1)
   (winner-mode 1) ;; window layout: c-c <left> = undo, c-c <right> = redo
   (global-auto-revert-mode t)
   (setq calendar-week-start-day 1)
@@ -53,7 +49,13 @@
   (setq initial-scratch-message ";)\n") ; cleaner scratch buffers
   (setq compilation-skip-threshold 2) ; jump directly to errors with M-p/M-n in compilation-mode
   (setq org-startup-indented t)
-  (setq-default ispell-program-name "aspell"))
+  (setq-default ispell-program-name "aspell")
+
+  (when (display-graphic-p)
+    (scroll-bar-mode -1)
+    (tooltip-mode -1)
+    (set-fringe-style -1)
+    (tool-bar-mode -1)))
 
 
 ;; load common lisp

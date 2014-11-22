@@ -63,7 +63,8 @@
 (when (load "sr-speedbar.el" 'noerror)
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
-  (set-face-font 'speedbar-face "Ubuntu Mono-9")
+  (when (display-graphic-p)
+    (set-face-font 'speedbar-face "Ubuntu Mono-9"))
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
   (speedbar-add-supported-extension ".hs")
@@ -209,18 +210,19 @@ symbol, not word, as I need this for programming the most."
 
 
 ;; rainbow-delimiters
-(add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
-(progn
-  (defun krig-paren-clr (n)
-    (let ((c (+ ?\x69 (* (1- n) 8))))
-      (format "#%X%X%X" c c c)))
+(when (display-graphic-p)
+  (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
+  (progn
+    (defun krig-paren-clr (n)
+      (let ((c (+ ?\x69 (* (1- n) 8))))
+        (format "#%X%X%X" c c c)))
 
-  (defun krig-rainbow-face-n (n)
-    (intern (format "rainbow-delimiters-depth-%d-face" n)))
+    (defun krig-rainbow-face-n (n)
+      (intern (format "rainbow-delimiters-depth-%d-face" n)))
 
-  (require 'rainbow-delimiters)
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
-  (cl-loop for i from 1 to 9 do
-           (set-face-foreground (krig-rainbow-face-n i)
-                                (krig-paren-clr i))))
+    (require 'rainbow-delimiters)
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+    (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
+    (cl-loop for i from 1 to 9 do
+             (set-face-foreground (krig-rainbow-face-n i)
+                                  (krig-paren-clr i)))))
