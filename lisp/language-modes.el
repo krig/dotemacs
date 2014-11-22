@@ -135,28 +135,46 @@ or just one char if that's not possible"
                c-lineup-gcc-asm-reg
                c-lineup-arglist-tabs-only)))))
 
+(defun* get-closest-pathname (&optional (file ".git"))
+  "Determine the pathname of the first instance of FILE starting from
+the current directory towards root. This may not do the correct thing
+in presence of links. If it does not find FILE, then it shall return
+the name of FILE in the current directory, suitable for creation"
+  (let ((root (expand-file-name "/")))
+    (expand-file-name file
+                      (loop
+                       for d = default-directory then (expand-file-name ".." d)
+                       if (file-exists-p (expand-file-name file d))
+                       return d
+                       if (equal d root)
+                       return nil))))
+
 (add-hook 'c-mode-common-hook 'kernel-style-mode-hook)
 
+(require 'compile)
+
 (defun krig-cc-mode-hook ()
+  (setq show-trailing-whitespace t)
+  (turn-on-fic-mode)
+  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
+  (local-set-key [return] 'newline-and-indent)
+  (subword-mode 1)
   (setq tab-width 8)
   (setq c-basic-offset 8)
   (setq indent-tabs-mode t)
   (c-set-style "linux")
-  ;;(smart-tabs-mode-enable)
-  ;;(smart-tabs-advice c-indent-line c-basic-offset)
-  ;;(smart-tabs-advice c-indent-region c-basic-offset)
-  (subword-mode 1)
-  (setq show-trailing-whitespace t)
-  (turn-on-fic-mode)
-  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
-  (local-set-key [return] 'newline-and-indent))
+
+  (setq compilation-read-command nil)
+  (set (make-local-variable 'compile-command)
+       (format "cd %s && ./build" (file-name-directory (get-closest-pathname))))
+  (local-set-key (kbd "C-x SPC") 'compile))
 
 (defun krig-mode-hook ()
   (setq show-trailing-whitespace t)
   (turn-on-fic-mode)
-  (subword-mode 1)
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
-  (local-set-key [return] 'newline-and-indent))
+  (local-set-key [return] 'newline-and-indent)
+  (subword-mode 1))
 
 (dolist (hook '(
                 emacs-lisp-mode-hook
@@ -236,13 +254,20 @@ or just one char if that's not possible"
       1 font-lock-keyword-face t))))
 
 
+(defun next-error-or-flymake ()
+  (interactive)
+  (if (bound-and-true-p flymake-mode)
+      (flymake-goto-next-error)
+    (next-error)))
+
+
 ;; flymake!
 (progn
   (require 'flymake)
   (setq flymake-gui-warnings-enabled nil)
   (setq help-at-pt-timer-delay 0.9)
   (setq help-at-pt-display-when-idle '(flymake-overlay))
-  (global-set-key (kbd "M-n") 'flymake-goto-next-error)
+  (global-set-key (kbd "M-n") 'next-error-or-flymake)
 
 
   (add-to-list 'load-path "~/.emacs.d/modes/flymake-easy/")
