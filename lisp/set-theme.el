@@ -15,7 +15,7 @@
   (when (krig-linuxp)
     (set-frame-font
      (pcase hostname
-       ("walker.kri.gs" "Ubuntu Mono-17")
+       ("walker.kri.gs" "Ubuntu Mono-19.5")
        ("kowloon" "Ubuntu Mono-17")
        ("krigpad.site" "Ubuntu Mono-14")
        (_ "Ubuntu Mono-13")))
