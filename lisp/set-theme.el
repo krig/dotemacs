@@ -24,8 +24,8 @@
   ;; use the after-init-hook to work around a scrollbar bug..
   (add-hook 'after-init-hook
             '(lambda ()
-               (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/tomorrow")
-               (load-theme 'tomorrow-night-eighties)
+               (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+               (load-theme 'noctilux)
                (scroll-bar-mode -1))))
 
 (unless (display-graphic-p)
