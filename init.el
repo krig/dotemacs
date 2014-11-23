@@ -39,7 +39,7 @@
   (blink-cursor-mode -1)
   (show-paren-mode t)
   (line-number-mode t)
-  (column-number-mode -1)
+  (column-number-mode t)
   (winner-mode 1) ;; window layout: c-c <left> = undo, c-c <right> = redo
   (global-auto-revert-mode t)
   (setq calendar-week-start-day 1)
@@ -92,6 +92,9 @@
 ;; start the server
 (when (not (eq system-type 'windows-nt))
   (server-start))
+
+;; eshell commands
+(load "shell-stuff.el")
 
 ;; notmuch
 (when (string-prefix-p "krigpad" hostname)
