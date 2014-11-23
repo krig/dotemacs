@@ -207,22 +207,3 @@ symbol, not word, as I need this for programming the most."
 (add-to-list 'load-path "~/.emacs.d/tools/textmate")
 (require 'textmate)
 (textmate-mode)
-
-
-;; rainbow-delimiters
-(when (display-graphic-p)
-  (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
-  (progn
-    (defun krig-paren-clr (n)
-      (let ((c (+ ?\x69 (* (1- n) 8))))
-        (format "#%X%X%X" c c c)))
-
-    (defun krig-rainbow-face-n (n)
-      (intern (format "rainbow-delimiters-depth-%d-face" n)))
-
-    (require 'rainbow-delimiters)
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-    (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
-    (cl-loop for i from 1 to 9 do
-             (set-face-foreground (krig-rainbow-face-n i)
-                                  (krig-paren-clr i)))))
