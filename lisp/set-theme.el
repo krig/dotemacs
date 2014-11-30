@@ -18,7 +18,8 @@
        ("walker.kri.gs" "Ubuntu Mono-19.5")
        ("kowloon" "Ubuntu Mono-17")
        ("krigpad.site" "Ubuntu Mono-14")
-       (_ "Ubuntu Mono-13")))
+       ("ultralix" "Ubuntu Mono-13.5")
+       (_ "Ubuntu Mono-14")))
     (menu-bar-mode -1))
 
   ;; use the after-init-hook to work around a scrollbar bug..
