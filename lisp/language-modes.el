@@ -217,11 +217,11 @@ the name of FILE in the current directory, suitable for creation"
 ;; markdown!
 (progn
   (add-to-list 'load-path "~/.emacs.d/modes/markdown-mode")
-  (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.mdwn$" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-  (autoload 'markdown-mode "markdown-mode" "Markdown editing mode." t)
+  (add-to-list 'auto-mode-alist '("\\.markdown$" . gfm-mode))
+  (add-to-list 'auto-mode-alist '("\\.mdwn$" . gfm-mode))
+  (add-to-list 'auto-mode-alist '("\\.mdown$" . gfm-mode))
+  (add-to-list 'auto-mode-alist '("\\.md$" . gfm-mode))
+  (require 'markdown-mode)
   (defun md-extra-stuff ()
     (auto-fill-mode 1))
   (add-hook 'markdown-mode-hook 'md-extra-stuff))
