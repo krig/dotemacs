@@ -67,7 +67,8 @@
     (set-face-font 'speedbar-face "Ubuntu Mono-9"))
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
-  (speedbar-add-supported-extension ".hs")
+  (setq speedbar-show-unknown-files t)
+  (mapcar 'speedbar-add-supported-extension '(".hs" ".rb"))
   (global-set-key (kbd "M-p") 'sr-speedbar-toggle))
 
 ;; unbound
