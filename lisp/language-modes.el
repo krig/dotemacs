@@ -227,6 +227,12 @@ the name of FILE in the current directory, suitable for creation"
   (add-hook 'markdown-mode-hook 'md-extra-stuff))
 
 
+;; yaml!
+(progn
+  (add-to-list 'load-path "~/.emacs.d/modes/yaml-mode")
+  (require 'yaml-mode)
+  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
+
 
 ;; python!
 (progn
