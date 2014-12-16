@@ -14,10 +14,10 @@
 
   (when (krig-linuxp)
     (set-frame-font
-     (pcase hostname
-       ("walker.kri.gs" "Ubuntu Mono-19.5")
+     (pcase (car (split-string hostname "\\."))
+       ("walker" "Ubuntu Mono-19.5")
        ("kowloon" "Ubuntu Mono-17")
-       ("krigpad.site" "Ubuntu Mono-13")
+       ("krigpad" "Ubuntu Mono-13")
        ("ultralix" "Ubuntu Mono-13.5")
        (_ "Ubuntu Mono-14")))
     (menu-bar-mode -1))
