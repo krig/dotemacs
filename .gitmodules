@@ -34,3 +34,6 @@
 [submodule "tools/notmuch"]
 	path = tools/notmuch
 	url = git://notmuchmail.org/git/notmuch
+[submodule "modes/auto-complete"]
+	path = modes/auto-complete
+	url = git@github.com:auto-complete/auto-complete.git
