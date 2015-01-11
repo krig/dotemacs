@@ -329,3 +329,9 @@ the name of FILE in the current directory, suitable for creation"
 (progn
   (add-to-list 'load-path "~/.emacs.d/modes/nimrod-mode")
   (require 'nimrod-mode))
+
+;; rust-mode
+(progn
+  (add-to-list 'load-path "~/.emacs.d/modes/rust-mode")
+  (autoload 'rust-mode "rust-mode" nil t)
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode)))

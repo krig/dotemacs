@@ -22,30 +22,33 @@
        (_ "Ubuntu Mono-14")))
     (menu-bar-mode -1))
 
-  ;; use the after-init-hook to work around a scrollbar bug..
+;; work around the scrollbar bug
   (add-hook 'after-init-hook
-            '(lambda ()
-               (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-               (load-theme 'noctilux)
-               (scroll-bar-mode -1)
-               ;; rainbow-delimiters
-               (when (display-graphic-p)
-                 (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
-                 (progn
-                   (defun krig-paren-clr (n)
-                     (let ((c (+ ?\x69 (* (1- n) 8))))
-                       (format "#%X%X%X" c c c)))
+            '(lambda () (scroll-bar-mode -1))))
 
-                   (defun krig-rainbow-face-n (n)
-                     (intern (format "rainbow-delimiters-depth-%d-face" n)))
+  ;; ;; use the after-init-hook to work around a scrollbar bug..
+  ;; (add-hook 'after-init-hook
+  ;;           '(lambda ()
+  ;;              (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+  ;;              (load-theme 'noctilux)
+  ;;              ;; rainbow-delimiters
+  ;;              (when (display-graphic-p)
+  ;;                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
+  ;;                (progn
+  ;;                  (defun krig-paren-clr (n)
+  ;;                    (let ((c (+ ?\x69 (* (1- n) 8))))
+  ;;                      (format "#%X%X%X" c c c)))
 
-                   (require 'rainbow-delimiters)
-                   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-                   (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
-                   (cl-loop for i from 1 to 9 do
-                            (set-face-foreground (krig-rainbow-face-n i)
-                                                 (krig-paren-clr i)))))
-               )))
+  ;;                  (defun krig-rainbow-face-n (n)
+  ;;                    (intern (format "rainbow-delimiters-depth-%d-face" n)))
+
+  ;;                  (require 'rainbow-delimiters)
+  ;;                  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  ;;                  (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
+  ;;                  (cl-loop for i from 1 to 9 do
+  ;;                           (set-face-foreground (krig-rainbow-face-n i)
+  ;;                                                (krig-paren-clr i)))))
+  ;;              )))
 
 (unless (display-graphic-p)
   (menu-bar-mode -1))
