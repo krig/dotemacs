@@ -50,6 +50,7 @@
   (setq compilation-skip-threshold 2) ; jump directly to errors with M-p/M-n in compilation-mode
   (setq org-startup-indented t)
   (setq-default ispell-program-name "aspell")
+  (setq vc-follow-symlinks t)
 
   (when (display-graphic-p)
     (scroll-bar-mode -1)
