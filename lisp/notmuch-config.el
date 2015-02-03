@@ -39,4 +39,5 @@
   (define-key 'notmuch-show-mode-map "D" 'my-notmuch-show-view-as-patch)
   (require 'notmuch-address)
   (setq notmuch-address-command (expand-file-name "~/bin/nottoomuch-addresses.sh"))
+  (setq notmuch-crypto-process-mime t)
   (notmuch-address-message-insinuate))
