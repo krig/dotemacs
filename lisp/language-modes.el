@@ -341,3 +341,8 @@ the name of FILE in the current directory, suitable for creation"
   (add-to-list 'load-path "~/.emacs.d/modes/ragel-mode")
   (autoload 'ragel-mode "ragel-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.rl\\'" . ragel-mode)))
+
+;; go mode
+(progn
+  (add-to-list 'load-path "~/.emacs.d/modes/go-mode")
+  (require 'go-mode-autoloads))
