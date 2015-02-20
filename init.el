@@ -105,7 +105,8 @@
 (load "shell-stuff.el")
 
 ;; notmuch
-(when (string-prefix-p "krigpad" hostname)
+(when (or (string-prefix-p "krigpad" hostname)
+          (string-prefix-p "ultralix" hostname))
   (load "notmuch-config.el"))
 
 ;; set the theme
