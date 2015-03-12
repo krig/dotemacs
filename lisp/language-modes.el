@@ -234,6 +234,13 @@ the name of FILE in the current directory, suitable for creation"
   (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
 
 
+;; haml!
+(progn
+  (add-to-list 'load-path "~/.emacs.d/modes/haml-mode")
+  (require 'haml-mode)
+  (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode)))
+
+
 ;; python!
 (progn
   (add-to-list 'interpreter-mode-alist '("python2.5" . python-mode))
