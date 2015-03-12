@@ -25,6 +25,10 @@
 			      (concat "kgronlund@" "suse" ".com")
 			    (concat "krig@" "koru" ".se"))))
 
+;; melpa
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
 
 ;;; basic settings
 (progn
