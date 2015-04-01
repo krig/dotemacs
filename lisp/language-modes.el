@@ -1,5 +1,7 @@
 ;; programming language modes
 
+(add-to-list 'load-path "~/.emacs.d/modes")
+
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq-default c-default-style "linux")
@@ -229,14 +231,12 @@ the name of FILE in the current directory, suitable for creation"
 
 ;; yaml!
 (progn
-  (add-to-list 'load-path "~/.emacs.d/modes/yaml-mode")
   (require 'yaml-mode)
   (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
 
 
 ;; haml!
 (progn
-  (add-to-list 'load-path "~/.emacs.d/modes/haml-mode")
   (require 'haml-mode)
   (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode)))
 
@@ -334,22 +334,23 @@ the name of FILE in the current directory, suitable for creation"
 
 ;; nimrod mode
 (progn
-  (add-to-list 'load-path "~/.emacs.d/modes/nimrod-mode")
   (require 'nimrod-mode))
 
 ;; rust-mode
 (progn
-  (add-to-list 'load-path "~/.emacs.d/modes/rust-mode")
   (autoload 'rust-mode "rust-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode)))
 
 ;; ragel mode
 (progn
-  (add-to-list 'load-path "~/.emacs.d/modes/ragel-mode")
   (autoload 'ragel-mode "ragel-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.rl\\'" . ragel-mode)))
 
 ;; go mode
 (progn
-  (add-to-list 'load-path "~/.emacs.d/modes/go-mode")
   (require 'go-mode-autoloads))
+
+;; nasm mode
+(progn
+  (autoload 'nasm-mode "nasm-mode" nil t)
+  (add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode)))
