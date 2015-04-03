@@ -93,6 +93,12 @@
 (global-set-key [C-tab] (lambda () (interactive) (insert-char 9 1)))
 (global-set-key [C-s-up] 'switch-cc-to-h)
 
+(when (eq system-type 'darwin)
+  ;;(setq mac-option-modifier 'super )
+  ;;(setq mac-command-modifier 'meta )
+  (global-set-key [home] 'beginning-of-line)
+  (global-set-key [end] 'end-of-line))
+
 
 ;; start the server
 (defun px-raise-frame-and-give-focus ()
