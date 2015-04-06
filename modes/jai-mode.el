@@ -108,16 +108,62 @@
   (defmacro setq-local (var val)
     `(set (make-local-variable ',var) ,val)))
 
+(defconst jai--defun-rx "\(.*\).*\{")
+
+(defmacro jai-paren-level ()
+  `(car (syntax-ppss)))
+
+(defun jai-line-is-defun ()
+  "return t if current line begins a procedure"
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (let (found)
+      (while (and (not (eolp)) (not found))
+        (if (looking-at jai--defun-rx)
+            (setq found t)
+          (forward-char 1)))
+      found)))
+
+(defun jai-beginning-of-defun (&optional count)
+  "Go to line on which current function starts."
+  (interactive)
+  (let ((orig-level (jai-paren-level)))
+    (while (and
+            (not (jai--line-is-defun))
+            (not (bobp))
+            (> orig-level 0))
+      (setq orig-level (jai-paren-level))
+      (while (>= (jai-paren-level) orig-level)
+        (skip-chars-backward "^{")
+        (backward-char))))
+  (if (jai--line-is-defun)
+      (beginning-of-line)))
+
+(defun jai-end-of-defun ()
+  "Go to line on which current function ends."
+  (interactive)
+  (let ((orig-level (jai-paren-level)))
+    (when (> orig-level 0)
+      (jai-beginning-of-defun)
+      (end-of-line)
+      (setq orig-level (jai-paren-level))
+      (skip-chars-forward "^}")
+      (while (>= (jai-paren-level) orig-level)
+        (skip-chars-forward "^}")
+        (forward-char)))))
+
 ;;;###autoload
 (define-derived-mode jai-mode prog-mode "Jai Mode"
   :syntax-table jai-mode-syntax-table
+  :group 'jai
   (setq-local comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
   (setq-local comment-start "/*")
   (setq-local comment-end "*/")
   (setq-local indent-line-function 'js-indent-line)
   (setq-local font-lock-defaults '(jai-font-lock-defaults))
-  (setq-local beginning-of-defun-function 'js-beginning-of-defun)
-  (setq-local end-of-defun-function 'js-end-of-defun)
+  (setq-local beginning-of-defun-function 'jai-beginning-of-defun)
+  (setq-local end-of-defun-function 'jai-end-of-defun)
 
   (font-lock-fontify-buffer))
 
