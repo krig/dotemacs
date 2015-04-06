@@ -354,3 +354,8 @@ the name of FILE in the current directory, suitable for creation"
 (progn
   (autoload 'nasm-mode "nasm-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode)))
+
+;; jai mode
+(progn
+  (autoload 'jai-mode "jai-mode" nil t)
+  (add-to-list 'auto-mode-alist '("\\.jai\\'" . jai-mode)))
