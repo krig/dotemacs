@@ -153,19 +153,25 @@
         (skip-chars-forward "^}")
         (forward-char)))))
 
-;;;###autoload
-(define-derived-mode jai-mode prog-mode "Jai Mode"
-  :syntax-table jai-mode-syntax-table
-  :group 'jai
-  (setq-local comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
-  (setq-local comment-start "/*")
-  (setq-local comment-end "*/")
-  (setq-local indent-line-function 'js-indent-line)
-  (setq-local font-lock-defaults '(jai-font-lock-defaults))
-  (setq-local beginning-of-defun-function 'jai-beginning-of-defun)
-  (setq-local end-of-defun-function 'jai-end-of-defun)
+(defalias 'jai-parent-mode
+ (if (fboundp 'prog-mode) 'prog-mode 'fundamental-mode))
 
-  (font-lock-fontify-buffer))
+;;;###autoload
+(define-derived-mode jai-mode jai-parent-mode "Jai"
+ :syntax-table jai-mode-syntax-table
+ :group 'jai
+ (setq bidi-paragraph-direction 'left-to-right)
+ (setq-local require-final-newline mode-require-final-newline)
+ (setq-local parse-sexp-ignore-comments t)
+ (setq-local comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
+ (setq-local comment-start "/*")
+ (setq-local comment-end "*/")
+ (setq-local indent-line-function 'js-indent-line)
+ (setq-local font-lock-defaults '(jai-font-lock-defaults))
+ (setq-local beginning-of-defun-function 'jai-beginning-of-defun)
+ (setq-local end-of-defun-function 'jai-end-of-defun)
+
+ (font-lock-fontify-buffer))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.jai\\'" . jai-mode))
