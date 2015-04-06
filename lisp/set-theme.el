@@ -32,7 +32,7 @@
   (add-hook 'after-init-hook
             '(lambda ()
                (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-               (load-theme 'mark)
+               (load-theme 'spacegray)
                ;; rainbow-delimiters
                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
                (progn
