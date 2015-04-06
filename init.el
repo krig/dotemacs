@@ -16,6 +16,8 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
 
+(when (krig-linuxp)
+  (setq source-directory"~/src/extern/emacs"))
 
 ;; personal settings
 (progn
