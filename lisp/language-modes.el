@@ -168,7 +168,16 @@ the name of FILE in the current directory, suitable for creation"
 
   (setq compilation-read-command nil)
   (set (make-local-variable 'compile-command)
-       (format "cd %s && ./build" (file-name-directory (get-closest-pathname))))
+       (let ((projdir (file-name-directory (get-closest-pathname))))
+         (cond
+          ((file-exists-p (format "%s/build" projdir))
+           (format "cd %s && ./build" projdir))
+          ((file-exists-p (format "%s/waf" projdir))
+           (format "cd %s && ./waf" projdir))
+          ((file-exists-p (format "%s/Makefile" projdir))
+           (format "cd %s && make" projdir))
+          ((file-exists-p (format "%s/mk" projdir))
+           (format "cd %s && ./mk" projdir)))))
   (local-set-key (kbd "C-x SPC") 'compile))
 
 (defun krig-mode-hook ()

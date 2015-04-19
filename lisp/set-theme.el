@@ -15,7 +15,7 @@
   (when (krig-linuxp)
     (set-frame-font
      (pcase (car (split-string hostname "\\."))
-       ("walker" "Ubuntu Mono-19.5")
+       ("walker" "Ubuntu Mono-15")
        ("kowloon" "Ubuntu Mono-17")
        ("krigpad" "Ubuntu Mono-13")
        ("ultralix" "Ubuntu Mono-13.5")
