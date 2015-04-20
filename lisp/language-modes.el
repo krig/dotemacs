@@ -158,8 +158,6 @@ the name of FILE in the current directory, suitable for creation"
 (defun krig-cc-mode-hook ()
   (setq show-trailing-whitespace t)
   (turn-on-fic-mode)
-  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
-  (local-set-key [return] 'newline-and-indent)
   (subword-mode 1)
   (setq tab-width 8)
   (setq c-basic-offset 8)
@@ -178,6 +176,9 @@ the name of FILE in the current directory, suitable for creation"
            (format "cd %s && make" projdir))
           ((file-exists-p (format "%s/mk" projdir))
            (format "cd %s && ./mk" projdir)))))
+  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
+  (local-set-key [return] 'newline-and-indent)
+  (local-set-key (kbd "M-j") 'join-line)
   (local-set-key (kbd "C-x SPC") 'compile))
 
 (defun krig-mode-hook ()
@@ -185,6 +186,7 @@ the name of FILE in the current directory, suitable for creation"
   (turn-on-fic-mode)
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
   (local-set-key [return] 'newline-and-indent)
+  (local-set-key (kbd "M-j") 'join-line)
   (subword-mode 1))
 
 (dolist (hook '(
