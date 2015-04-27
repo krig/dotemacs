@@ -173,7 +173,7 @@ the name of FILE in the current directory, suitable for creation"
           ((file-exists-p (format "%s/waf" projdir))
            (format "cd %s && ./waf" projdir))
           ((file-exists-p (format "%s/Makefile" projdir))
-           (format "cd %s && make" projdir))
+           (format "cd %s && make -j" projdir))
           ((file-exists-p (format "%s/mk" projdir))
            (format "cd %s && ./mk" projdir)))))
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
