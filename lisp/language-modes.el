@@ -175,7 +175,9 @@ the name of FILE in the current directory, suitable for creation"
           ((file-exists-p (format "%s/Makefile" projdir))
            (format "cd %s && make -j" projdir))
           ((file-exists-p (format "%s/mk" projdir))
-           (format "cd %s && ./mk" projdir)))))
+           (format "cd %s && ./mk" projdir)))
+          ((file-exists-p (format "%s/Cargo.toml" projdir))
+           (format "cd %s && cargo build" projdir))))
   (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
   (local-set-key [return] 'newline-and-indent)
   (local-set-key (kbd "M-j") 'join-line)
@@ -238,6 +240,11 @@ the name of FILE in the current directory, suitable for creation"
   (defun md-extra-stuff ()
     (auto-fill-mode 1))
   (add-hook 'markdown-mode-hook 'md-extra-stuff))
+
+;; toml :P
+(progn
+  (add-to-list 'auto-mode-alist '("\\.toml$" . toml-mode))
+  (require 'toml-mode))
 
 
 ;; yaml!
