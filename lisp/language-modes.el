@@ -164,6 +164,26 @@ the name of FILE in the current directory, suitable for creation"
   (setq indent-tabs-mode t)
   (c-set-style "linux")
 
+  ;;(setq compilation-read-command nil)
+  ;; (set (make-local-variable 'compile-command)
+  ;;      (let ((projdir (file-name-directory (get-closest-pathname))))
+  ;;        (cond
+  ;;         ((file-exists-p (format "%s/build" projdir))
+  ;;          (format "cd %s && ./build" projdir))
+  ;;         ((file-exists-p (format "%s/waf" projdir))
+  ;;          (format "cd %s && ./waf" projdir))
+  ;;         ((file-exists-p (format "%s/Makefile" projdir))
+  ;;          (format "cd %s && make -j" projdir))
+  ;;         ((file-exists-p (format "%s/mk" projdir))
+  ;;          (format "cd %s && ./mk" projdir))
+  ;;         ((file-exists-p (format "%s/Cargo.toml" projdir))
+  ;;          (format "cd %s && cargo build" projdir)))))
+  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
+  (local-set-key [return] 'newline-and-indent)
+  (local-set-key (kbd "M-j") 'join-line))
+  ;;;(local-set-key (kbd "C-x SPC") 'compile))
+
+(defun krig-compile-hook ()
   (setq compilation-read-command nil)
   (set (make-local-variable 'compile-command)
        (let ((projdir (file-name-directory (get-closest-pathname))))
@@ -177,11 +197,9 @@ the name of FILE in the current directory, suitable for creation"
           ((file-exists-p (format "%s/mk" projdir))
            (format "cd %s && ./mk" projdir))
           ((file-exists-p (format "%s/Cargo.toml" projdir))
-           (format "cd %s && cargo build" projdir)))))
-  (local-set-key (kbd "DEL") 'backward-delete-whitespace-to-column)
-  (local-set-key [return] 'newline-and-indent)
-  (local-set-key (kbd "M-j") 'join-line)
+           (format "cd %s && cargo test" projdir)))))
   (local-set-key (kbd "C-x SPC") 'compile))
+
 
 (defun krig-mode-hook ()
   (setq show-trailing-whitespace t)
@@ -209,6 +227,7 @@ the name of FILE in the current directory, suitable for creation"
 (dolist (hook '(c-mode-hook c++-mode-hook))
   (add-hook hook 'krig-cc-mode-hook))
 
+(add-hook 'prog-mode-hook 'krig-compile-hook)
 
 (add-hook 'align-load-hook (lambda ()
        (add-to-list 'align-rules-list
