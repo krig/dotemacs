@@ -375,12 +375,24 @@ the name of FILE in the current directory, suitable for creation"
 
 ;; rust-mode
 
+(defun krig-locate-rustc-sources (buffer &optional stat)
+  "modify rust sources paths"
+  (interactive "b")
+  (save-excursion
+    (set-buffer buffer)
+    (goto-char (point-min))
+    (let ((buffer-read-only nil))
+      (replace-regexp "/home/abuild/rpmbuild/BUILD/[a-zA-Z0-9.~+-]+/\\([^:]+\\)"
+                      "~/src/extern/rust/\\1"))))
+
 (defun krig-rust-mode-hook ()
   (eval-after-load 'compile
     '(progn
        (add-to-list 'compilation-error-regexp-alist-alist
                     (cons 'cargo '("^\\s-+thread '[^']+' panicked at \\('[^']+', \\([^:]+\\):\\([0-9]+\\)\\)" 2 3 nil nil 1)))
-       (add-to-list 'compilation-error-regexp-alist 'cargo))))
+       (add-to-list 'compilation-error-regexp-alist 'cargo)))
+
+  (add-hook 'compilation-finish-functions 'krig-locate-rustc-sources))
 
 (progn
   (autoload 'rust-mode "rust-mode" nil t)
