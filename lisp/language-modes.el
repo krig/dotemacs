@@ -386,12 +386,6 @@ the name of FILE in the current directory, suitable for creation"
                       "~/src/extern/rust/\\1"))))
 
 (defun krig-rust-mode-hook ()
-  (eval-after-load 'compile
-    '(progn
-       (add-to-list 'compilation-error-regexp-alist-alist
-                    (cons 'cargo '("^\\s-+thread '[^']+' panicked at \\('[^']+', \\([^:]+\\):\\([0-9]+\\)\\)" 2 3 nil nil 1)))
-       (add-to-list 'compilation-error-regexp-alist 'cargo)))
-
   (add-hook 'compilation-finish-functions 'krig-locate-rustc-sources))
 
 (progn
