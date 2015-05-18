@@ -374,9 +374,18 @@ the name of FILE in the current directory, suitable for creation"
   (require 'nimrod-mode))
 
 ;; rust-mode
+
+(defun krig-rust-mode-hook ()
+  (eval-after-load 'compile
+    '(progn
+       (add-to-list 'compilation-error-regexp-alist-alist
+                    (cons 'cargo '("^\\s-+thread '[^']+' panicked at \\('[^']+', \\([^:]+\\):\\([0-9]+\\)\\)" 2 3 nil nil 1)))
+       (add-to-list 'compilation-error-regexp-alist 'cargo))))
+
 (progn
   (autoload 'rust-mode "rust-mode" nil t)
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode)))
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+  (add-hook 'rust-mode-hook 'krig-rust-mode-hook))
 
 ;; ragel mode
 (progn
