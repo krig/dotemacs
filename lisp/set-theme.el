@@ -27,6 +27,13 @@
   (add-hook 'after-init-hook
             '(lambda () (scroll-bar-mode -1))))
 
+(defun krig-paren-clr (n)
+  (let ((c (+ ?\x69 (* (1- n) 8))))
+    (format "#%X%X%X" c c c)))
+
+(defun krig-rainbow-face-n (n)
+  (intern (format "rainbow-delimiters-depth-%d-face" n)))
+
 ;; set theme
 (when (display-graphic-p)
   (add-hook 'after-init-hook
@@ -36,13 +43,6 @@
                ;; rainbow-delimiters
                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
                (progn
-                 (defun krig-paren-clr (n)
-                   (let ((c (+ ?\x69 (* (1- n) 8))))
-                     (format "#%X%X%X" c c c)))
-
-                 (defun krig-rainbow-face-n (n)
-                   (intern (format "rainbow-delimiters-depth-%d-face" n)))
-
                  (require 'rainbow-delimiters)
                  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
                  (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
