@@ -89,7 +89,7 @@
    `(font-lock-constant-face ((,class (:foreground ,foreground))))
    `(font-lock-doc-face ((,class (:foreground "moccasin"))))
    `(font-lock-doc-string-face ((,class (:foreground ,yellow))))
-   `(font-lock-function-name-face ((,class (:foreground ,foreground))))
+   `(font-lock-function-name-face ((,class (:foreground ,foreground :weight bold))))
    `(font-lock-keyword-face ((,class (:foreground ,foreground))))
    `(font-lock-negation-char-face ((,class (:foreground ,foreground))))
    `(font-lock-preprocessor-face ((,class (:foreground ,foreground))))

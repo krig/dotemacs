@@ -9,7 +9,7 @@
    (vector "#ffffff" "#bf616a" "#B4EB89" "#ebcb8b" "#89AAEB" "#C189EB" "#89EBCA" "#232830"))
  '(custom-safe-themes
    (quote
-    ("63f5ed94b6af34aad9dfa0a3f21b72ecf7c589fbe9dc030c6809d324d7cf94bf" "48ffa37e49a95b865520078f411ddf29d1cff3a13703f03e5df2c5ba8db17072" default)))
+    ("6e15e30e6bf4d6e434da4667b86602514ad94174d248c8d9740b72c5ffdfcc07" "63f5ed94b6af34aad9dfa0a3f21b72ecf7c589fbe9dc030c6809d324d7cf94bf" "48ffa37e49a95b865520078f411ddf29d1cff3a13703f03e5df2c5ba8db17072" default)))
  '(delete-selection-mode nil)
  '(fci-rule-color "#343d46")
  '(mark-even-if-inactive t)
@@ -22,6 +22,7 @@
      (:name "drafts" :query "tag:draft" :key "d")
      (:name "all mail" :query "*" :key "a")
      (:name "fedora" :query "tag:fedora and tag:unread"))))
+ '(safe-local-variable-values (quote ((hl-sexp-mode) (rainbow-mode . t))))
  '(scroll-bar-mode (quote right))
  '(send-mail-function (quote sendmail-send-it))
  '(transient-mark-mode 1)
