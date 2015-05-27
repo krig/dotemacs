@@ -324,7 +324,7 @@ the name of FILE in the current directory, suitable for creation"
   (add-to-list 'load-path "~/.emacs.d/modes/flymake-python-pyflakes/")
   (when (require 'flymake-python-pyflakes nil 'noerror)
     (setq flymake-python-pyflakes-executable "flake8")
-    (setq flymake-python-pyflakes-extra-arguments '("--max-complexity=10" "--max-line-length=99"))
+    (setq flymake-python-pyflakes-extra-arguments '("--max-complexity=10" "--max-line-length=120"))
     (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
   ;; Forces flymake to underline bad lines, instead of fully
   ;; highlighting them; remove this if you prefer full highlighting.
