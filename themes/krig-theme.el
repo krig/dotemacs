@@ -1,10 +1,11 @@
-;;; krig-theme.el --- A Hyperminimal UI Theme
+;;; krig-theme.el --- Anti-highlighting UI Theme for Emacs
 
+;; Copyright (C) 2015 Kristoffer Gronlund
 ;; Copyright (C) 2013 Bruce Williams
 
-;; Author: Bruce Williams <brwcodes@gmail.com>
+;; Author: Kristoffer Gronlund <krig@koru.se>
 ;; Keywords: themes
-;; URL: http://github.com/bruce/emacs-krig-theme
+;; URL: http://github.com/krig/dotemacs
 ;; Version: 0.1
 ;; Package-Requires: ((emacs "24.1"))
 
@@ -31,10 +32,14 @@
 
 ;;; Credits:
 
+;; Completely and shamelessly based on the Emacs version of spacegray
+;; by Bruce Williams <brwcodes@gmail.com>
+;; http://github.com/bruce/emacs-spacegray-theme
+
 ;; Gadzhi Kharkharov deserves most of the credit for color selection
-;; as the author of the original Krig color theme for Sublime Text:
+;; as the author of the original Spacegray color theme for Sublime Text:
 ;; The MIT License (MIT) Copyright (c) 2013 Gadzhi Kharkharov
-;; http://kkga.github.io/krig/
+;; http://kkga.github.io/spacegray/
 
 ;; Also thanks to Ozan Sener for afternoon-theme, used as the boilerplate:
 ;; https://github.com/osener/emacs-afternoon-theme/
@@ -49,7 +54,7 @@
 
 
 (deftheme krig
-  "A Hyperminimal UI Theme for Emacs")
+  "Anti-highlighting UI Theme for Emacs")
 (display-color-cells (selected-frame))
 (let* ((class '((class color) (min-colors 89)))
        (256color (eq (display-color-cells (selected-frame)) 256))
@@ -60,7 +65,7 @@
        (subtle "#a7adba") ;; tree-row-hover-disclosure-button-control
        (selection "#ebcb8b") ;; tab-control-dirty-tab-close-button
        (secondary-selection "#bf616a") ;; tab-control-hover-tab-close-button
-       (foreground "#ffffff")
+       (foreground "#e9e2cb")
        ;;(comment "#4f5b67") ;; table-row
        (comment "#a7adba") ;; table-row
        (red "#bf616a") ;; tab-control-hover-tab-close-button

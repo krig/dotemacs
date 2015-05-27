@@ -9,7 +9,7 @@
    (vector "#ffffff" "#bf616a" "#B4EB89" "#ebcb8b" "#89AAEB" "#C189EB" "#89EBCA" "#232830"))
  '(custom-safe-themes
    (quote
-    ("48ffa37e49a95b865520078f411ddf29d1cff3a13703f03e5df2c5ba8db17072" default)))
+    ("63f5ed94b6af34aad9dfa0a3f21b72ecf7c589fbe9dc030c6809d324d7cf94bf" "48ffa37e49a95b865520078f411ddf29d1cff3a13703f03e5df2c5ba8db17072" default)))
  '(delete-selection-mode nil)
  '(fci-rule-color "#343d46")
  '(mark-even-if-inactive t)
