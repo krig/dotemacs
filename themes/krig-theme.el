@@ -335,6 +335,14 @@
    `(mm/master-face ((,class (:inherit region :foreground nil :background nil))))
    `(mm/mirror-face ((,class (:inherit region :foreground nil :background nil))))
 
+   `(speedbar-button-face ((,class (:foreground ,foreground))))
+   `(speedbar-directory-face ((,class (:foreground ,orange))))
+   `(speedbar-file-face ((,class (:foreground ,green))))
+   `(speedbar-highlight-face ((,class (:foreground ,aqua :inherit highlight))))
+   `(speedbar-selected-face ((,class (:foreground ,yellow))))
+   `(speedbar-separator-face ((,class (:foreground ,red))))
+   `(speedbar-tag-face ((,class (:foreground ,blue))))
+
    `(org-agenda-structure ((,class (:foreground ,purple))))
    `(org-agenda-date ((,class (:foreground ,blue :underline nil))))
    `(org-agenda-done ((,class (:foreground ,green))))
