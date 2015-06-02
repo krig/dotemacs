@@ -18,7 +18,7 @@
        ("walker" "Ubuntu Mono-15")
        ("kowloon" "Ubuntu Mono-17")
        ("krigpad" "Ubuntu Mono-13")
-       ("ultralix" "Ubuntu Mono-13.5")
+       ("ultralix" "Ubuntu Mono-15")
        (_ "Ubuntu Mono-14")))
     (menu-bar-mode -1)))
 
