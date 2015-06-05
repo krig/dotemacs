@@ -18,7 +18,7 @@
        ("walker" "Ubuntu Mono-15")
        ("kowloon" "Ubuntu Mono-17")
        ("krigpad" "Ubuntu Mono-13")
-       ("ultralix" "Ubuntu Mono-15")
+       ("ultralix" "Ubuntu Mono-17")
        (_ "Ubuntu Mono-14")))
     (menu-bar-mode -1)))
 
@@ -40,6 +40,7 @@
             '(lambda ()
                (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
                (load-theme 'krig)
+               ;;(load-theme 'noctilux)
                ;; rainbow-delimiters
                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
                (progn

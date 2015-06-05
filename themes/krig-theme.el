@@ -65,7 +65,8 @@
        (subtle "#a7adba") ;; tree-row-hover-disclosure-button-control
        (selection "#ebcb8b") ;; tab-control-dirty-tab-close-button
        (secondary-selection "#bf616a") ;; tab-control-hover-tab-close-button
-       (foreground "#e9e2cb")
+       ;;(foreground "#e9e2cb")
+       (foreground "#cacacb")
        ;;(comment "#4f5b67") ;; table-row
        (comment "#a7adba") ;; table-row
        (red "#bf616a") ;; tab-control-hover-tab-close-button
@@ -87,16 +88,16 @@
    `(font-lock-comment-delimiter-face ((,class (:foreground ,comment))))
    `(font-lock-comment-face ((,class (:foreground ,comment))))
    `(font-lock-constant-face ((,class (:foreground ,foreground))))
-   `(font-lock-doc-face ((,class (:foreground "moccasin"))))
-   `(font-lock-doc-string-face ((,class (:foreground ,yellow))))
+   `(font-lock-doc-face ((,class (:foreground ,foreground))))
+   `(font-lock-doc-string-face ((,class (:foreground ,foreground))))
    `(font-lock-function-name-face ((,class (:foreground ,foreground :weight bold))))
    `(font-lock-keyword-face ((,class (:foreground ,foreground))))
    `(font-lock-negation-char-face ((,class (:foreground ,foreground))))
    `(font-lock-preprocessor-face ((,class (:foreground ,foreground))))
    `(font-lock-regexp-grouping-backslash ((,class (:foreground ,yellow))))
    `(font-lock-regexp-grouping-construct ((,class (:foreground ,purple))))
-   `(font-lock-string-face ((,class (:foreground "moccasin"))))
-   `(font-lock-type-face ((,class (:foreground ,foreground))))
+   `(font-lock-string-face ((,class (:foreground ,foreground :slant italic))))
+   `(font-lock-type-face ((,class (:foreground ,foreground :weight bold))))
    `(font-lock-variable-name-face ((,class (:foreground ,foreground))))
    `(font-lock-warning-face ((,class (:weight bold :foreground ,red))))
    `(shadow ((,class (:foreground ,comment))))
