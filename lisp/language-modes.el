@@ -283,6 +283,7 @@ the name of FILE in the current directory, suitable for creation"
   (add-to-list 'interpreter-mode-alist '("python2.5" . python-mode))
   (defun mypy-extra-stuff ()
     (setq show-trailing-whitespace t)
+    (turn-on-fic-mode)
     (setq tab-width 4)
     (setq indent-tabs-mode nil)
     (define-key python-mode-map "\C-m" 'newline-and-indent))
