@@ -7,7 +7,7 @@
      ("walker" 15)
      ("kowloon" 17)
      ("krigpad" 13)
-     ("ultralix" 17)
+     ("ultralix" 18)
      (_ 14)))
 
 (defun font-candidate (&rest fonts)
@@ -26,12 +26,12 @@
 
   (when (krig-linuxp)
     (let ((font (font-candidate
-                 "Fantasque Sans Mono"
-                 "Ubuntu Mono"
                  "Inconsolata"
+                 "DejaVu Sans Mono"
+                 "Ubuntu Mono"
+                 "Fantasque Sans Mono"
                  "Consolas"
-                 "Liberation Mono"
-                 "DejaVu Sans Mono")))
+                 "Liberation Mono")))
       (message "Setting font: %s" font)
       (set-face-attribute 'default nil :font font)))
   (menu-bar-mode -1))
@@ -53,8 +53,8 @@
   (add-hook 'after-init-hook
             '(lambda ()
                (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-               (load-theme 'krig)
-               ;;(load-theme 'noctilux)
+               ;;(load-theme 'krig)
+               (load-theme 'noctilux)
                ;; rainbow-delimiters
                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
                (progn
