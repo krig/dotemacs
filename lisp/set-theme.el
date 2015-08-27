@@ -26,9 +26,9 @@
 
   (when (krig-linuxp)
     (let ((font (font-candidate
-                 "Inconsolata"
-                 "DejaVu Sans Mono"
                  "Ubuntu Mono"
+                 "DejaVu Sans Mono"
+                 "Inconsolata"
                  "Fantasque Sans Mono"
                  "Consolas"
                  "Liberation Mono")))
@@ -55,6 +55,7 @@
                (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
                ;;(load-theme 'krig)
                (load-theme 'noctilux)
+               ;;(load-theme 'adwaita)
                ;; rainbow-delimiters
                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
                (progn
