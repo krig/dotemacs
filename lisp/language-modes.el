@@ -238,7 +238,6 @@ the name of FILE in the current directory, suitable for creation"
                       (repeat  . t)))))
 
 
-
 ;; java!
 (add-hook
  'java-mode-hook
@@ -246,6 +245,15 @@ the name of FILE in the current directory, suitable for creation"
     (setq c-comment-start-regexp "(@|/(/|[*][*]?))")
     (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
 
+
+;; clean up some modelines
+(defmacro rename-modeline (package-name mode new-name)
+  `(eval-after-load ,package-name
+     '(defadvice ,mode (after rename-modeline activate)
+        (setq mode-name ,new-name))))
+
+(rename-modeline "js2-mode" js2-mode "js2")
+(rename-modeline "clojure-mode" clojure-mode "clj")
 
 
 ;; markdown!
