@@ -255,6 +255,16 @@ the name of FILE in the current directory, suitable for creation"
 (rename-modeline "js2-mode" js2-mode "js2")
 (rename-modeline "clojure-mode" clojure-mode "clj")
 
+;; javascript!
+(defun krig-js2-mode-hook ()
+  (setq show-trailing-whitespace t)
+  (turn-on-fic-mode)
+  (subword-mode 1)
+  (setq tab-width 2)
+  (setq js-indent-level 2)
+  (setq indent-tabs-mode nil))
+(add-hook 'js2-mode-hook 'krig-js2-mode-hook)
+(add-hook 'js-mode-hook 'krig-js2-mode-hook)
 
 ;; markdown!
 (progn
