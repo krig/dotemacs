@@ -2,7 +2,7 @@
   (require 'cl))
 
 (defconst proctologist-description
-  "A Light Table inspired color theme based on Solarized's definitions.")
+  "A noctilux-based color theme based on a Light Table inspired color theme based on Solarized's definitions.")
 
 (defcustom proctologist-degrade nil
   "For test purposes only; when in GUI mode, forces Proctologist to use the 256

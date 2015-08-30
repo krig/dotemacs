@@ -1,4 +1,4 @@
-;;; proctologist-theme.el --- Dark theme inspired by LightTable
+;;; proctologist-theme.el --- Dark theme inspired by noctilux inspired by LightTable
 
 (require 'proctologist-definitions
          (locate-file "proctologist-definitions.el" custom-theme-load-path
