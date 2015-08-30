@@ -229,4 +229,6 @@ symbol, not word, as I need this for programming the most."
     (kill-buffer)
     (jump-to-register :magit-fullscreen))
 
-  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+
+  (global-set-key (kbd "C-c s") 'magit-status))
