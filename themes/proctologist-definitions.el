@@ -53,11 +53,12 @@ the \"Gen RGB\" column in proctologist-definitions.el to improve them further."
 ;; FIXME: The Generic RGB colors will actually vary from device to device, but
 ;;        hopefully these are closer to the intended colors than the sRGB values
 ;;        that Emacs seems to dislike
+;; 2a2c2e
 (defvar proctologist-colors           ; ANSI(Proctologist terminal)
   ;; name     sRGB      Gen RGB   256       16              8
-  '((base03  "#2a2c2e" "#2a2c2e" "#2a2c2e" "brightblack"   "black")
-    (base02  "#292929" "#292929" "#292929" "black"         "black")
-    (base01  "#696969" "#696969" "#696969" "brightgreen"   "green")
+  '((base03  "#23262e" "#23262e" "#23262e" "brightblack"   "black")
+    (base02  "#1f2229" "#1f2229" "#1f2229" "black"         "black")
+    (base01  "#45484f" "#45484f" "#45484f" "brightgreen"   "green")
     (base00  "#9f9f9f" "#9f9f9f" "#9f9f9f" "brightyellow"  "yellow")
     (base0   "#cfcfcf" "#cfcfcf" "#cfcfcf" "brightblue"    "blue")
     (base1   "#aaaaaa" "#aaaaaa" "#aaaaaa" "brightcyan"    "cyan")
