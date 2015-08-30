@@ -64,7 +64,7 @@
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
   (when (display-graphic-p)
-    (set-face-font 'speedbar-face "Ubuntu Mono-9"))
+    (set-face-font 'speedbar-face "Ubuntu Mono-11"))
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
   (setq speedbar-show-unknown-files t)

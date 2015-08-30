@@ -54,7 +54,8 @@
             '(lambda ()
                (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
                ;;(load-theme 'krig)
-               (load-theme 'noctilux)
+               ;;(load-theme 'noctilux)
+               (load-theme 'proctologist)
                ;;(load-theme 'adwaita)
                ;; rainbow-delimiters
                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
