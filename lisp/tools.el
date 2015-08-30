@@ -234,5 +234,7 @@ symbol, not word, as I need this for programming the most."
 
 (global-set-key (kbd "C-c s") 'magit-status)
 
+(require 'rfringe)
+
 ;; diminish
 (require 'diminish)
