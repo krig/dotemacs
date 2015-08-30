@@ -104,19 +104,21 @@
 ;; smart-tab
 (progn
   (add-to-list 'load-path "~/.emacs.d/tools/smart-tab")
-  (when (require 'smart-tab nil 'noerror)
+  (require 'smart-tab)
+  (with-eval-after-load 'smart-tab
     (global-smart-tab-mode 1)
     (add-to-list 'smart-tab-disabled-major-modes 'message-mode)
     (setq smart-tab-using-hippie-expand t)
     (require 'hippie-exp)
     (setq hippie-expand-try-functions-list
-	  '(try-expand-dabbrev
-	    try-expand-dabbrev-all-buffers
-	    try-expand-dabbrev-from-kill
-	    try-complete-lisp-symbol-partially
-	    try-complete-lisp-symbol
-	    try-complete-file-name-partially
-	    try-complete-file-name))))
+          '(try-complete-file-name-partially
+            try-complete-file-name
+            try-expand-all-abbrevs
+            try-expand-dabbrev
+            try-expand-dabbrev-all-buffers
+            try-expand-dabbrev-from-kill
+            try-complete-lisp-symbol-partially
+            try-complete-lisp-symbol))))
 
 ;; smarttabs
 (progn
@@ -229,6 +231,18 @@ symbol, not word, as I need this for programming the most."
     (interactive)
     (kill-buffer)
     (jump-to-register :magit-fullscreen))
+
+  ;; workaround issue magit/magit#2220
+  (defun magit-toplevel (&optional file strict)
+    (magit--with-safe-default-directory file
+      (-if-let (cdup (magit-rev-parse-safe "--show-cdup"))
+          (magit-expand-git-file-name
+           (file-name-as-directory (expand-file-name cdup)))
+        (unless strict
+          (-when-let (gitdir (magit-git-dir))
+            (if (magit-bare-repo-p)
+                gitdir
+            (file-name-directory (directory-file-name gitdir))))))))
 
   (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 
