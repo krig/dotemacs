@@ -96,7 +96,7 @@
 (require 'ignoramus)
 (ignoramus-setup)
 
-;; whitespace - 
+;; whitespace
 (require 'whitespace)
 (setq whitespace-line-column 130)
 
@@ -183,8 +183,8 @@ symbol, not word, as I need this for programming the most."
 
 
 ;; open for dired
-(progn
-  (require 'dired-x)
+(require 'dired-x)
+(with-eval-after-load 'dired-x
   (defun dired-open-mac ()
     (interactive)
     (let ((file-name (dired-get-file-for-visit)))
@@ -200,7 +200,8 @@ symbol, not word, as I need this for programming the most."
 ;; git-messenger
 (add-to-list 'load-path "~/.emacs.d/tools/popup")
 (add-to-list 'load-path "~/.emacs.d/tools/git-messenger")
-(when (require 'git-messenger nil 'noerror)
+(require 'git-messenger)
+(with-eval-after-load 'git-messenger
   (setq git-messenger:show-detail t)
   (define-key git-messenger-map (kbd "C-k") 'git-messenger:copy-message)
   (global-set-key (kbd "C-x v p") 'git-messenger:popup-message))
@@ -217,7 +218,7 @@ symbol, not word, as I need this for programming the most."
 ;; full screen magit-status
 
 
-(when (require 'magit nil 'noerror)
+(with-eval-after-load 'magit
   (defadvice magit-status (around magit-fullscreen activate)
     (window-configuration-to-register :magit-fullscreen)
     ad-do-it
@@ -229,10 +230,9 @@ symbol, not word, as I need this for programming the most."
     (kill-buffer)
     (jump-to-register :magit-fullscreen))
 
-  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 
-  (global-set-key (kbd "C-c s") 'magit-status))
-
+(global-set-key (kbd "C-c s") 'magit-status)
 
 ;; diminish
 (require 'diminish)
