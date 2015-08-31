@@ -25,7 +25,7 @@
      (:name "sent" :query "tag:sent" :key "t")
      (:name "drafts" :query "tag:draft" :key "d")
      (:name "all mail" :query "*" :key "a")
-     (:name "fedora" :query "tag:fedora and tag:unread"))))
+     (:name "to-me" :query "tag:to-me"))))
  '(safe-local-variable-values (quote ((hl-sexp-mode) (rainbow-mode . t))))
  '(scroll-bar-mode (quote right))
  '(send-mail-function (quote sendmail-send-it))
