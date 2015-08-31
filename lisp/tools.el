@@ -68,7 +68,7 @@
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
   (setq speedbar-show-unknown-files t)
-  (setq sr-speedbar-skip-other-window-p t)
+  (setq sr-speedbar-skip-other-window-p nil)
   (mapcar 'speedbar-add-supported-extension '(".hs" ".rb"))
   (global-set-key (kbd "M-p") 'sr-speedbar-toggle)
   (global-set-key (kbd "C-x p") 'sr-speedbar-select-window))
