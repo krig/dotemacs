@@ -252,3 +252,24 @@ symbol, not word, as I need this for programming the most."
 
 ;; diminish
 (require 'diminish)
+
+;; paredit
+(progn
+  (add-to-list 'load-path "~/.emacs.d/tools/paredit")
+  (autoload 'enable-paredit-mode "paredit"
+    "Turn on pseudo-structural editing of Lisp code."
+    t)
+
+  (add-hook 'clojure-mode-hook (lambda () (enable-paredit-mode)))
+  (add-hook 'cider-repl-mode-hook (lambda () (enable-paredit-mode)))
+  (add-hook 'emacs-lisp-mode-hook (lambda () (enable-paredit-mode)))
+
+  (with-eval-after-load 'paredit
+    ;; don't hijack \
+    (define-key paredit-mode-map (kbd "\\") nil)
+
+    ;; making paredit work with delete-selection-mode
+    (put 'paredit-forward-delete 'delete-selection 'supersede)
+    (put 'paredit-backward-delete 'delete-selection 'supersede)
+    (put 'paredit-newline 'delete-selection t)))
+

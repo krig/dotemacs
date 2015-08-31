@@ -37,3 +37,6 @@
 [submodule "modes/auto-complete"]
 	path = modes/auto-complete
 	url = git@github.com:auto-complete/auto-complete.git
+[submodule "tools/paredit"]
+	path = tools/paredit
+	url = http://mumble.net/~campbell/git/paredit.git/
