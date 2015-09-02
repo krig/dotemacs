@@ -216,7 +216,7 @@ the \"Gen RGB\" column in proctologist-definitions.el to improve them further."
               ((t (,@fg-base01 ,@bg-base02 ,@fmt-revbb :box nil))))
              (region ((t (,@fg-base01 ,@bg-base03 ,@fmt-revbb)))) ; Visual
              (secondary-selection ((t (,@bg-base02))))
-             (shadow ((t (,@fg-base01))))
+             (shadow ((t (,@fg-base00))))
              (trailing-whitespace ((t (,@fmt-revr ,@fg-red))))
              (vertical-border ((t (,@fg-base0))))
              ;; comint
