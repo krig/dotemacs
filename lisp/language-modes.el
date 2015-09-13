@@ -430,3 +430,12 @@ the name of FILE in the current directory, suitable for creation"
 (progn
   (autoload 'jai-mode "jai-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.jai\\'" . jai-mode)))
+
+
+;; sml-mode
+(with-eval-after-load 'sml-mode
+  (add-to-list 'auto-mode-alist '("\\.fun$" . sml-mode)
+  (add-to-list 'auto-mode-alist '("\\.sig$" . sml-mode)
+  (add-hook 'sml-mode-hook
+            (lambda ()
+              (turn-on-fic-mode))))))
