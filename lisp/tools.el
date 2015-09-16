@@ -233,16 +233,16 @@ symbol, not word, as I need this for programming the most."
     (jump-to-register :magit-fullscreen))
 
   ;; workaround issue magit/magit#2220
-  (defun magit-toplevel (&optional file strict)
-    (magit--with-safe-default-directory file
-      (-if-let (cdup (magit-rev-parse-safe "--show-cdup"))
-          (magit-expand-git-file-name
-           (file-name-as-directory (expand-file-name cdup)))
-        (unless strict
-          (-when-let (gitdir (magit-git-dir))
-            (if (magit-bare-repo-p)
-                gitdir
-            (file-name-directory (directory-file-name gitdir))))))))
+  ;; (defun magit-toplevel (&optional file strict)
+  ;;   (magit--with-safe-default-directory file
+  ;;     (-if-let (cdup (magit-rev-parse-safe "--show-cdup"))
+  ;;         (magit-expand-git-file-name
+  ;;          (file-name-as-directory (expand-file-name cdup)))
+  ;;       (unless strict
+  ;;         (-when-let (gitdir (magit-git-dir))
+  ;;           (if (magit-bare-repo-p)
+  ;;               gitdir
+  ;;           (file-name-directory (directory-file-name gitdir))))))))
 
   (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
 
