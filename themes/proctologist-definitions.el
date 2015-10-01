@@ -506,12 +506,12 @@ the \"Gen RGB\" column in proctologist-definitions.el to improve them further."
              ;; whitespace
              (whitespace-empty ((t (,@fg-red))))
              (whitespace-hspace ((t (,@fg-orange))))
-             (whitespace-indentation ((t (,@fg-base02))))
-             (whitespace-space ((t (,@fg-base02))))
+             (whitespace-indentation ((t (,@fg-green))))
+             (whitespace-space ((t (,@fg-green))))
              (whitespace-space-after-tab ((t (,@fg-cyan))))
              (whitespace-space-before-tab ((t (,@fmt-bold ,@fg-red))))
-             (whitespace-tab ((t (,@fg-base02))))
-             (whitespace-trailing ((t (,@fmt-bold ,@fg-red ,@bg-base02))))
+             (whitespace-tab ((t (,@fg-green))))
+             (whitespace-trailing ((t (,@fmt-bold ,@fg-red ,@bg-base01))))
              (whitespace-highlight-face ((t (,@fg-red ,@bg-blue))))
              (whitespace-line ((t (,@fg-magenta ,@bg-base03))))
              ;; rcirc
