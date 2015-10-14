@@ -178,7 +178,7 @@ open and unsaved."
 (defun open-worklog ()
   "creates the worklog for today if it doesn't exist and opens it in emacs"
   (interactive)
-  (let ((fn (shell-command-to-string "sh ~/annex/doc/work/SUSE/create-entry.sh")))
+  (let ((fn (shell-command-to-string "sh ~/work/SUSE/create-entry.sh")))
     (find-file (s-trim fn))))
 
 (defun reindent-buffer ()
