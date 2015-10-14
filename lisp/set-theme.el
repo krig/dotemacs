@@ -7,7 +7,7 @@
      ("walker" 15)
      ("kowloon" 17)
      ("krigpad" 13)
-     ("ultralix" 18)
+     ("ultralix" 15)
      (_ 14)))
 
 (defun font-candidate (&rest fonts)
@@ -26,6 +26,7 @@
 
   (when (krig-linuxp)
     (let ((font (font-candidate
+                 "Input"
                  "Ubuntu Mono"
                  "DejaVu Sans Mono"
                  "Inconsolata"
