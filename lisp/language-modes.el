@@ -323,33 +323,66 @@ the name of FILE in the current directory, suitable for creation"
       1 font-lock-keyword-face t))))
 
 
-(defun next-error-or-flymake ()
+(defun next-error-or-flycheck ()
   (interactive)
-  (if (bound-and-true-p flymake-mode)
-      (flymake-goto-next-error)
+  (if (bound-and-true-p flycheck-mode)
+      (flycheck-next-error)
     (next-error)))
 
+;; flycheck!
+(progn
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (setq flycheck-indication-mode 'right-fringe)
+  (setq flycheck-flake8-maximum-line-length 160)
+
+  ;; replace ugly indicator
+  (when (fboundp 'define-fringe-bitmap)
+  (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
+    (vector #b00001111
+            #b00001111
+            #b00001111
+            #b00001111
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000)))
+
+  (global-set-key (kbd "M-n") 'next-error-or-flycheck))
 
 ;; flymake!
-(progn
-  (require 'flymake)
-  (setq flymake-gui-warnings-enabled nil)
-  (setq help-at-pt-timer-delay 0.9)
-  (setq help-at-pt-display-when-idle '(flymake-overlay))
-  (global-set-key (kbd "M-n") 'next-error-or-flymake)
+;; (defun next-error-or-flymake ()
+;;   (interactive)
+;;   (if (bound-and-true-p flymake-mode)
+;;       (flymake-goto-next-error)
+;;     (next-error)))
+;; (progn
+;;   (require 'flymake)
+;;   (setq flymake-gui-warnings-enabled nil)
+;;   (setq help-at-pt-timer-delay 0.9)
+;;   (setq help-at-pt-display-when-idle '(flymake-overlay))
+;;   (global-set-key (kbd "M-n") 'next-error-or-flymake)
 
 
-  (add-to-list 'load-path "~/.emacs.d/modes/flymake-easy/")
-  (add-to-list 'load-path "~/.emacs.d/modes/flymake-python-pyflakes/")
-  (when (require 'flymake-python-pyflakes nil 'noerror)
-    (setq flymake-python-pyflakes-executable "flake8")
-    (setq flymake-python-pyflakes-extra-arguments '("--max-complexity=10" "--max-line-length=120"))
-    (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
-  ;; Forces flymake to underline bad lines, instead of fully
-  ;; highlighting them; remove this if you prefer full highlighting.
-  (custom-set-faces
-   '(flymake-errline ((((class color)) (:underline "#aa3333"))))
-   '(flymake-warnline ((((class color)) (:underline "#aa4444"))))))
+;;   (add-to-list 'load-path "~/.emacs.d/modes/flymake-easy/")
+;;   (add-to-list 'load-path "~/.emacs.d/modes/flymake-python-pyflakes/")
+;;   (when (require 'flymake-python-pyflakes nil 'noerror)
+;;     (setq flymake-python-pyflakes-executable "flake8")
+;;     (setq flymake-python-pyflakes-extra-arguments '("--max-complexity=10" "--max-line-length=120"))
+;;     (add-hook 'python-mode-hook 'flymake-python-pyflakes-load))
+;;   ;; Forces flymake to underline bad lines, instead of fully
+;;   ;; highlighting them; remove this if you prefer full highlighting.
+;;   (custom-set-faces
+;;    '(flymake-errline ((((class color)) (:underline "#aa3333"))))
+;;    '(flymake-warnline ((((class color)) (:underline "#aa4444"))))))
 
 
 ;; Workaround the annoying warnings:

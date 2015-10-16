@@ -192,7 +192,8 @@ the \"Gen RGB\" column in proctologist-definitions.el to improve them further."
               (fmt-revbb `(:weight ,bright-bold :slant normal :underline nil  :inverse-video t))
               (fmt-revbbu `(:weight ,bright-bold :slant normal  :underline ,underline :inverse-video t))
               (fmt-redwave `(:underline (:color ,red :style wave) :inherit default))
-              (fmt-orangewave `(:underline (:color ,orange :style wave) :inherit default)))
+              (fmt-orangewave `(:underline (:color ,orange :style wave) :inherit default))
+              (fmt-bluewave `(:underline (:color ,blue :style wave) :inherit default)))
           `((;; basic
              (default ((t (,@fg-base0 ,@bg-back)))) ; Normal
              (cursor ((t (,@fg-base03 ,@bg-white)))) ; Cursor
@@ -373,6 +374,12 @@ the \"Gen RGB\" column in proctologist-definitions.el to improve them further."
              ;; Flymake
              (flymake-errline ((t (,@fmt-redwave)))) ; ErrorMsg
              (flymake-warnline ((t (,@fmt-orangewave)))) ; WarningMsg
+             (flycheck-error ((t (,@fmt-redwave)))) ; ErrorMsg
+             (flycheck-warning ((t (,@fmt-orangewave)))) ; WarningMsg
+             (flycheck-info ((t (,@fmt-bluewave))))
+             (flycheck-fringe-error ((t (,@fg-red)))) ; ErrorMsg
+             (flycheck-fringe-warning ((t (,@fg-orange)))) ; WarningMsg
+             (flycheck-fringe-info ((t (,@fg-blue))))
              ;; column-marker
              (column-marker-1 ((t (,@bg-base01))))
              (column-marker-2 ((t (,@bg-cyan))))

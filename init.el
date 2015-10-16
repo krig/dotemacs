@@ -21,7 +21,7 @@
 
 ;; personal settings
 (progn
-  (setq hostname (or (getenv "HOSTNAME") system-name))
+  (defvar hostname (or (getenv "HOSTNAME") system-name))
   (setq user-full-name "Kristoffer Grönlund")
   (setq user-mail-address (if (string-prefix-p "krigpad" hostname)
 			      (concat "kgronlund@" "suse" ".com")
@@ -43,6 +43,8 @@
    dash
    epl
    findr
+   flycheck
+   flycheck-rust
    git-commit
    inf-ruby
    inflections
@@ -87,7 +89,7 @@
   (when (display-graphic-p)
     (scroll-bar-mode -1)
     (tooltip-mode -1)
-    (set-fringe-style -1)
+    (fringe-mode '(0 . 8))
     (tool-bar-mode -1)))
 
 
