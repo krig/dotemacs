@@ -31,6 +31,32 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+(mapc
+ (lambda (package)
+   (unless (package-installed-p package)
+     (package-install package)))
+ '(async
+   caml
+   cider
+   clojure-mode
+   dash
+   epl
+   findr
+   git-commit
+   inf-ruby
+   inflections
+   jump
+   magit
+   magit-popup
+   pkg-info
+   queue
+   rinari
+   ruby-compilation
+   sml-mode
+   spinner
+   tuareg
+   with-editor))
 
 ;;; basic settings
 (progn
