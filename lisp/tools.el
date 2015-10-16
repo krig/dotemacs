@@ -273,3 +273,28 @@ symbol, not word, as I need this for programming the most."
     (put 'paredit-backward-delete 'delete-selection 'supersede)
     (put 'paredit-newline 'delete-selection t)))
 
+
+;; zeal-at-point
+(progn
+  (add-to-list 'load-path "~/.emacs.d/tools/zeal-at-point")
+  (require 'zeal-at-point)
+  (global-set-key (kbd "C-c C-d") 'zeal-at-point)
+  (global-set-key (kbd "C-c d") 'zeal-at-point)
+  (global-set-key (kbd "C-c f") 'zeal-at-point-search)
+
+  (setq zeal-at-point-mode-alist
+        '((c++-mode . "c++")
+        (c-mode . "c")
+        (clojure-mode . "clojure")
+        (rust-mode . "rust")
+        (python-mode . "python 2")
+        (ruby-mode . "ruby 2")
+        (enh-ruby-mode . "ruby 2")
+        (common-lisp-mode . "lisp")
+        (perl-mode . "perl")
+        (html-mode . "html")
+        (gfm-mode . "markdown")
+        (markdown-mode . "markdown")
+        (js2-mode . "javascript")
+        (go-mode . "go")
+        (css-mode . "css"))))

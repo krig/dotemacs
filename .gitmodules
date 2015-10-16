@@ -40,3 +40,6 @@
 [submodule "tools/paredit"]
 	path = tools/paredit
 	url = http://mumble.net/~campbell/git/paredit.git/
+[submodule "tools/zeal-at-point"]
+	path = tools/zeal-at-point
+	url = git@github.com:krig/zeal-at-point.git
