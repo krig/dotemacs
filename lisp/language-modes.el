@@ -336,25 +336,27 @@ the name of FILE in the current directory, suitable for creation"
   (setq flycheck-flake8-maximum-line-length 160)
 
   ;; replace ugly indicator
-  (when (fboundp 'define-fringe-bitmap)
-  (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
-    (vector #b00001111
-            #b00001111
-            #b00001111
-            #b00001111
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000)))
+  (add-hook 'flycheck-mode-hook
+            (lambda ()
+              (when (fboundp 'define-fringe-bitmap)
+                (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
+                  (vector #b00001111
+                          #b00001111
+                          #b00001111
+                          #b00001111
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000
+                          #b00000000)))))
 
   (global-set-key (kbd "M-n") 'next-error-or-flycheck))
 
