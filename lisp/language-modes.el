@@ -137,6 +137,7 @@ or just one char if that's not possible"
                c-lineup-gcc-asm-reg
                c-lineup-arglist-tabs-only)))))
 
+
 (defun* get-closest-pathname (&optional (file ".git"))
   "Determine the pathname of the first instance of FILE starting from
 the current directory towards root. This may not do the correct thing
@@ -150,6 +151,7 @@ the name of FILE in the current directory, suitable for creation"
                        return d
                        if (equal d root)
                        return nil))))
+
 
 (add-hook 'c-mode-common-hook 'kernel-style-mode-hook)
 
@@ -197,7 +199,9 @@ the name of FILE in the current directory, suitable for creation"
           ((file-exists-p (format "%s/mk" projdir))
            (format "cd %s && ./mk" projdir))
           ((file-exists-p (format "%s/Cargo.toml" projdir))
-           (format "cd %s && cargo test" projdir)))))
+           (format "cd %s && cargo test" projdir))
+          (t
+           (format "cd %s && make -j" projdir)))))
   (local-set-key (kbd "C-x SPC") 'compile))
 
 
