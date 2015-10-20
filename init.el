@@ -51,6 +51,7 @@
    jump
    magit
    magit-popup
+   org-page
    pkg-info
    queue
    rinari
