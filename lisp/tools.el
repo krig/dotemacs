@@ -298,3 +298,4 @@ symbol, not word, as I need this for programming the most."
         (js2-mode . "javascript")
         (go-mode . "go")
         (css-mode . "css"))))
+
