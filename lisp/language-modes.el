@@ -337,7 +337,7 @@ the name of FILE in the current directory, suitable for creation"
 (progn
   (add-hook 'after-init-hook #'global-flycheck-mode)
   (setq flycheck-indication-mode 'right-fringe)
-  (setq flycheck-clang-language-standard "c++11")
+  ;;(setq flycheck-clang-language-standard "c++11")
   (setq flycheck-flake8-maximum-line-length 160)
 
   ;; replace ugly indicator
