@@ -7,6 +7,8 @@
 ;;
 ;; Should work for 24.3+.
 
+;; raise GC threshold during init
+(setq gc-cons-threshold 80000000)
 
 ;; system details
 (defun krig-macp () (string-match "apple-darwin" system-configuration))
@@ -156,3 +158,6 @@
 ;; finally, open ~/.todo
 (find-file "~/.todo")
 (rename-buffer "*todo*")
+
+;; reset gc-cons-threshold
+(setq gc-cons-threshold 800000)
