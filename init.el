@@ -159,5 +159,20 @@
 (find-file "~/.todo")
 (rename-buffer "*todo*")
 
+(defun indent-4-spaces ()
+  (interactive)
+  (setq tab-width 4)
+  (setq indent-tabs-mode nil))
+
+(defun indent-2-spaces ()
+  (interactive)
+  (setq tab-width 2)
+  (setq indent-tabs-mode nil))
+
+(defun indent-tabs ()
+  (interactive)
+  (setq tab-width 4)
+  (setq indent-tabs-mode t))
+
 ;; reset gc-cons-threshold
 (setq gc-cons-threshold 800000)
