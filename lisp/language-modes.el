@@ -185,6 +185,18 @@ the name of FILE in the current directory, suitable for creation"
   (local-set-key (kbd "M-j") 'join-line))
   ;;;(local-set-key (kbd "C-x SPC") 'compile))
 
+(defun compile-and-run ()
+  (interactive)
+  (let* ((projdir (file-name-directory (get-closest-pathname)))
+         (command (cond
+                   ((file-exists-p (format "%s/Cargo.toml" projdir))
+                    (format "cd %s && cargo run" projdir))
+                   ((file-exists-p (format "%s/Makefile" projdir))
+                    (format "cd %s && make run" projdir))
+                   (t
+                    (format "cd %s && make run" projdir)))))
+    (async-shell-command command)))
+
 (defun krig-compile-hook ()
   (setq compilation-read-command nil)
   (set (make-local-variable 'compile-command)
@@ -202,8 +214,8 @@ the name of FILE in the current directory, suitable for creation"
            (format "cd %s && cargo test" projdir))
           (t
            (format "cd %s && make -j" projdir)))))
-  (local-set-key (kbd "C-x SPC") 'compile))
-
+  (local-set-key (kbd "C-x SPC") 'compile)
+  (local-set-key (kbd "C-x r") 'compile-and-run))
 
 (defun krig-mode-hook ()
   (setq show-trailing-whitespace t)
