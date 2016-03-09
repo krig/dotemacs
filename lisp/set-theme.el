@@ -6,7 +6,7 @@
    (pcase (car (split-string hostname "\\."))
      ("walker" 15)
      ("kowloon" 17)
-     ("krigpad" 13)
+     ("krigpad" 15)
      ("ultralix" 15)
      (_ 14)))
 
