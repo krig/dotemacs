@@ -6,7 +6,7 @@
    (pcase (car (split-string hostname "\\."))
      ("walker" 15)
      ("kowloon" 17)
-     ("krigpad" 13)
+     ("krigpad" (if (> (display-pixel-width) 1900) 13 12))
      ("ultralix" 15)
      (_ 14)))
 
@@ -26,10 +26,10 @@
 
   (when (krig-linuxp)
     (let ((font (font-candidate
-                 "DejaVu Sans Mono"
-                 "Input"
-                 "Inconsolata"
                  "Ubuntu Mono"
+                 "Input"
+                 "DejaVu Sans Mono"
+                 "Inconsolata"
                  "Fantasque Sans Mono"
                  "Consolas"
                  "Liberation Mono")))
