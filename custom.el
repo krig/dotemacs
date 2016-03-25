@@ -12,7 +12,7 @@
  '(cursor-color "#cccccc")
  '(custom-safe-themes
    (quote
-    ("7b6ad0adf617f1e9c7ab0029a41e8d3ffd641d2168beca01140016ec3e80dbe4" default)))
+    ("dbacd88a89792b06377f164e190b6b3101a1ba6b0bce8851e08d575f5a6eae76" "7b6ad0adf617f1e9c7ab0029a41e8d3ffd641d2168beca01140016ec3e80dbe4" default)))
  '(delete-selection-mode nil)
  '(fci-rule-color "#343d46")
  '(foreground-color "#cccccc")

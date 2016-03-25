@@ -49,6 +49,7 @@
 ;;; Code:
 
 (defun krig-theme-paren-clr (n)
+  "Generate paren color for rainbow-delimiters (N is intensity)."
   (let ((c (+ ?\x69 (* (1- n) 8))))
     (format "#%X%X%X" c c c)))
 
@@ -68,7 +69,8 @@
        ;;(foreground "#e9e2cb")
        (foreground "#cbc5bd")
        ;;(comment "#4f5b67") ;; table-row
-       (comment "#a7adba") ;; table-row
+       ;;(comment "#a7adba") ;; table-row
+       (comment "#2ecc71") ;; table-row
        (red "#bf616a") ;; tab-control-hover-tab-close-button
        (orange "#DCA432") ;; darker tab-control-dirty-tab-close-butto
        (yellow "#ebcb8b") ;; tab-control-dirty-tab-close-button
@@ -90,13 +92,13 @@
    `(font-lock-constant-face ((,class (:foreground ,foreground))))
    `(font-lock-doc-face ((,class (:foreground ,foreground))))
    `(font-lock-doc-string-face ((,class (:foreground ,foreground))))
-   `(font-lock-function-name-face ((,class (:foreground ,foreground :weight bold))))
+   `(font-lock-function-name-face ((,class (:foreground ,foreground))))
    `(font-lock-keyword-face ((,class (:foreground ,foreground))))
    `(font-lock-negation-char-face ((,class (:foreground ,foreground))))
    `(font-lock-preprocessor-face ((,class (:foreground ,foreground))))
    `(font-lock-regexp-grouping-backslash ((,class (:foreground ,yellow))))
    `(font-lock-regexp-grouping-construct ((,class (:foreground ,purple))))
-   `(font-lock-string-face ((,class (:foreground ,foreground :slant italic))))
+   `(font-lock-string-face ((,class (:foreground ,aqua))))
    `(font-lock-type-face ((,class (:foreground ,foreground :weight bold))))
    `(font-lock-variable-name-face ((,class (:foreground ,foreground))))
    `(font-lock-warning-face ((,class (:weight bold :foreground ,red))))
