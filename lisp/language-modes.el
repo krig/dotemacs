@@ -419,7 +419,8 @@ the name of FILE in the current directory, suitable for creation"
 (progn
   (add-to-list 'load-path "~/.emacs.d/tools/slime")
   (require 'slime-autoloads)
-  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (when (not (krig-winp))
+    (setq inferior-lisp-program "/usr/bin/sbcl"))
   (setq slime-contribs '(slime-fancy)))
 
 
@@ -459,7 +460,7 @@ the name of FILE in the current directory, suitable for creation"
 (defun krig-rust-mode-hook ()
   (add-hook 'compilation-finish-functions 'krig-locate-rustc-sources))
 
-(progn
+(when (not (krig-winp))
   (autoload 'rust-mode "rust-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
   (add-hook 'rust-mode-hook 'krig-rust-mode-hook))
@@ -482,6 +483,11 @@ the name of FILE in the current directory, suitable for creation"
 (progn
   (autoload 'jai-mode "jai-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.jai\\'" . jai-mode)))
+
+;; keii mode
+(progn
+  (autoload 'kei-mode "kei-mode" nil t)
+  (add-to-list 'auto-mode-alist '("\\.kei\\'" . kei-mode)))
 
 
 ;; sml-mode

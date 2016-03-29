@@ -34,33 +34,42 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
-(mapc
- (lambda (package)
-   (unless (package-installed-p package)
-     (package-install package)))
- '(async
-   caml
-   cider
-   clojure-mode
-   dash
-   epl
-   findr
-   flycheck
-   flycheck-rust
-   git-commit
-   inf-ruby
-   inflections
-   jump
-   magit
-   magit-popup
-   pkg-info
-   queue
-   rinari
-   ruby-compilation
-   sml-mode
-   spinner
-   tuareg
-   with-editor))
+(when (not (krig-winp))
+  (mapc
+   (lambda (package)
+     (unless (package-installed-p package)
+       (package-install package)))
+   '(async
+     caml
+     cider
+     clojure-mode
+     dash
+     epl
+     findr
+     flycheck
+     flycheck-rust
+     git-commit
+     inf-ruby
+     inflections
+     jump
+     magit
+     magit-popup
+     pkg-info
+     queue
+     rinari
+     ruby-compilation
+     sml-mode
+     spinner
+     tuareg
+     with-editor)))
+
+(when (not (krig-winp))
+  (mapc
+   (lambda (package)
+     (unless (package-installed-p package)
+       (package-install package)))
+   '(flycheck)))
+
 
 ;;; basic settings
 (progn
@@ -117,19 +126,20 @@
 
 
 ;; basic keybindings
-(global-set-key (kbd "M-[") 'beginning-of-defun)
-(global-set-key (kbd "M-]") 'end-of-defun)
-(global-set-key (kbd "M-j") 'join-line)
-(global-set-key (kbd "C-c C--") 'snakecase-word-or-region)
-(global-set-key (kbd "C-k") 'kill-and-join-forward)
-(global-set-key [C-tab] (lambda () (interactive) (insert-char 9 1)))
-(global-set-key [C-s-up] 'switch-cc-to-h)
+(progn
+  (global-set-key (kbd "M-[") 'beginning-of-defun)
+  (global-set-key (kbd "M-]") 'end-of-defun)
+  (global-set-key (kbd "M-j") 'join-line)
+  (global-set-key (kbd "C-c C--") 'snakecase-word-or-region)
+  (global-set-key (kbd "C-k") 'kill-and-join-forward)
+  (global-set-key [C-tab] (lambda () (interactive) (insert-char 9 1)))
+  (global-set-key [C-s-up] 'switch-cc-to-h)
 
-(when (eq system-type 'darwin)
-  ;;(setq mac-option-modifier 'super )
-  ;;(setq mac-command-modifier 'meta )
-  (global-set-key [home] 'beginning-of-line)
-  (global-set-key [end] 'end-of-line))
+  (when (krig-macp)
+    ;;(setq mac-option-modifier 'super )
+    ;;(setq mac-command-modifier 'meta )
+    (global-set-key [home] 'beginning-of-line)
+    (global-set-key [end] 'end-of-line)))
 
 
 ;; start the server

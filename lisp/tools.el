@@ -63,7 +63,7 @@
 (when (load "sr-speedbar.el" 'noerror)
   (setq speedbar-use-images nil)
   (make-face 'speedbar-face)
-  (when (display-graphic-p)
+  (when (and (display-graphic-p) (not (krig-winp)))
     (set-face-font 'speedbar-face "Ubuntu Mono-11"))
   (setq speedbar-mode-hook '(lambda () (buffer-face-set 'speedbar-face)))
   (sr-speedbar-refresh-turn-on)
@@ -254,7 +254,7 @@ symbol, not word, as I need this for programming the most."
 (require 'diminish)
 
 ;; zeal-at-point
-(progn
+(when (not (krig-winp))
   (add-to-list 'load-path "~/.emacs.d/tools/zeal-at-point")
   (require 'zeal-at-point)
   (global-set-key (kbd "C-c C-d") 'zeal-at-point)
