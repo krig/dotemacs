@@ -12,7 +12,7 @@
  '(cursor-color "#cccccc")
  '(custom-safe-themes
    (quote
-    ("44338f9097c0a5938fb4836886a4e88c2db356da7f5803b99444dfa1a9c71727" "dbacd88a89792b06377f164e190b6b3101a1ba6b0bce8851e08d575f5a6eae76" "7b6ad0adf617f1e9c7ab0029a41e8d3ffd641d2168beca01140016ec3e80dbe4" default)))
+    ("1b82a145fc1450dbff77258e3faa334f84b136b784d26ebb186d9658e2eddb89" "44338f9097c0a5938fb4836886a4e88c2db356da7f5803b99444dfa1a9c71727" "dbacd88a89792b06377f164e190b6b3101a1ba6b0bce8851e08d575f5a6eae76" "7b6ad0adf617f1e9c7ab0029a41e8d3ffd641d2168beca01140016ec3e80dbe4" default)))
  '(delete-selection-mode nil)
  '(fci-rule-color "#343d46")
  '(foreground-color "#cccccc")
