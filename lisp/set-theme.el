@@ -24,6 +24,9 @@
                       'greek-iso8859-7
                       '("Consolas" . "iso10646-1")))
 
+  (when (krig-winp)
+    (set-frame-font "Consolas-12"))
+
   (when (krig-linuxp)
     (let ((font (font-candidate
                  "Ubuntu Mono"
