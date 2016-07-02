@@ -37,7 +37,7 @@
   (setq message-kill-buffer-on-exit t)
   ;(setq notmuch-search-oldest-first nil) ;; second thought on this :P
   (define-key 'notmuch-show-mode-map "D" 'my-notmuch-show-view-as-patch)
-  (require 'notmuch-address)
-  (setq notmuch-address-command (expand-file-name "~/bin/nottoomuch-addresses.sh"))
-  (setq notmuch-crypto-process-mime t)
-  (notmuch-address-message-insinuate))
+  ;;(require 'notmuch-address)
+  ;;(setq notmuch-address-command (expand-file-name "~/bin/nottoomuch-addresses.sh"))
+  (setq notmuch-crypto-process-mime t))
+  ;;(notmuch-address-message-insinuate))
