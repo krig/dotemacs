@@ -29,6 +29,7 @@
 
   (when (krig-linuxp)
     (let ((font (font-candidate
+                 "mononoki"
                  "Ubuntu Mono"
                  "Input"
                  "DejaVu Sans Mono"
@@ -57,7 +58,8 @@
   (add-hook 'after-init-hook
             '(lambda ()
                (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-               (load-theme 'krig)
+               ;;(load-theme 'krig)
+               (load-theme 'misterioso)
                ;;(load-theme 'noctilux)
                ;;(load-theme 'proctologist)
                ;;(load-theme 'adwaita)

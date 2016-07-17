@@ -25,7 +25,9 @@
 (progn
   (defvar hostname (or (getenv "HOSTNAME") system-name))
   (setq user-full-name "Kristoffer Grönlund")
-  (setq user-mail-address (if (string-prefix-p "krigpad" hostname)
+  (setq user-mail-address (if (or
+                               (string-prefix-p "krigpad" hostname)
+                               (string-prefix-p "charsiu" hostname))
 			      (concat "kgronlund@" "suse" ".com")
 			    (concat "krig@" "koru" ".se"))))
 
@@ -158,6 +160,7 @@
 
 ;; notmuch
 (when (or (string-prefix-p "krigpad" hostname)
+          (string-prefix-p "charsiu" hostname)
           (string-prefix-p "ultralix" hostname))
   (load "notmuch-config.el"))
 
