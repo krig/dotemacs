@@ -27,6 +27,8 @@
                  (add-to-list 'minor-mode-overriding-map-alist new-ro-bind))
     (goto-char (point-min))))
 
+(setq mm-sign-option 'guided)
+
 (add-to-list 'load-path "~/.emacs.d/tools/notmuch/emacs")
 (when (require 'notmuch nil 'noerror)
   (setq mail-user-agent 'message-user-agent)
@@ -39,6 +41,7 @@
   (define-key 'notmuch-show-mode-map "D" 'my-notmuch-show-view-as-patch)
   ;;(require 'notmuch-address)
   ;;(setq notmuch-address-command (expand-file-name "~/bin/nottoomuch-addresses.sh"))
+  (add-hook 'message-setup-hook 'mml-secure-sign-pgpmime)
   ;;(add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)
   (setq notmuch-crypto-process-mime t))
   ;;(notmuch-address-message-insinuate))
