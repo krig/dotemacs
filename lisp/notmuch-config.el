@@ -41,7 +41,7 @@
   (define-key 'notmuch-show-mode-map "D" 'my-notmuch-show-view-as-patch)
   ;;(require 'notmuch-address)
   ;;(setq notmuch-address-command (expand-file-name "~/bin/nottoomuch-addresses.sh"))
-  (add-hook 'message-setup-hook 'mml-secure-sign-pgpmime)
+  ;;(add-hook 'message-setup-hook 'mml-secure-sign-pgpmime)
   ;;(add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)
   (setq notmuch-crypto-process-mime t))
   ;;(notmuch-address-message-insinuate))
