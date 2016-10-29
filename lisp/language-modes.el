@@ -355,24 +355,31 @@ the name of FILE in the current directory, suitable for creation"
   ;; replace ugly indicator
   (add-hook 'flycheck-mode-hook
             (lambda ()
+              ;; if this is python 3, use python 3 executables
+              (when (save-excursion
+                      (goto-char 1)
+                      (looking-at "#!/usr/bin/python3"))
+                (setq flycheck-python-flake8-executable "flake8-3.5")
+                (setq flycheck-python-pylint-executable "flake8-3.5")
+                (setq flycheck-python-pycompile-executable "python3"))
               (when (fboundp 'define-fringe-bitmap)
                 (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
-                  (vector #b00001111
-                          #b00001111
-                          #b00001111
-                          #b00001111
-                          #b00000000
-                          #b00000000
-                          #b00000000
-                          #b00000000
-                          #b00000000
-                          #b00000000
-                          #b00000000
-                          #b00000000
-                          #b00000000
-                          #b00000000
-                          #b00000000
-                          #b00000000
+                  (vector #b00000100
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00001110
+                          #b00000100
                           #b00000000)))))
 
   (global-set-key (kbd "M-n") 'next-error-or-flycheck))
