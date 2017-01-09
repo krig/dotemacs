@@ -356,12 +356,17 @@ the name of FILE in the current directory, suitable for creation"
   (add-hook 'flycheck-mode-hook
             (lambda ()
               ;; if this is python 3, use python 3 executables
-              (when (save-excursion
+              (if (save-excursion
                       (goto-char 1)
                       (looking-at "#!/usr/bin/python3"))
-                (setq flycheck-python-flake8-executable "flake8-3.5")
-                (setq flycheck-python-pylint-executable "flake8-3.5")
-                (setq flycheck-python-pycompile-executable "python3"))
+                  (progn
+                    (setq flycheck-python-flake8-executable "flake8-3.5")
+                    (setq flycheck-python-pylint-executable "pylint-3.5")
+                    (setq flycheck-python-pycompile-executable "python3"))
+                (progn
+                  (setq flycheck-python-flake8-executable "flake8-2.7")
+                  (setq flycheck-python-pylint-executable "pylint-2.7")
+                  (setq flycheck-python-pycompile-executable "python2.7")))
               (when (fboundp 'define-fringe-bitmap)
                 (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
                   (vector #b00000100
@@ -479,6 +484,7 @@ the name of FILE in the current directory, suitable for creation"
 
 ;; go mode
 (progn
+  (add-to-list 'load-path "~/.emacs.d/modes/go-mode")
   (require 'go-mode-autoloads))
 
 ;; nasm mode
