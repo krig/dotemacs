@@ -6,7 +6,7 @@
    (pcase (car (split-string hostname "\\."))
      ("walker" 15)
      ("kowloon" 17)
-     ("krigpad" (if (> (display-pixel-width) 1900) 13 12))
+     ("krigpad" (if (> (display-pixel-width) 1900) 13 13))
      ("ultralix" 15)
      (_ 14)))
 
@@ -63,6 +63,7 @@
                ;;(load-theme 'noctilux)
                ;;(load-theme 'proctologist)
                ;;(load-theme 'adwaita)
+               (load-theme 'misterioso)
                ;; rainbow-delimiters
                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
                (progn
