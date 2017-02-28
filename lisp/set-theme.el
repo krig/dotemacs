@@ -75,4 +75,5 @@
                                                (krig-paren-clr i)))))))
 
 (unless (display-graphic-p)
-  (menu-bar-mode -1))
+  (menu-bar-mode -1)
+  (load-theme 'adwaita))
