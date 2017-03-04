@@ -1,17 +1,21 @@
-;; loads and sets the theme
+;;; package --- Set font and theme depending on computer/screen/etc.
+;;; Commentary:
 
 (require 'cl)
 
+;;; Code:
+
 (defun font-size-for-machine ()
+  "Set font size depending on hostname and screen size."
    (pcase (car (split-string hostname "\\."))
      ("walker" 15)
      ("kowloon" 17)
-     ("krigpad" (if (> (display-pixel-width) 1900) 13 13))
+     ("krigpad" (if (> (display-pixel-width) 1900) 13 12))
      ("ultralix" 15)
      (_ 14)))
 
 (defun font-candidate (&rest fonts)
-  "Return existing font which first match."
+  "Return existing font which first match.  FONTS is a list of font names."
   (let ((fonts (map 'list (lambda (f) (format "%s-%d:weight=normal" f (font-size-for-machine))) fonts)))
     (find-if (lambda (f) (find-font (font-spec :name f))) fonts)))
 
@@ -29,9 +33,9 @@
 
   (when (krig-linuxp)
     (let ((font (font-candidate
+                 "Input"
                  "mononoki"
                  "Ubuntu Mono"
-                 "Input"
                  "DejaVu Sans Mono"
                  "Inconsolata"
                  "Fantasque Sans Mono"
@@ -47,10 +51,12 @@
             '(lambda () (scroll-bar-mode -1))))
 
 (defun krig-paren-clr (n)
+  "Generate grayscale color code.  N is a number between 1 and 9."
   (let ((c (+ ?\x69 (* (1- n) 8))))
     (format "#%X%X%X" c c c)))
 
 (defun krig-rainbow-face-n (n)
+  "Format name of face for rainbow-delimiters.  N is number between 1 and 9."
   (intern (format "rainbow-delimiters-depth-%d-face" n)))
 
 ;; set theme
@@ -64,6 +70,9 @@
                ;;(load-theme 'proctologist)
                ;;(load-theme 'adwaita)
                (load-theme 'misterioso)
+               ;; adjust some notmuch faces
+               (progn
+                 (set-face-foreground 'notmuch-search-unread-face "#afa"))
                ;; rainbow-delimiters
                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
                (progn
@@ -77,3 +86,5 @@
 (unless (display-graphic-p)
   (menu-bar-mode -1)
   (load-theme 'adwaita))
+
+;;; set-theme.el ends here

@@ -26,6 +26,9 @@
      (:name "drafts" :query "tag:draft" :key "d")
      (:name "all mail" :query "*" :key "a")
      (:name "to-me" :query "tag:to-me"))))
+ '(package-selected-packages
+   (quote
+    (zonokai-theme tuareg swiper sublimity sublime-themes spacegray-theme sml-mode scss-mode rinari python-pylint python-pep8 pymacs pretty-symbols notmuch monokai-theme molokai-theme magit js2-mode jinja2-mode ipython idomenu gruvbox-theme github-browse-file git-messenger flymake-python-pyflakes flycheck-rust flycheck-elm erlang elpy elm-mode darkokai-theme cmake-mode cm-mode cider auto-yasnippet)))
  '(safe-local-variable-values (quote ((hl-sexp-mode) (rainbow-mode . t))))
  '(scroll-bar-mode (quote right))
  '(send-mail-function (quote sendmail-send-it))
