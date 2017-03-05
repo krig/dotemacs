@@ -72,7 +72,8 @@
                (load-theme 'misterioso)
                ;; adjust some notmuch faces
                (progn
-                 (set-face-foreground 'notmuch-search-unread-face "#afa"))
+                 (set-face-foreground 'notmuch-search-unread-face "#afa")
+                 (set-cursor-color "#f1c40f"))
                ;; rainbow-delimiters
                (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
                (progn
