@@ -60,16 +60,17 @@
   (intern (format "rainbow-delimiters-depth-%d-face" n)))
 
 ;; set theme
-(when (display-graphic-p)
-  (add-hook 'after-init-hook
-            '(lambda ()
-               (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(if (display-graphic-p)
+    (add-hook 'after-init-hook
+              '(lambda ()
+               ;;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
                ;;(load-theme 'krig)
-               (load-theme 'misterioso)
+               ;;(load-theme 'misterioso)
                ;;(load-theme 'noctilux)
                ;;(load-theme 'proctologist)
                ;;(load-theme 'adwaita)
-               (load-theme 'misterioso)
+               ;;(load-theme 'misterioso)
+               (load-theme 'gruvbox)
                ;; adjust some notmuch faces
                (progn
                  (set-face-foreground 'notmuch-search-unread-face "#afa")
@@ -82,10 +83,10 @@
                  (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
                  (cl-loop for i from 1 to 9 do
                           (set-face-foreground (krig-rainbow-face-n i)
-                                               (krig-paren-clr i)))))))
-
-(unless (display-graphic-p)
-  (menu-bar-mode -1)
-  (load-theme 'adwaita))
+                                               (krig-paren-clr i))))))
+  (add-hook 'after-init-hook
+            '(lambda ()
+               (menu-bar-mode -1)
+               (load-theme 'adwaita))))
 
 ;;; set-theme.el ends here
