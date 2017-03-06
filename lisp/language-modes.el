@@ -306,12 +306,6 @@ the name of FILE in the current directory, suitable for creation"
   (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode)))
 
 
-;; haml!
-(progn
-  (require 'haml-mode)
-  (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode)))
-
-
 ;; python!
 (progn
   (add-to-list 'interpreter-mode-alist '("python2.5" . python-mode))
@@ -453,10 +447,6 @@ the name of FILE in the current directory, suitable for creation"
 ; nope, I hate global auto-complete-mode
   ;(ac-config-default))
 
-;; nimrod mode
-(progn
-  (require 'nimrod-mode))
-
 ;; rust-mode
 
 (defun krig-locate-rustc-sources (buffer &optional stat)
@@ -476,11 +466,6 @@ the name of FILE in the current directory, suitable for creation"
   (autoload 'rust-mode "rust-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
   (add-hook 'rust-mode-hook 'krig-rust-mode-hook))
-
-;; ragel mode
-(progn
-  (autoload 'ragel-mode "ragel-mode" nil t)
-  (add-to-list 'auto-mode-alist '("\\.rl\\'" . ragel-mode)))
 
 ;; go mode
 (progn
