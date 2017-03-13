@@ -72,7 +72,7 @@
                ;;(load-theme 'misterioso)
                (load-theme 'gruvbox)
                ;; adjust some notmuch faces
-               (progn
+               (when (kg-using-notmuch-on-host)
                  (set-face-foreground 'notmuch-search-unread-face "#afa")
                  (set-cursor-color "#f1c40f"))
                ;; rainbow-delimiters

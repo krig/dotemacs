@@ -159,9 +159,12 @@
 (load "shell-stuff.el")
 
 ;; notmuch
-(when (or (string-prefix-p "krigpad" hostname)
+(defun kg-using-notmuch-on-host ()
+  (or (string-prefix-p "krigpad" hostname)
           (string-prefix-p "charsiu" hostname)
-          (string-prefix-p "ultralix" hostname))
+          (string-prefix-p "ultralix" hostname)))
+
+(when (kg-using-notmuch-on-host)
   (load "notmuch-config.el"))
 
 ;; set the theme
