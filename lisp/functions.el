@@ -292,3 +292,8 @@ open and unsaved."
         (linum-mode 1)
         (goto-line (read-number "Goto line: ")))
     (linum-mode -1)))
+
+(defun empty-string-p (string)
+  "Return true if the string is empty or nil. Expects string."
+  (or (null string)
+      (zerop (length (s-trim string)))))

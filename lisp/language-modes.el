@@ -187,7 +187,7 @@ the name of FILE in the current directory, suitable for creation"
 
 (defun krig-is-go (projdir)
   "Check if project dir contain a go project.  PROJDIR is the project dir."
-  (and (not (string-empty-p (getenv "GOPATH"))) (string-prefix-p (car (split-string (getenv "GOPATH") ":")) projdir)))
+  (and (not (empty-string-p (getenv "GOPATH"))) (string-prefix-p (car (split-string (getenv "GOPATH") ":")) projdir)))
 
 (defun compile-and-run ()
   "Used by krig-compile-hook to compile, then run."
