@@ -36,7 +36,7 @@
                 (mouse ((t (:foreground ,dark))))
                 (cursor ((t (:background ,dark))))
                 (border ((t (:foreground ,dark))))
-                (show-paren-match-face ((t (:foreground ,dark :background ,match-bg))))
+                (show-paren-match ((t (:foreground ,dark :background ,match-bg))))
                 (match ((t (:foreground ,light :background ,match-bg))))
                 (isearch ((t (:foreground ,light :background ,dark))))
                 (isearch-lazy-highlight-face ((t (:foreground ,dark :background ,match-bg))))
