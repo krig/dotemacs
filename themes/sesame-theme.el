@@ -28,40 +28,23 @@
 (deftheme sesame
   "Black on white.")
 
-(let* ((dark "#222222")
-       (light "#fcfcfc")
-       (match-bg "#f1c40f")
-       (shade-bg "#eeeeec")
-       (faces `((default ((t (:background ,light :foreground ,dark))))
-                (mouse ((t (:foreground ,dark))))
-                (cursor ((t (:background ,dark))))
-                (border ((t (:foreground ,dark))))
-                (show-paren-match ((t (:foreground ,dark :background ,match-bg))))
-                (match ((t (:foreground ,light :background ,match-bg))))
-                (isearch ((t (:foreground ,light :background ,dark))))
-                (isearch-lazy-highlight-face ((t (:foreground ,dark :background ,match-bg))))
-                (notmuch-wash-cited-text ((t (:foreground ,dark :background ,shade-bg))))
-                (widget-field ((t (:foreground ,dark :background ,shade-bg))))
-                )))
-  (dolist (face (face-list))
-    (cond ((memq face '(bold bold-italic))
-           (add-to-list 'faces `(,face ((t (:bold t))))))
-          ((memq face '(italic underline show-paren-mismatch-face))
-           (add-to-list 'faces `(,face ((t (:underline t))))))
-          ((memq face '(modeline modeline-buffer-id modeline-mousable
-                                 modeline-mousable-minor-mode highlight region
-                                 secondary-selection show-paren-match-face))
-           (add-to-list 'faces `(,face ((t (:foreground ,light
-                                            :background ,dark
-                                            :inverse t))))))
-          (t
-           (add-to-list 'faces `(,face ((t (nil))))))))
-  (apply 'custom-theme-set-faces 'sesame faces))
-
-;;;###autoload
-(when load-file-name
-  (add-to-list 'custom-theme-load-path
-               (file-name-as-directory (file-name-directory load-file-name))))
+(let ((class '((class color) (min-colors 89)))
+      (dark "#222222")
+      (light "#fcfcfc")
+      (match-bg "#f1c40f")
+      (shade-bg "#eeeeec"))
+  (custom-theme-set-faces
+   'sesame
+   `(default ((,class (:foreground ,dark :background ,light))))
+   `(mouse ((,class (:foreground ,dark))))
+   `(cursor ((,class (:background ,dark))))
+   `(border ((,class (:foreground ,dark))))
+   `(show-paren-match ((,class (:foreground ,dark :background ,match-bg))))
+   `(match ((,class (:foreground ,light :background ,match-bg))))
+   `(isearch ((,class (:foreground ,light :background ,dark))))
+   `(isearch-lazy-highlight-face ((,class (:foreground ,dark :background ,match-bg))))
+   `(notmuch-wash-cited-text ((,class (:foreground ,dark :background ,shade-bg))))
+   `(widget-field ((,class (:foreground ,dark :background ,shade-bg))))))
 
 (provide-theme 'sesame)
 

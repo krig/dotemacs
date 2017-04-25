@@ -91,6 +91,7 @@
   (global-auto-revert-mode t)
   (setq calendar-week-start-day 1)
   (delete-selection-mode t) ; delete selection when adding new text (like "normal" editors)
+  (setq blink-matching-paren t)
   (setq mark-even-if-inactive nil)
   (setq frame-title-format "%b %*") ; nicer window names
   (setq initial-scratch-message ";)\n") ; cleaner scratch buffers
