@@ -185,10 +185,17 @@ the name of FILE in the current directory, suitable for creation"
   (local-set-key (kbd "M-j") 'join-line))
   ;;;(local-set-key (kbd "C-x SPC") 'compile))
 
+(defun krig-is-go (projdir)
+  "Check if project dir contain a go project.  PROJDIR is the project dir."
+  (and (not (string-empty-p (getenv "GOPATH"))) (string-prefix-p (car (split-string (getenv "GOPATH") ":")) projdir)))
+
 (defun compile-and-run ()
+  "Used by krig-compile-hook to compile, then run."
   (interactive)
   (let* ((projdir (file-name-directory (get-closest-pathname)))
          (command (cond
+                   ((krig-is-go projdir)
+                    (format "cd %s && go run" projdir))
                    ((file-exists-p (format "%s/Cargo.toml" projdir))
                     (format "cd %s && cargo run" projdir))
                    ((file-exists-p (format "%s/Makefile" projdir))
@@ -202,6 +209,8 @@ the name of FILE in the current directory, suitable for creation"
   (set (make-local-variable 'compile-command)
        (let ((projdir (file-name-directory (get-closest-pathname))))
          (cond
+          ((krig-is-go projdir)
+           (format "cd %s && go test" projdir))
           ((file-exists-p (format "%s/build" projdir))
            (format "cd %s && ./build" projdir))
           ((file-exists-p (format "%s/waf" projdir))
@@ -470,7 +479,10 @@ the name of FILE in the current directory, suitable for creation"
 ;; go mode
 (progn
   (add-to-list 'load-path "~/.emacs.d/modes/go-mode")
-  (require 'go-mode-autoloads))
+  (require 'go-mode-autoloads)
+  (add-hook 'go-mode-hook
+            (lambda ()
+              )))
 
 ;; nasm mode
 (progn

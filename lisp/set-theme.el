@@ -63,29 +63,31 @@
 (if (display-graphic-p)
     (add-hook 'after-init-hook
               '(lambda ()
-               ;;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-               ;;(load-theme 'krig)
-               ;;(load-theme 'misterioso)
-               ;;(load-theme 'noctilux)
-               ;;(load-theme 'proctologist)
-               ;;(load-theme 'adwaita)
-               ;;(load-theme 'misterioso)
-               (load-theme 'gruvbox)
-               ;; adjust some notmuch faces
-               (when (kg-using-notmuch-on-host)
-                 (set-face-foreground 'notmuch-search-unread-face "#afa")
-                 (set-cursor-color "#f1c40f"))
-               ;; rainbow-delimiters
-               (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
-               (progn
-                 (require 'rainbow-delimiters)
-                 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-                 (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
-                 (cl-loop for i from 1 to 9 do
-                          (set-face-foreground (krig-rainbow-face-n i)
-                                               (krig-paren-clr i))))))
+                 (message "setting theme for graphical mode")
+                 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+                 (load-theme 'sesame)
+                 ;;(load-theme 'misterioso)
+                 ;;(load-theme 'noctilux)
+                 ;;(load-theme 'proctologist)
+                 ;;(load-theme 'adwaita)
+                 ;;(load-theme 'misterioso)
+                 ;;(load-theme 'gruvbox)
+                 ;; adjust some notmuch faces
+                 (when (kg-using-notmuch-on-host)
+                   (set-face-foreground 'notmuch-search-unread-face "#afa")
+                   (set-cursor-color "#f1c40f"))))
+  ;; rainbow-delimiters
+  ;;(add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
+  ;;(progn
+  ;;  (require 'rainbow-delimiters)
+  ;;  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  ;;  (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
+  ;;  (cl-loop for i from 1 to 9 do
+  ;;           (set-face-foreground (krig-rainbow-face-n i)
+  ;;                                (krig-paren-clr i))))))
   (add-hook 'after-init-hook
             '(lambda ()
+               (message "Setting theme to adwaita for console mode")
                (menu-bar-mode -1)
                (load-theme 'adwaita))))
 
