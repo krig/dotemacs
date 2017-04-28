@@ -31,6 +31,9 @@
 (let ((class '((class color) (min-colors 89)))
       (dark "#222222")
       (light "#fcfcfc")
+      (success-fg "#278e40")
+      (warning-fg "#e74c3c")
+      (error-fg "#c0392b")
       (match-bg "#f1c40f")
       (shade-bg "#eeeeec"))
   (custom-theme-set-faces
@@ -39,10 +42,12 @@
    `(mouse ((,class (:foreground ,dark))))
    `(cursor ((,class (:background ,dark))))
    `(border ((,class (:foreground ,dark))))
+   `(hl-line ((,class (:background ,match-bg :underline t))))
    `(show-paren-match ((,class (:foreground ,dark :background ,match-bg))))
    `(match ((,class (:foreground ,light :background ,match-bg))))
    `(isearch ((,class (:foreground ,light :background ,dark))))
    `(isearch-lazy-highlight-face ((,class (:foreground ,dark :background ,match-bg))))
+   `(notmuch-search-unread-face ((,class (:foreground ,success-fg :background ,light))))
    `(notmuch-wash-cited-text ((,class (:foreground ,dark :background ,shade-bg))))
    `(widget-field ((,class (:foreground ,dark :background ,shade-bg))))))
 
