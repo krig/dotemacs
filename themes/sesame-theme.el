@@ -35,19 +35,42 @@
       (warning-fg "#e74c3c")
       (error-fg "#c0392b")
       (match-bg "#f1c40f")
-      (shade-bg "#eeeeec"))
+      (shade-bg "#ecf0f1")
+      (hint-bg "#f6f6f6")
+      (midnight-blue "#2c3e50")
+      (lime "#CDDC39")
+      (light-green "#8BC34A"))
   (custom-theme-set-faces
    'sesame
    `(default ((,class (:foreground ,dark :background ,light))))
-   `(mouse ((,class (:foreground ,dark))))
    `(cursor ((,class (:background ,dark))))
+   ;; Highlighting
+   `(fringe ((,class (:background ,light))))
+   `(highlight ((,class (:background ,match-bg))))
+   `(region ((,class (:background ,shade-bg))))
+   `(secondary-selection ((,class (:background ,shade-bg))))
+   `(lazy-highlight ((,class (:background ,match-bg))))
+   `(trailing-whitespace ((,class (:background ,error-fg))))
+   `(isearch ((,class (:foreground ,light :background ,dark))))
+   `(isearch-lazy-highlight-face ((,class (:foreground ,dark :background ,match-bg))))
+   `(mouse ((,class (:foreground ,dark))))
    `(border ((,class (:foreground ,dark))))
    `(hl-line ((,class (:background ,match-bg :underline t))))
    `(show-paren-match ((,class (:foreground ,dark :background ,match-bg))))
    `(match ((,class (:foreground ,light :background ,match-bg))))
-   `(isearch ((,class (:foreground ,light :background ,dark))))
-   `(isearch-lazy-highlight-face ((,class (:foreground ,dark :background ,match-bg))))
    `(notmuch-search-unread-face ((,class (:foreground ,success-fg :background ,light))))
+
+   ;; Font lock
+   `(font-lock-builtin-face ((,class (:foreground ,midnight-blue :background ,light))))
+   `(font-lock-comment-face ((,class (:slant italic :foreground ,dark))))
+   `(font-lock-constant-face ((,class (:foreground ,dark))))
+   `(font-lock-function-name-face ((,class (:foreground ,dark))))
+   `(font-lock-keyword-face ((,class (:weight bold :foreground ,dark))))
+   `(font-lock-string-face ((,class (:foreground ,dark :background ,hint-bg))))
+   `(font-lock-type-face ((,class (:foreground ,dark))))
+   `(font-lock-variable-name-face ((,class (:foreground ,dark))))
+
+   ;; Other stuff
    `(notmuch-wash-cited-text ((,class (:foreground ,dark :background ,shade-bg))))
    `(widget-field ((,class (:foreground ,dark :background ,shade-bg))))))
 
