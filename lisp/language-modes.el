@@ -303,6 +303,18 @@ the name of FILE in the current directory, suitable for creation"
     (auto-fill-mode 1))
   (add-hook 'markdown-mode-hook 'md-extra-stuff))
 
+;; ponylang
+(defun krig-ponylang-mode-hook ()
+  (setq show-trailing-whitespace t)
+  (turn-on-fic-mode)
+  (local-set-key [return] 'newline-and-indent))
+
+(progn
+  (add-to-list 'load-path "~/.emacs.d/modes/ponylang-mode")
+  (add-to-list 'auto-mode-alist '("\\.pony$" . ponylang-mode))
+  (autoload 'ponylang-mode "ponylang-mode" nil t)
+  (add-hook 'ponylang-mode-hook 'krig-ponylang-mode-hook))
+
 ;; toml :P
 (progn
   (add-to-list 'auto-mode-alist '("\\.toml$" . toml-mode))

@@ -39,7 +39,11 @@
       (hint-bg "#f6f6f6")
       (midnight-blue "#2c3e50")
       (lime "#CDDC39")
-      (light-green "#8BC34A"))
+      (light-green "#8BC34A")
+      (dodger-blue "#19B5FE")
+      (hanada "#044F67")
+      (watermelon "#ff3b3f")
+      (eggplant "#49274a"))
   (custom-theme-set-faces
    'sesame
    `(default ((,class (:foreground ,dark :background ,light))))
@@ -50,7 +54,7 @@
    `(region ((,class (:background ,shade-bg))))
    `(secondary-selection ((,class (:background ,shade-bg))))
    `(lazy-highlight ((,class (:background ,match-bg))))
-   `(trailing-whitespace ((,class (:background ,error-fg))))
+   `(trailing-whitespace ((,class (:background ,watermelon))))
    `(isearch ((,class (:foreground ,light :background ,dark))))
    `(isearch-lazy-highlight-face ((,class (:foreground ,dark :background ,match-bg))))
    `(mouse ((,class (:foreground ,dark))))
@@ -64,13 +68,15 @@
    `(font-lock-builtin-face ((,class (:foreground ,midnight-blue :background ,light))))
    `(font-lock-comment-face ((,class (:slant italic :foreground ,dark))))
    `(font-lock-constant-face ((,class (:foreground ,dark))))
-   `(font-lock-function-name-face ((,class (:foreground ,dark))))
-   `(font-lock-keyword-face ((,class (:weight bold :foreground ,dark))))
-   `(font-lock-string-face ((,class (:foreground ,dark :background ,hint-bg))))
+   `(font-lock-function-name-face ((,class (:foreground ,dark :background ,light :weight bold))))
    `(font-lock-type-face ((,class (:foreground ,dark))))
-   `(font-lock-variable-name-face ((,class (:foreground ,dark))))
+   `(font-lock-keyword-face ((,class (:foreground ,dark))))
+   `(font-lock-string-face ((,class (:foreground ,eggplant))))
+   `(font-lock-variable-name-face ((,class (:foreground ,dark :weight bold))))
 
    ;; Other stuff
+   `(trailing-whitespace ((,class (:foreground ,watermelon))))
+   `(whitespace-trailing ((,class (:foreground ,watermelon))))
    `(notmuch-wash-cited-text ((,class (:foreground ,dark :background ,shade-bg))))
    `(widget-field ((,class (:foreground ,dark :background ,shade-bg))))))
 

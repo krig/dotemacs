@@ -46,3 +46,6 @@
 [submodule "modes/go-mode"]
 	path = modes/go-mode
 	url = git@github.com:dominikh/go-mode.el.git
+[submodule "modes/ponylang-mode"]
+	path = modes/ponylang-mode
+	url = git@github.com:krig/ponylang-mode

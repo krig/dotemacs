@@ -11,7 +11,7 @@
      ("walker" 15)
      ("kowloon" 17)
      ("krigpad" (if (> (display-pixel-width) 1900) 13 12))
-     ("ultralix" 16)
+     ("ultralix" 14)
      (_ 14)))
 
 (defun font-candidate (&rest fonts)
