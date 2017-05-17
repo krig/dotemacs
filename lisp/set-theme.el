@@ -65,7 +65,7 @@
               '(lambda ()
                  (message "setting theme for graphical mode")
                  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-                 (load-theme 'sesame)
+                 (load-theme 'sesame)))
                  ;;(load-theme 'misterioso)
                  ;;(load-theme 'noctilux)
                  ;;(load-theme 'proctologist)
@@ -73,9 +73,9 @@
                  ;;(load-theme 'misterioso)
                  ;;(load-theme 'gruvbox)
                  ;; adjust some notmuch faces
-                 (when (kg-using-notmuch-on-host)
-                   (set-face-foreground 'notmuch-search-unread-face "#afa")
-                   (set-cursor-color "#f1c40f"))))
+                 ;;(when (kg-using-notmuch-on-host)
+                 ;;  (set-face-foreground 'notmuch-search-unread-face "#afa")
+                 ;;  (set-cursor-color "#f1c40f"))))
   ;; rainbow-delimiters
   ;;(add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
   ;;(progn
