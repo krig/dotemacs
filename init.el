@@ -193,3 +193,4 @@
 
 ;; reset gc-cons-threshold
 (setq gc-cons-threshold 800000)
+(put 'upcase-region 'disabled nil)

@@ -297,3 +297,13 @@ open and unsaved."
   "Return true if the string is empty or nil. Expects string."
   (or (null string)
       (zerop (length (s-trim string)))))
+
+(defun copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
