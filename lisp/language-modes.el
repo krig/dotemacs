@@ -313,6 +313,7 @@ the name of FILE in the current directory, suitable for creation"
 (defun krig-ponylang-mode-hook ()
   (setq show-trailing-whitespace t)
   (turn-on-fic-mode)
+  (setq tab-width 2)
   (local-set-key [return] 'newline-and-indent))
 
 (with-eval-after-load 'ponylang-mode
