@@ -193,7 +193,10 @@ the name of FILE in the current directory, suitable for creation"
   "Used by krig-compile-hook to compile, then run."
   (interactive)
   (let* ((projdir (file-name-directory (get-closest-pathname)))
+         ;;; Remember to fix krig-compile-hook too!
          (command (cond
+                   ((equal major-mode 'ponylang-mode)
+                    (format "cd %s && ponyc" projdir))
                    ((krig-is-go projdir)
                     (format "cd %s && go run" projdir))
                    ((file-exists-p (format "%s/Cargo.toml" projdir))
@@ -205,10 +208,13 @@ the name of FILE in the current directory, suitable for creation"
     (async-shell-command command)))
 
 (defun krig-compile-hook ()
+  "Run the appropriate thingie to compile."
   (setq compilation-read-command nil)
   (set (make-local-variable 'compile-command)
        (let ((projdir (file-name-directory (get-closest-pathname))))
          (cond
+          ((equal major-mode 'ponylang-mode)
+           (format "cd %s && ponyc" projdir))
           ((krig-is-go projdir)
            (format "cd %s && go test" projdir))
           ((file-exists-p (format "%s/build" projdir))
