@@ -28,7 +28,7 @@
      (:name "to-me" :query "tag:to-me"))))
  '(package-selected-packages
    (quote
-    (ponylang-mode ghub+ async elm-mode flycheck-elm gruvbox-theme vagrant-tramp vagrant tuareg swiper sublimity sublime-themes spacegray-theme sml-mode scss-mode rustfmt rinari python-pylint python-pep8 pymacs pretty-symbols notmuch magit js2-mode jinja2-mode ipython idomenu github-browse-file git-messenger flymake-python-pyflakes flycheck-rust erlang elpy cmake-mode cm-mode cider cargo caml auto-yasnippet)))
+    (ghub+ async elm-mode flycheck-elm gruvbox-theme vagrant-tramp vagrant tuareg swiper sublimity sublime-themes spacegray-theme sml-mode scss-mode rustfmt rinari python-pylint python-pep8 pymacs pretty-symbols notmuch magit js2-mode jinja2-mode ipython idomenu github-browse-file git-messenger flymake-python-pyflakes flycheck-rust erlang elpy cmake-mode cm-mode cider cargo caml auto-yasnippet)))
  '(safe-local-variable-values (quote ((hl-sexp-mode) (rainbow-mode . t))))
  '(scroll-bar-mode (quote right))
  '(send-mail-function (quote sendmail-send-it))

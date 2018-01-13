@@ -310,17 +310,18 @@ the name of FILE in the current directory, suitable for creation"
   (add-hook 'markdown-mode-hook 'md-extra-stuff))
 
 ;; ponylang
-(defun krig-ponylang-mode-hook ()
-  (setq show-trailing-whitespace t)
-  (turn-on-fic-mode)
-  (setq tab-width 2)
-  (local-set-key [return] 'newline-and-indent))
+(progn
+  (defun krig-ponylang-mode-hook ()
+    (setq show-trailing-whitespace t)
+    (turn-on-fic-mode)
+    (setq tab-width 2)
+    (local-set-key [return] 'newline-and-indent))
 
-(with-eval-after-load 'ponylang-mode
-  ;;(add-to-list 'load-path "~/.emacs.d/modes/ponylang-mode")
-  ;;(add-to-list 'auto-mode-alist '("\\.pony$" . ponylang-mode))
-  ;;(autoload 'ponylang-mode "ponylang-mode" nil t)
-  (add-hook 'ponylang-mode-hook 'krig-ponylang-mode-hook))
+  (add-to-list 'load-path "~/.emacs.d/modes/ponylang-mode")
+  (add-to-list 'auto-mode-alist '("\\.pony$" . ponylang-mode))
+  (autoload 'ponylang-mode "ponylang-mode" nil t)
+  (with-eval-after-load 'ponylang-mode
+    (add-hook 'ponylang-mode-hook 'krig-ponylang-mode-hook)))
 
 ;; toml :P
 (progn
