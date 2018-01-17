@@ -49,3 +49,6 @@
 [submodule "modes/ponylang-mode"]
 	path = modes/ponylang-mode
 	url = git@github.com:krig/ponylang-mode
+[submodule "tools/sublimity"]
+	path = tools/sublimity
+	url = git@github.com:zk-phi/sublimity.git
