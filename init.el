@@ -162,6 +162,7 @@
 ;; notmuch
 (defun kg-using-notmuch-on-host ()
   (or (string-prefix-p "krigpad" hostname)
+      (string-prefix-p "dumpling" hostname)
           (string-prefix-p "charsiu" hostname)
           (string-prefix-p "ultralix" hostname)))
 
