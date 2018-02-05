@@ -13,4 +13,5 @@ abbrev_defs
 url/*
 eshell/*
 tramp
+recentf
 
