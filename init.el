@@ -21,6 +21,12 @@
 (when (krig-linuxp)
   (setq source-directory"~/src/extern/emacs"))
 
+(defun split-window-right-ignore (&optional size)
+  (if (car size) size (list (/ (window-total-width) 2))))
+
+(advice-add 'split-window-right :filter-args
+            'split-window-right-ignore)
+
 ;; personal settings
 (progn
   (defvar hostname (or (getenv "HOSTNAME") system-name))

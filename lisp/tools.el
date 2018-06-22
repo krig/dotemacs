@@ -281,7 +281,7 @@ symbol, not word, as I need this for programming the most."
 (progn
   (add-to-list 'load-path "~/.emacs.d/tools/sublimity")
   (require 'sublimity)
-  (require 'sublimity-scroll)
+  ;;(require 'sublimity-scroll)
   ;; (require 'sublimity-map) ;; experimental
   (require 'sublimity-attractive)
   (sublimity-mode))

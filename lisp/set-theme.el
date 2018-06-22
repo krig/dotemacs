@@ -92,4 +92,7 @@
                (menu-bar-mode -1)
                (load-theme 'adwaita))))
 
+(unless (display-graphic-p)
+  (load-theme 'misterioso))
+
 ;;; set-theme.el ends here

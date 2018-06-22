@@ -378,10 +378,10 @@ the name of FILE in the current directory, suitable for creation"
   ;; replace ugly indicator
   (add-hook 'flycheck-mode-hook
             (lambda ()
-              ;; if this is python 3, use python 3 executables
+              ;; Assume python 3
               (if (save-excursion
                       (goto-char 1)
-                      (looking-at "#!/usr/bin/python3"))
+                      (not (looking-at "#!/usr/bin/python2")))
                   (progn
                     (setq flycheck-python-flake8-executable "flake8-3.5")
                     (setq flycheck-python-pylint-executable "pylint-3.5")
