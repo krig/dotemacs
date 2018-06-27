@@ -499,7 +499,8 @@ the name of FILE in the current directory, suitable for creation"
 ;; go mode
 (progn
   (add-to-list 'load-path "~/.emacs.d/modes/go-mode")
-  (require 'go-mode-autoloads)
+  (autoload 'go-mode "go-mode" nil t)
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
   (add-hook 'go-mode-hook
             (lambda ()
               )))
