@@ -42,7 +42,9 @@
                  "Consolas"
                  "Liberation Mono")))
       (message "Setting font: %s" font)
-      (set-face-attribute 'default nil :font font)))
+      (set-face-attribute 'default nil :font font)
+      (set-face-attribute 'fixed-pitch nil :font font :inherit 'default)
+      (set-face-attribute 'fixed-pitch-serif nil :font font :inherit 'default)))
   (menu-bar-mode -1))
 
 ;; work around the scrollbar bug
@@ -65,9 +67,7 @@
               '(lambda ()
                  (message "setting theme for graphical mode")
                  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-                 (load-theme 'atom-one-dark t)
-                 (copy-face 'default 'fixed-pitch)
-                 (copy-face 'default 'fixed-pitch-serif)))
+                 (load-theme 'atom-one-dark t)))
                  ;;(load-theme 'sesame)))
                  ;;(load-theme 'misterioso)
                  ;;(load-theme 'noctilux)))
