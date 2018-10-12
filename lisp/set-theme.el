@@ -43,8 +43,8 @@
                  "Liberation Mono")))
       (message "Setting font: %s" font)
       (set-face-attribute 'default nil :font font)
-      (set-face-attribute 'fixed-pitch nil :font font :inherit 'default)
-      (set-face-attribute 'fixed-pitch-serif nil :font font :inherit 'default)))
+      (set-face-attribute 'fixed-pitch nil :family nil :inherit 'default)
+      (set-face-attribute 'fixed-pitch-serif nil :family nil :inherit 'default)))
   (menu-bar-mode -1))
 
 ;; work around the scrollbar bug

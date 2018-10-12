@@ -309,6 +309,7 @@ the name of FILE in the current directory, suitable for creation"
     (setq markdown-header-scaling nil)
     (setq markdown-gfm-use-electric-backquote nil)
     (setq markdown-fontify-code-blocks-natively t)
+    (copy-face 'font-lock-constant-face 'markdown-code-face)
     (auto-fill-mode 1))
   (add-hook 'markdown-mode-hook 'md-extra-stuff))
 
