@@ -306,6 +306,9 @@ the name of FILE in the current directory, suitable for creation"
   (add-to-list 'auto-mode-alist '("\\.md$" . gfm-mode))
   (require 'markdown-mode)
   (defun md-extra-stuff ()
+    (setq markdown-header-scaling nil)
+    (setq markdown-gfm-use-electric-backquote nil)
+    (setq markdown-fontify-code-blocks-natively t)
     (auto-fill-mode 1))
   (add-hook 'markdown-mode-hook 'md-extra-stuff))
 
