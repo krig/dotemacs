@@ -33,6 +33,7 @@
 
   (when (krig-linuxp)
     (let ((font (font-candidate
+                 "iosevka Term SS05 Medium"
                  "Input"
                  "Inconsolata"
                  "mononoki"

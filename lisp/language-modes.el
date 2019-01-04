@@ -347,6 +347,11 @@ the name of FILE in the current directory, suitable for creation"
     (turn-on-fic-mode)
     (setq tab-width 4)
     (setq indent-tabs-mode nil)
+    (defun python-indent-with-tabs ()
+      (interactive)
+      (setq tab-width 4)
+      (setq indent-tabs-mode t)
+      (setq python-indent-offset 4))
     (define-key python-mode-map "\C-m" 'newline-and-indent))
   (add-hook 'python-mode-hook 'mypy-extra-stuff))
 
