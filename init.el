@@ -1,19 +1,29 @@
-;; My .emacs
-;; Revised structure for 2014
-;; Like all very customisable software, once in a while
-;; all the packages and tweaks and little snippets of code
-;; that you've piled up over the years collapse, and the
-;; only way to fix the situation is to start over.
-;;
-;; Should work for 24.3+.
+;;; init -- My .emacs file.
+;;; Commentary:
+;;; Revised structure for 2014
+;;; Like all very customisable software, once in a while
+;;; all the packages and tweaks and little snippets of code
+;;; that you've piled up over the years collapse, and the
+;;; only way to fix the situation is to start over.
+;;;
+;;; Should work for 24.3+.
+;;;
+;;; Code:
 
 ;; raise GC threshold during init
 (setq gc-cons-threshold 80000000)
 
 ;; system details
-(defun krig-macp () (string-match "apple-darwin" system-configuration))
-(defun krig-linuxp () (string-match "linux" system-configuration))
-(defun krig-winp () (eq system-type 'windows-nt))
+(defun krig-macp ()
+  "Is this a mac?"
+  (string-match "apple-darwin" system-configuration))
+(defun krig-linuxp ()
+  "Is this Linux?"
+  (string-match "linux" system-configuration))
+(defun krig-winp ()
+  "Is this Windows?"
+  (eq system-type 'windows-nt))
+
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
@@ -22,6 +32,7 @@
   (setq source-directory"~/src/extern/emacs"))
 
 (defun split-window-right-ignore (&optional size)
+  "TBH I don't remember exactly what this fixes.  SIZE = ?"
   (if (car size) size (list (/ (window-total-width) 2))))
 
 (advice-add 'split-window-right :filter-args
@@ -29,11 +40,11 @@
 
 ;; personal settings
 (progn
-  (defvar hostname (or (getenv "HOSTNAME") system-name))
+  (defvar *hostname* (or (getenv "HOSTNAME") (system-name)))
   (setq user-full-name "Kristoffer Grönlund")
   (setq user-mail-address (if (or
-                               (string-prefix-p "krigpad" hostname)
-                               (string-prefix-p "charsiu" hostname))
+                               (string-prefix-p "krigpad" *hostname*)
+                               (string-prefix-p "charsiu" *hostname*))
 			      (concat "kgronlund@" "suse" ".com")
 			    (concat "krig@" "koru" ".se"))))
 
@@ -120,7 +131,7 @@
 ;; set path to emacs source code
 (cond ((krig-winp)
        (setq find-function-C-source-directory "C:/Program/Emacs/src/src"))
-      ((string-match "ultralix" hostname)
+      ((string-match "ultralix" *hostname*)
        (setq find-function-C-source-directory "~/src/extern/emacs-24.3/src"))
       ((krig-macp)
        (setq find-function-C-source-directory "~/Personal/Sources/emacs/src")))
@@ -153,6 +164,7 @@
 
 ;; start the server
 (defun px-raise-frame-and-give-focus ()
+  "Utility function to display the focused window."
   (when window-system
     (raise-frame)
     (x-focus-frame (selected-frame))
@@ -167,10 +179,11 @@
 
 ;; notmuch
 (defun kg-using-notmuch-on-host ()
-  (or (string-prefix-p "krigpad" hostname)
-      (string-prefix-p "dumpling" hostname)
-          (string-prefix-p "charsiu" hostname)
-          (string-prefix-p "ultralix" hostname)))
+  "Used to only load notmuch on certain machines."
+  (or (string-prefix-p "krigpad" *hostname*)
+      (string-prefix-p "dumpling" *hostname*)
+          (string-prefix-p "charsiu" *hostname*)
+          (string-prefix-p "ultralix" *hostname*)))
 
 (when (kg-using-notmuch-on-host)
   (load "notmuch-config.el"))
@@ -184,16 +197,19 @@
 (rename-buffer "*todo*")
 
 (defun indent-4-spaces ()
+  "Set indentation to 4 spaces."
   (interactive)
   (setq tab-width 4)
   (setq indent-tabs-mode nil))
 
 (defun indent-2-spaces ()
+  "Set indentation to 2 spaces."
   (interactive)
   (setq tab-width 2)
   (setq indent-tabs-mode nil))
 
 (defun indent-tabs ()
+  "Set indentation to tabs."
   (interactive)
   (setq tab-width 4)
   (setq indent-tabs-mode t))
@@ -201,3 +217,6 @@
 ;; reset gc-cons-threshold
 (setq gc-cons-threshold 800000)
 (put 'upcase-region 'disabled nil)
+
+(provide 'init)
+;;; init ends here
