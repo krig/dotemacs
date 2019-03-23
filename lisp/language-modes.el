@@ -512,6 +512,7 @@ the name of FILE in the current directory, suitable for creation"
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
   (add-hook 'go-mode-hook
             (lambda ()
+              (setq gofmt-args '("-s"))
               )))
 
 ;; nasm mode
