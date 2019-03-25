@@ -15,4 +15,4 @@ eshell/*
 tramp
 recentf
 session.*
-
+transient/*
