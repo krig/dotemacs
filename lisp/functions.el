@@ -309,18 +309,18 @@ open and unsaved."
       (message "Copied buffer file name '%s' to the clipboard." filename))))
 
 
-(defun font-size-for-machine (fontname)
-  "Set font size depending on hostname and screen size.  FONTNAME is name of font."
+(defun font-size-for-machine ()
+  "Set font size depending on hostname and screen size."
    (pcase (car (split-string *hostname* "\\."))
      ("walker" 15)
      ("kowloon" 17)
      ("krigpad" (if (> (display-pixel-width) 1900) 13 12))
-     ("ultralix" 16)
+     ("ultralix" 18)
      (_ 14)))
 
 (defun font-candidate (&rest fonts)
   "Return existing font which first match.  FONTS is a list of font names."
-  (let ((fonts (map 'list (lambda (f) (format "%s-%d:weight=normal" f (font-size-for-machine f))) fonts)))
+  (let ((fonts (map 'list (lambda (f) (format "%s-%d:weight=normal" f (font-size-for-machine))) fonts)))
     (find-if (lambda (f) (find-font (font-spec :name f))) fonts)))
 
 
@@ -345,4 +345,3 @@ open and unsaved."
   (interactive "r")
   (align-regexp start end
                 "\\(\\s-*\\)," 1 1 t))
-
