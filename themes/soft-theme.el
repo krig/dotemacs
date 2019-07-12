@@ -15,9 +15,10 @@
 
 (let* ((class '((class color) (min-colors 89)))
        (256color (eq (display-color-cells (selected-frame)) 256))
-       (background "#bebebe")
+       (background "#fefefe")
        (foreground "#333")
-       (comment "#111144")
+       (comment "#111111")
+       (commentbg "#fff0f2")
        (warning "#996611")
        (error "#cc0000"))
   (custom-theme-set-faces
@@ -40,8 +41,8 @@
    `(font-lock-type-face ((,class (:foreground ,foreground))))
    `(font-lock-variable-name-face ((,class (:foreground ,foreground))))
    `(font-lock-warning-face ((,class (:foreground ,warning))))
-   `(font-lock-comment-delimiter-face ((,class (:foreground ,comment))))
-   `(font-lock-comment-face ((,class (:foreground ,comment))))
+   `(font-lock-comment-delimiter-face ((,class (:foreground ,comment :background ,commentbg))))
+   `(font-lock-comment-face ((,class (:foreground ,comment :background ,commentbg))))
    `(font-lock-doc-face ((,class (:foreground ,comment))))
    `(font-lock-doc-string-face ((,class (:foreground ,comment))))
 

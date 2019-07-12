@@ -315,7 +315,7 @@ open and unsaved."
      ("walker" 15)
      ("kowloon" 17)
      ("krigpad" (if (> (display-pixel-width) 1900) 13 12))
-     ("ultralix" 18)
+     ("ultralix" 12)
      (_ 14)))
 
 (defun font-candidate (&rest fonts)
