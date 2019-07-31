@@ -60,6 +60,7 @@
                  (krig-set-font)))
   (add-hook 'after-init-hook
             '(lambda ()
+               (message "setting theme for terminal mode")
                (menu-bar-mode -1)
                (set-face-background 'notmuch-message-summary-face nil))))
 

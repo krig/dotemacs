@@ -316,6 +316,7 @@ open and unsaved."
      ("kowloon" 17)
      ("krigpad" (if (> (display-pixel-width) 1900) 13 12))
      ("ultralix" 12)
+     ("rivendell" 18)
      (_ 14)))
 
 (defun font-candidate (&rest fonts)
@@ -327,8 +328,8 @@ open and unsaved."
 (defun font-on-linux ()
   "Return a usable monospace font on linux"
   (font-candidate
-   "Roboto Mono"
    "iosevka Term SS05 Medium"
+   "Roboto Mono"
    "Input"
    "Inconsolata"
    "mononoki"
@@ -337,7 +338,6 @@ open and unsaved."
    "Fantasque Sans Mono"
    "Consolas"
    "Liberation Mono"))
-
 
 ;;;###autoload
 (defun align-comma (start end)

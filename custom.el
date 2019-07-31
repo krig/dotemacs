@@ -9,6 +9,8 @@
    (vector "#ffffff" "#bf616a" "#B4EB89" "#ebcb8b" "#89AAEB" "#C189EB" "#89EBCA" "#232830"))
  '(background-color "#202020")
  '(background-mode dark)
+ '(blink-cursor-mode nil)
+ '(column-number-mode t)
  '(cursor-color "#cccccc")
  '(custom-safe-themes
    (quote
@@ -28,11 +30,12 @@
      (:name "to-me" :query "tag:to-me"))))
  '(package-selected-packages
    (quote
-    (nix-mode jump inflections inf-ruby git-commit flycheck findr dash geiser hcl-mode terraform-mode salt-mode meson-mode ghub+ async elm-mode flycheck-elm gruvbox-theme swiper rustfmt python-pylint python-pep8 pymacs pretty-symbols notmuch magit js2-mode jinja2-mode ipython idomenu github-browse-file git-messenger flymake-python-pyflakes flycheck-rust erlang elpy cmake-mode cm-mode cider cargo caml auto-yasnippet)))
+    (atom-dark-theme atom-one-dark-theme nix-mode jump inflections inf-ruby git-commit flycheck findr dash geiser hcl-mode terraform-mode salt-mode meson-mode ghub+ async elm-mode flycheck-elm gruvbox-theme swiper rustfmt python-pylint python-pep8 pymacs pretty-symbols notmuch magit js2-mode jinja2-mode ipython idomenu github-browse-file git-messenger flymake-python-pyflakes flycheck-rust erlang elpy cmake-mode cm-mode cider cargo caml auto-yasnippet)))
  '(safe-local-variable-values (quote ((hl-sexp-mode) (rainbow-mode . t))))
  '(scroll-bar-mode (quote right))
  '(send-mail-function (quote sendmail-send-it))
- '(transient-mark-mode 1)
+ '(show-paren-mode t)
+ '(tool-bar-mode nil)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -55,9 +58,3 @@
      (340 . "#ebcb8b")
      (360 . "#B4EB89"))))
  '(vc-annotate-very-old-color nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:background nil)))))
