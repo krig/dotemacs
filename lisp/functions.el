@@ -321,20 +321,21 @@ open and unsaved."
 
 (defun font-candidate (&rest fonts)
   "Return existing font which first match.  FONTS is a list of font names."
-  (let ((fonts (map 'list (lambda (f) (format "%s-%d:weight=normal" f (font-size-for-machine))) fonts)))
-    (find-if (lambda (f) (find-font (font-spec :name f))) fonts)))
+  (let ((fonts (map 'list (lambda (f) (format "%s:weight=normal" f)) fonts)))
+    (font-spec :name (find-if (lambda (f) (find-font (font-spec :name f))) fonts) :size (font-size-for-machine))))
 
 
 (defun font-on-linux ()
   "Return a usable monospace font on linux"
   (font-candidate
+   "Noto Sans Mono"
    "iosevka Term SS05 Medium"
-   "Roboto Mono"
-   "Input"
-   "Inconsolata"
-   "mononoki"
    "Ubuntu Mono"
+   "Roboto Mono"
    "DejaVu Sans Mono"
+   "Inconsolata"
+   "Input"
+   "mononoki"
    "Fantasque Sans Mono"
    "Consolas"
    "Liberation Mono"))

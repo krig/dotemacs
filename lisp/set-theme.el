@@ -22,9 +22,6 @@
     (when (krig-linuxp)
       (let ((font (font-on-linux)))
         (message "Setting font: %s" font)
-        (set-face-attribute 'default nil :font font)
-        (set-face-attribute 'fixed-pitch nil :family nil :inherit 'default)
-        (set-face-attribute 'fixed-pitch-serif nil :family nil :inherit 'default)
         (set-frame-font font nil t)))))
 
 (defun krig-paren-clr (n)
@@ -56,7 +53,6 @@
                  (menu-bar-mode -1)
                  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
                  (load-theme 'soft t)
-                 (krig-rainbow-delimiters)
                  (krig-set-font)))
   (add-hook 'after-init-hook
             '(lambda ()
