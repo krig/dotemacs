@@ -9,7 +9,7 @@
 	url = git@github.com:jcsalomon/smarttabs.git
 [submodule "modes/markdown-mode"]
 	path = modes/markdown-mode
-	url = git://jblevins.org/git/markdown-mode.git
+	url = https://github.com/jrblevin/markdown-mode.git
 [submodule "tools/git-messenger"]
 	path = tools/git-messenger
 	url = git@github.com:syohex/emacs-git-messenger.git
