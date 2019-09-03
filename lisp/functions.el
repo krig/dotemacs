@@ -328,8 +328,9 @@ open and unsaved."
 (defun font-on-linux ()
   "Return a usable monospace font on linux"
   (font-candidate
+   "Iosevka Term SS04"
+   "Iosevka Term SS05"
    "Noto Sans Mono"
-   "iosevka Term SS05 Medium"
    "Ubuntu Mono"
    "Roboto Mono"
    "DejaVu Sans Mono"

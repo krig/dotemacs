@@ -77,10 +77,12 @@
      queue
      rinari
      ruby-compilation
-     sml-mode
+     ;sml-mode
      spinner
      tuareg
-     with-editor)))
+     with-editor
+     nord-theme
+     nordless-theme)))
 
 (when (not (krig-winp))
   (mapc

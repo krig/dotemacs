@@ -17,8 +17,8 @@
        (256color (eq (display-color-cells (selected-frame)) 256))
        (background "#fefefe")
        (foreground "#333")
-       (comment "#111111")
-       (commentbg "#fff0f2")
+       (comment "#434C5E")
+       (commentbg "#fefefe")
        (warning "#996611")
        (error "#cc0000"))
   (custom-theme-set-faces

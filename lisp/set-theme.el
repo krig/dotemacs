@@ -44,6 +44,15 @@
              (set-face-foreground (krig-rainbow-face-n i)
                                   (krig-paren-clr i)))))
 
+(defun krig-rainbow-delimiters-noface ()
+  "Set delimiter color depending on nesting depth."
+  (add-to-list 'load-path "~/.emacs.d/tools/rainbow-delimiters")
+  (progn
+    (require 'rainbow-delimiters)
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+    (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)))
+
+
 ;; set theme
 (if (display-graphic-p)
     (add-hook 'after-init-hook
@@ -52,7 +61,9 @@
                  (scroll-bar-mode -1)
                  (menu-bar-mode -1)
                  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-                 (load-theme 'soft t)
+                 ;(load-theme 'soft t)
+                 (load-theme 'nord)
+                 (krig-rainbow-delimiters)
                  (krig-set-font)))
   (add-hook 'after-init-hook
             '(lambda ()
