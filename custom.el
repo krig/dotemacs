@@ -30,7 +30,7 @@
      (:name "to-me" :query "tag:to-me"))))
  '(package-selected-packages
    (quote
-    (sml-mode rinari magit-popup nord-theme nordless-theme atom-dark-theme atom-one-dark-theme nix-mode jump inflections inf-ruby git-commit flycheck findr dash geiser hcl-mode terraform-mode salt-mode meson-mode ghub+ async elm-mode flycheck-elm gruvbox-theme swiper rustfmt python-pylint python-pep8 pymacs pretty-symbols notmuch magit js2-mode jinja2-mode ipython idomenu github-browse-file git-messenger flymake-python-pyflakes flycheck-rust erlang elpy cmake-mode cm-mode cider cargo caml auto-yasnippet)))
+    (magithub sml-mode rinari magit-popup nord-theme nordless-theme atom-dark-theme atom-one-dark-theme nix-mode jump inflections inf-ruby git-commit flycheck findr dash geiser hcl-mode terraform-mode salt-mode meson-mode ghub+ async elm-mode flycheck-elm gruvbox-theme swiper rustfmt python-pylint python-pep8 pymacs pretty-symbols notmuch magit js2-mode jinja2-mode ipython idomenu github-browse-file git-messenger flymake-python-pyflakes flycheck-rust erlang elpy cmake-mode cm-mode cider cargo caml auto-yasnippet)))
  '(safe-local-variable-values (quote ((hl-sexp-mode) (rainbow-mode . t))))
  '(scroll-bar-mode (quote right))
  '(send-mail-function (quote sendmail-send-it))

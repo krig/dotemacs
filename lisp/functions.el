@@ -321,8 +321,7 @@ open and unsaved."
 
 (defun font-candidate (&rest fonts)
   "Return existing font which first match.  FONTS is a list of font names."
-  (let ((fonts (map 'list (lambda (f) (format "%s:weight=normal" f)) fonts)))
-    (font-spec :name (find-if (lambda (f) (find-font (font-spec :name f))) fonts) :size (font-size-for-machine))))
+  (format "%s-%s" (find-if (lambda (f) (find-font (font-spec :name f))) fonts) (font-size-for-machine)))
 
 
 (defun font-on-linux ()

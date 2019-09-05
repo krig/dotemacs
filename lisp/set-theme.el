@@ -55,16 +55,16 @@
 
 ;; set theme
 (if (display-graphic-p)
-    (add-hook 'after-init-hook
-              '(lambda ()
-                 (message "setting theme for graphical mode")
-                 (scroll-bar-mode -1)
-                 (menu-bar-mode -1)
-                 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-                 ;(load-theme 'soft t)
-                 (load-theme 'nord)
-                 (krig-rainbow-delimiters)
-                 (krig-set-font)))
+    (progn
+      (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+      (load-theme 'nord)
+      (krig-rainbow-delimiters)
+      (krig-set-font)
+      (add-hook 'after-init-hook
+                '(lambda ()
+                   (message "setting theme for graphical mode")
+                   (scroll-bar-mode -1)
+                   (menu-bar-mode -1))))
   (add-hook 'after-init-hook
             '(lambda ()
                (message "setting theme for terminal mode")
