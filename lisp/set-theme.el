@@ -20,7 +20,7 @@
       (set-frame-font "Consolas-12"))
 
     (when (krig-linuxp)
-      (let ((font (font-on-linux)))
+      (let ((font (font-on-linux (font-size-for-machine))))
         (message "Setting font: %s" font)
         (set-frame-font font nil t)))))
 

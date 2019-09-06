@@ -316,17 +316,18 @@ open and unsaved."
      ("kowloon" 17)
      ("krigpad" (if (> (display-pixel-width) 1900) 13 12))
      ("ultralix" 12)
-     ("rivendell" 18)
+     ("rivendell" 16)
      (_ 14)))
 
-(defun font-candidate (&rest fonts)
+(defun font-candidate (font-size &rest fonts)
   "Return existing font which first match.  FONTS is a list of font names."
-  (format "%s-%s" (find-if (lambda (f) (find-font (font-spec :name f))) fonts) (font-size-for-machine)))
+  (format "%s-%s" (find-if (lambda (f) (find-font (font-spec :name f))) fonts)
+          (if font-size font-size (font-size-for-machine))))
 
 
-(defun font-on-linux ()
+(defun font-on-linux (font-size)
   "Return a usable monospace font on linux"
-  (font-candidate
+  (font-candidate font-size
    "Iosevka Term SS04"
    "Iosevka Term SS05"
    "Noto Sans Mono"

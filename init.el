@@ -124,7 +124,8 @@
     (tooltip-mode -1)
     (fringe-mode '(0 . 8))
     (tool-bar-mode -1)
-    (global-display-line-numbers-mode)))
+    (linum-relative-global-mode)
+    (global-hl-line-mode)))
 
 
 ;; load common lisp
