@@ -11,7 +11,7 @@
   (when (display-graphic-p)
     (when (krig-macp)
       (setq mac-allow-anti-aliasing t)
-      (set-frame-font (format "Inconsolata-%d" (if (> (display-pixel-width) 1900) 15 13)))
+      (set-frame-font (format "Menlo-%d" (if (> (display-pixel-width) 1900) 15 13)))
       (set-fontset-font "fontset-default"
                         'greek-iso8859-7
                         '("Consolas" . "iso10646-1")))
