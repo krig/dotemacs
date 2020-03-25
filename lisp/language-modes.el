@@ -6,39 +6,6 @@
 (setq-default indent-tabs-mode nil)
 (setq-default c-default-style "linux")
 
-;; some generic modes
-(require 'generic-x)
-
-
-;; LORD PROGRAMMATON
-(define-generic-mode 'programmaton-mode
-  '("#")
-  '("def" "if" "case" "elif" "else" "for" "in" "unless" "while" "do" "end" "fn" "throw" "int" "int64" "string" "real" "type")
-  '(("[0-9]+" . 'font-lock-variable-name-face)
-    ("[\(\)]" . 'paren-face)
-    ("\\\"[^\\\"]*\\\"" . 'font-lock-string-face)
-    ("['][^']*[']" . 'font-lock-string-face))
-  '("\\.lp$")
-  '(smart-tab-mode)
-  "A mode for lord programmaton files")
-
-;; crmsh
-(define-generic-mode 'crmsh-mode
-  '("#")
-  '("node" "primitive" "group" "clone" "master" "ms"
-    "location" "colocation" "order" "rsc_ticket" "rsc_template"
-    "property" "rsc_defaults" "op_defaults" "user" "role"
-    "fencing_topology" "tag")
-  '(("[A-Za-z_][A-Za-z0-9_-]+" . 'font-lock-variable-name-face)
-    ("[0-9]+" . 'font-lock-constant-face)
-    ("[\(\)]" . 'paren-face)
-    ("\\\"[^\\\"]*\\\"" . 'font-lock-string-face)
-    ("['][^']*[']" . 'font-lock-string-face))
-  '("\\.crm$")
-  '(smart-tab-mode)
-  "A mode for crmsh")
-
-
 (defun krig-sh-mode-hook ()
   (setq show-trailing-whitespace t)
   (setq tab-width 4)
@@ -284,7 +251,6 @@ the name of FILE in the current directory, suitable for creation"
         (setq mode-name ,new-name))))
 
 (rename-modeline "js2-mode" js2-mode "js2")
-(rename-modeline "clojure-mode" clojure-mode "clj")
 
 ;; javascript!
 (defun krig-js2-mode-hook ()
@@ -341,7 +307,7 @@ the name of FILE in the current directory, suitable for creation"
 
 ;; python!
 (progn
-  (add-to-list 'interpreter-mode-alist '("python2.5" . python-mode))
+  (add-to-list 'interpreter-mode-alist '("python2.7" . python-mode))
   (defun mypy-extra-stuff ()
     (setq show-trailing-whitespace t)
     (turn-on-fic-mode)
@@ -525,16 +491,3 @@ the name of FILE in the current directory, suitable for creation"
   (autoload 'jai-mode "jai-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.jai\\'" . jai-mode)))
 
-;; keii mode
-(progn
-  (autoload 'kei-mode "kei-mode" nil t)
-  (add-to-list 'auto-mode-alist '("\\.kei\\'" . kei-mode)))
-
-
-;; sml-mode
-(with-eval-after-load 'sml-mode
-  (add-to-list 'auto-mode-alist '("\\.fun$" . sml-mode)
-  (add-to-list 'auto-mode-alist '("\\.sig$" . sml-mode)
-  (add-hook 'sml-mode-hook
-            (lambda ()
-              (turn-on-fic-mode))))))

@@ -59,30 +59,29 @@
      (unless (package-installed-p package)
        (package-install package)))
    '(async
-     caml
-     cider
-     clojure-mode
-     dash
+     ;;caml
+     ;;cider
+     ;;clojure-mode
+     ;;dash
      epl
      findr
      flycheck
      flycheck-rust
      git-commit
-     inf-ruby
-     inflections
+     ;;inf-ruby
+     ;;inflections
      jump
      magit
      magit-popup
-     pkg-info
-     queue
-     rinari
-     ruby-compilation
-     ;sml-mode
-     spinner
-     tuareg
+     ;;pkg-info
+     ;;queue
+     ;;rinari
+     ;;ruby-compilation
+     ;;sml-mode
+     ;;spinner
+     ;;tuareg
      with-editor
-     nord-theme
-     nordless-theme)))
+     nord-theme)))
 
 (when (not (krig-winp))
   (mapc
