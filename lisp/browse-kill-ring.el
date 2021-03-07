@@ -198,7 +198,7 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'cl)
+  (require 'cl-lib)
   (require 'derived))
 
 (when (featurep 'xemacs)
@@ -602,9 +602,9 @@ of the *Kill Ring*."
 						     'browse-kill-ring-extra)))
 	      ;; This is some voodoo.
 	      (when prev
-		(incf prev))
+		(cl-incf prev))
 	      (when next
-		(incf next))
+		(cl-incf next))
 	      (delete-region (or prev (point-min))
 			     (or next (point-max))))))
       (setq buffer-read-only t)))
@@ -646,7 +646,7 @@ of the *Kill Ring*."
   (while (not (zerop arg))
     (if (< arg 0)
 	(progn
-	  (incf arg)
+	  (cl-incf arg)
 	  (if (overlays-at (point))
 	      (progn
 		(goto-char (overlay-start (car (overlays-at (point)))))

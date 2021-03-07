@@ -117,7 +117,7 @@ try to diminish abbrev-mode under GNU Emacs 19.34, you'll get the error
 message \"Attempt to modify read-only object\".")
 
 (or diminish-must-not-copy-minor-mode-alist
-    (callf copy-alist minor-mode-alist))
+    (cl-callf copy-alist minor-mode-alist))
 
 (defvar diminished-mode-alist nil
   "The original `minor-mode-alist' value of all (diminish)ed modes.")
@@ -178,10 +178,10 @@ to TO-WHAT if it's > 1 char long & doesn't already begin with a space."
                       nil nil nil 'diminish-history-names)))
   (let ((minor (assq mode minor-mode-alist)))
     (or minor (error "%S is not currently registered as a minor mode" mode))
-    (callf or to-what "")
+    (cl-callf or to-what "")
     (when (> (length to-what) 1)
       (or (= (string-to-char to-what) ?\ )
-          (callf2 concat " " to-what)))
+          (cl-callf2 concat " " to-what)))
     (or (assq mode diminished-mode-alist)
         (push (copy-sequence minor) diminished-mode-alist))
     (setcdr minor (list to-what))))
@@ -223,7 +223,7 @@ the arg must be quoted as a symbol, as in (diminish-undo 'diminished-modes)."
       (let ((diminished-modes diminished-mode-alist))
         (while diminished-modes
           (diminish-undo (caar diminished-modes))
-          (callf cdr diminished-modes)))
+          (cl-callf cdr diminished-modes)))
     (let ((minor      (assq mode      minor-mode-alist))
           (diminished (assq mode diminished-mode-alist)))
       (or minor
@@ -260,14 +260,14 @@ what diminished modes would be on the mode-line if they were still minor."
           (when (symbolp minor-name)
             ;; This minor mode uses symbol indirection in the cdr
             (let ((symbols-seen (list minor-name)))
-              (while (and (symbolp (callf symbol-value minor-name))
+              (while (and (symbolp (cl-callf symbol-value minor-name))
                           (not (memq minor-name symbols-seen)))
                 (push minor-name symbols-seen))))
           (push minor-name message)))
-      (callf cdr minor-modes))
+      (cl-callf cdr minor-modes))
     (setq message (mapconcat 'identity (nreverse message) ""))
     (when (= (string-to-char message) ?\ )
-      (callf substring message 1))
+      (cl-callf substring message 1))
     (message "%s" message)))
 
 ;; A human mind is a Black Forest of diminished modes.  Some are dangerous;

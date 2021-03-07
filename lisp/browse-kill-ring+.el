@@ -256,8 +256,8 @@ A yank command is a command in `browse-kill-ring-yank-commands'."
            (when (get-text-property (point) 'browse-kill-ring-extra)
              (let ((prev (previous-single-property-change (point) 'browse-kill-ring-extra))
                    (next (next-single-property-change (point) 'browse-kill-ring-extra)))
-               (when prev(incf prev))   ; This is some voodoo.
-               (when next(incf next))
+               (when prev(cl-incf prev))   ; This is some voodoo.
+               (when next(cl-incf next))
                (delete-region (or prev (point-min)) (or next (point-max))))))
       (setq buffer-read-only t)))
   (browse-kill-ring-resize-window)

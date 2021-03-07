@@ -1,5 +1,7 @@
 ;; programming language modes
 
+(require 'cl-lib)
+
 (add-to-list 'load-path "~/.emacs.d/modes")
 
 (setq-default tab-width 4)
@@ -105,14 +107,14 @@ or just one char if that's not possible"
                c-lineup-arglist-tabs-only)))))
 
 
-(defun* get-closest-pathname (&optional (file ".git"))
+(cl-defun get-closest-pathname (&optional (file ".git"))
   "Determine the pathname of the first instance of FILE starting from
 the current directory towards root. This may not do the correct thing
 in presence of links. If it does not find FILE, then it shall return
 the name of FILE in the current directory, suitable for creation"
   (let ((root (expand-file-name "/")))
     (expand-file-name file
-                      (loop
+                      (cl-loop
                        for d = default-directory then (expand-file-name ".." d)
                        if (file-exists-p (expand-file-name file d))
                        return d
