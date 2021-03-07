@@ -152,8 +152,8 @@
 
 ;;; requirements
 
-;; for callf
-(require 'cl)
+;; for cl-callf
+(require 'cl-lib)
 
 (autoload 'dired-omit-mode "dired-x" "Toggle omission of uninteresting files in Dired (Dired-Omit mode)." t)
 
@@ -709,7 +709,7 @@ Also identify bogons."
 
 (defun ignoramus--extract-strings (arg)
   "Return a list of strings which may be contained in or referred to in ARG."
-  (remove-if-not 'stringp
+  (cl-remove-if-not 'stringp
                  (ignoramus-list-flatten
                   (ignoramus--string-or-symbol arg))))
 
@@ -951,9 +951,9 @@ ACTIONS is optional, and defaults to the value of
 
 If ACTIONS contains 'all, turn on ignoring files for all
 actions in `ignoramus-known-actions'."
-  (callf or actions ignoramus-default-actions)
+  (cl-callf or actions ignoramus-default-actions)
   (when (symbolp actions)
-    (callf list actions))
+    (cl-callf list actions))
   (when (memq 'all actions)
     (setq actions ignoramus-known-actions))
   (setq actions (remq 'all actions))
@@ -978,7 +978,7 @@ actions in `ignoramus-known-actions'."
 ;; End:
 ;;
 ;; LocalWords: Ignoramus ARGS alist Howto pathname dired ignorable
-;; LocalWords: callf datafiles datafile completepath dirprefix
+;; LocalWords: cl-callf datafiles datafile completepath dirprefix
 ;;
 
 ;;; ignoramus.el ends here

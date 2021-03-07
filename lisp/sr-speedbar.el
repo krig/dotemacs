@@ -265,7 +265,7 @@
 (require 'advice)
 (require 'cl-lib)
 (eval-when-compile
-  (require 'cl))
+  (require 'cl-lib))
 
 ;;; Code:
 

@@ -66,6 +66,7 @@
      evil
      evil-commentary
      evil-surround
+     rust-mode
      epl
      findr
      flycheck
@@ -131,7 +132,7 @@
 
 
 ;; load common lisp
-;;(require 'cl)
+(require 'cl-lib)
 
 ;; go evil
 ;; Download Evil

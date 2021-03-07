@@ -453,19 +453,6 @@ the name of FILE in the current directory, suitable for creation"
 
 ;; rust-mode
 
-(defun krig-locate-rustc-sources (buffer &optional stat)
-  "modify rust sources paths"
-  (interactive "b")
-  (save-excursion
-    (set-buffer buffer)
-    (goto-char (point-min))
-    (let ((buffer-read-only nil))
-      (replace-regexp "/home/abuild/rpmbuild/BUILD/[a-zA-Z0-9.~+-]+/\\([^:]+\\)"
-                      "~/src/extern/rust/\\1"))))
-
-(defun krig-rust-mode-hook ()
-  (add-hook 'compilation-finish-functions 'krig-locate-rustc-sources))
-
 (when (not (krig-winp))
   (autoload 'rust-mode "rust-mode" nil t)
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))

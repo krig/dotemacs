@@ -1,7 +1,7 @@
 ;;; package --- Set font and theme depending on computer/screen/etc.
 ;;; Commentary:
 
-(require 'cl)
+(require 'cl-lib)
 
 ;;; Code:
 

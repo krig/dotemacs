@@ -194,7 +194,7 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'cl)) ;; case
+(eval-when-compile (require 'cl-lib)) ;; case
 
 ;; Unless you first load `hexrgb.el', then either `palette.el' or `eyedropper.el', you will get
 ;; warnings about variables and functions with prefix `eyedrop-' when you byte-compile

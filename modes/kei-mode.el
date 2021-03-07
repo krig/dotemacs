@@ -1,6 +1,6 @@
 ;; kei-mode.el - very basic kei mode
 
-(require 'cl)
+(require 'cl-lib)
 (require 'rx)
 (require 'js)
 

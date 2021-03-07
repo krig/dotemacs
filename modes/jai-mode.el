@@ -1,6 +1,6 @@
 ;; jai-mode.el - very basic jai mode
 
-(require 'cl)
+(require 'cl-lib)
 (require 'rx)
 (require 'js)
 
