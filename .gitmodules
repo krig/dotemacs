@@ -24,7 +24,7 @@
 	url = git@github.com:purcell/flymake-easy.git
 [submodule "tools/textmate"]
 	path = tools/textmate
-	url = git@github.com:defunkt/textmate.el.git
+	url = git@github.com:krig/textmate.el.git
 [submodule "tools/rainbow-delimiters"]
 	path = tools/rainbow-delimiters
 	url = git@github.com:Fanael/rainbow-delimiters.git
