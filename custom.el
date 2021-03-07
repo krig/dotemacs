@@ -27,7 +27,7 @@
      (:name "all mail" :query "*" :key "a")
      (:name "to-me" :query "tag:to-me")))
  '(package-selected-packages
-   '(swift-helpful swift-mode swift-playground-mode jump epl linum-off linum-relative sml-mode magit-popup nord-theme nix-mode inflections git-commit flycheck findr dash geiser hcl-mode terraform-mode salt-mode meson-mode async swiper rustfmt python-pylint python-pep8 pymacs pretty-symbols magit js2-mode jinja2-mode ipython idomenu github-browse-file git-messenger flymake-python-pyflakes flycheck-rust elpy cmake-mode cm-mode cargo))
+   '(evil evil-commentary evil-surround swift-helpful swift-mode swift-playground-mode jump epl linum-off linum-relative sml-mode magit-popup nord-theme nix-mode inflections git-commit flycheck findr dash geiser hcl-mode terraform-mode salt-mode meson-mode async swiper rustfmt python-pylint python-pep8 pymacs pretty-symbols magit js2-mode jinja2-mode ipython idomenu github-browse-file git-messenger flymake-python-pyflakes flycheck-rust elpy cmake-mode cm-mode cargo))
  '(safe-local-variable-values '((hl-sexp-mode) (rainbow-mode . t)))
  '(scroll-bar-mode 'right)
  '(send-mail-function 'sendmail-send-it)

@@ -63,6 +63,9 @@
      ;;cider
      ;;clojure-mode
      ;;dash
+     evil
+     evil-commentary
+     evil-surround
      epl
      findr
      flycheck
@@ -128,7 +131,16 @@
 
 
 ;; load common lisp
-(require 'cl)
+;;(require 'cl)
+
+;; go evil
+;; Download Evil
+(unless (package-installed-p 'evil)
+  (package-install 'evil))
+
+;; Enable Evil
+(require 'evil)
+(evil-mode 1)
 
 
 ;; set path to emacs source code
